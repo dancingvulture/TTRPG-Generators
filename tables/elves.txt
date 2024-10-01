@@ -1,0 +1,9 @@
+# Prefix
+aeg, ael, aer, aes, aeth, an, ar, bel, ber, cael, caer, cal, car, cel, cir, clar, cris, ear, el, elb, elth, eol, er, erl, est, faer, far, fean, fin, find, gal, gan, gar, gel, gil, ilm, im, in, ir, ist, ith, laeg, lar, lend, lind, lir, lith, lor, maeg, mar, mel, mer, mind, mir, mith, nim, nin, nir, nith, rael, ral, ran, rel, ril, rim, rin, rind, saer, sar, seld, ser, sil, silm, sind, thael, thaer, thal, thel, ther, thir
+
+# Middle
+ad, al, am, an, ar, as, eb, ed, el, em, en, er, es, ev, il, in, ir, ol, thal, thon
+
+# Suffix
+ad, dan, del, dil, dir, edel, el, eth, fal, ian, iel, ien, ion, lad, las, lin, loth, mir, nar, or, orn, ras, rial, rian, riel, rien, ril, rior, rod, roel, rond, ros, sil, thir, we, wen
+
