@@ -4,6 +4,7 @@ For storing name generator classes. This is the real core of the program.
 
 import time
 import os
+import re
 from random import choice, choices, randint
 
 
@@ -404,14 +405,71 @@ class MysticOrders(_NameGenerator):
         return mystic_order
 
 
+class Spells(_NameGenerator):
+    """
+    Spell generator using the knave 2e tables.
+    """
+    def _generator(self) -> str:
+        templates = {
+            (1, 2, 3): "{} {}",
+            (4, 5, 6): "The {} {} {}",
+            (7, 8, 9): "{} {} {}",
+            (10, 11, 12): "{}'s {} {} {}",
+        }
+        formulae = {
+            1: ("element", "form"),
+            2: ("effect", "form"),
+            3: ("effect", "element"),
+            4: ("quality", "element", "form"),
+            5: ("quality", "effect", "form"),
+            6: ("quality", "effect", "element"),
+            7: ("wizard name", "element", "form"),
+            8: ("wizard name", "effect", "form"),
+            9: ("wizard name", "effect", "element"),
+            10: ("wizard name", "quality", "element", "form"),
+            11: ("wizard name", "quality", "effect", "form"),
+            12: ("wizard name", "quality", "effect", "element"),
+        }
+
+        formula_chosen = randint(1, 12)
+        for key in templates:
+            if formula_chosen in key:
+                template_chosen = templates[key]
+                break
+        else:
+            raise Exception("the creator of this fault did not specify a reason")
+
+        table_results = map(self._get, formulae[formula_chosen])
+        spell = template_chosen.format(*table_results)
+        return spell
+
+
+    def _get(self, header: str) -> str:
+        result = choice(self._tables[header])
+        search = re.compile(r"\*.*\*").findall(result)
+
+        if search:
+            if header == "*surname*":
+                return f"{self._tables["surname 1"]}{self._tables["surname 2"]}"
+            elif header == "*inn*":
+                return f"{self._tables["inn name 1"]} {self._tables["inn name 2"]}"
+            else:
+                return header.replace(search[0], self._tables[search[0][1:-1]], 1)
+        else:
+            return result
+
+
 # This lists every generator, it's associated string (put in on the
 # command line), and the set of table files it uses.
 generator_dict = {
+    "test": (Test, ["test.txt"]),
     "dwarves": (Dwarves, ["dwarves.txt"]),
     "elves": (Elves, ["elves.txt"]),
     "epithets": (Epithets, ["epithets.txt"]),
     "locations": (Locations, ["locations.txt"]),
     "minor-gods": (MinorGods, ["minor gods.txt"]),
     "mystic-orders": (MysticOrders, ["mystic orders.txt"]),
-    "test": (Test, ["test.txt"])
+    "spells": (Spells, ["alchemy.txt", "civilization.txt", "delving.txt",
+                        "equipment.txt", "monster.txt", "people.txt",
+                        "spells.txt", "travel.txt"])
 }
