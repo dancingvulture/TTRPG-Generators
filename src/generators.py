@@ -19,7 +19,7 @@ class GeneratorLibrary:
         # enough to use elsewhere). The Value is a tuple, the first entry is
         # always the generator class itself, while all other tuple entries
         # (if they exist) are arguments used to initiate the generator class.
-        self.name_generators = {
+        self.name = {
             "test": (
                 name_generators.Test,
                 ["test.txt"]
@@ -63,6 +63,6 @@ class GeneratorLibrary:
             ),
         }
 
-        self.generator_categories = {
-            "name": self.name_generators,
+        self.generators_by_type = {
+            "name": self.name,
         }

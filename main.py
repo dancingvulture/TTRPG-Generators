@@ -9,12 +9,21 @@ from src.command_line import parse_arguments
 
 def main():
     args = parse_arguments()
-    name_generators = GeneratorLibrary().name_generators
 
-    generator_class, *init_args = name_generators[args.generator]
-    generator = generator_class(args.update, *init_args)
+    get_gen = GeneratorLibrary().generators_by_type
+    generator_class, *default_init_args = get_gen[args.type][args.generator]
 
-    generator.generate(args.count, args.keywords, args.maxtime)
+    if args.type == "name":
+        command_line_init_args = [args.update,]
+        generator_args = (args.count, args.keywords, args.maxtime)
+
+    else:
+        raise Exception(f"Invalid type: {args.type}")
+
+    init_args = command_line_init_args + default_init_args
+    generator = generator_class(*init_args)
+
+    generator.generate(*generator_args)
     generator.show()
 
 

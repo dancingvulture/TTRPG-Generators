@@ -232,7 +232,7 @@ class KnaveGenerator(LinkedGenerator):
         Get a single spell, used for when the input into _substitute_headers
         contains '*spell*'.
         """
-        Spells, *init_args = gen.GeneratorLibrary().name_generators["spells"]
+        Spells, *init_args = gen.GeneratorLibrary().name["spells"]
         spell_generator = Spells(False)
         spell_generator.generate(1, None, 0.10, True)
         return spell_generator.items[0]
