@@ -43,6 +43,7 @@ class GeneratorLibrary:
             ),
             "inn": (
                 name_generators.Inn,
+                []
             ),
             "locations": (
                 name_generators.Locations,
@@ -58,6 +59,7 @@ class GeneratorLibrary:
             ),
             "spells": (
                 name_generators.Spells,
+                []
             ),
         }
 

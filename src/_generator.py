@@ -214,7 +214,7 @@ class KnaveGenerator(LinkedGenerator):
     """
     A base class for any generator using the Knave 2e tables.
     """
-    def __init__(self, force_table_update: bool):
+    def __init__(self, force_table_update: bool, additional_tables: list[str]):
         special_case_funcs = {
             "*surname*": "_get_surname",
             "*inn*": "_get_inn_name",
@@ -223,6 +223,7 @@ class KnaveGenerator(LinkedGenerator):
         table_filenames = ["alchemy.txt", "civilization.txt", "delving.txt",
                            "equipment.txt", "monster.txt", "people.txt",
                            "spells.txt", "travel.txt"]
+        table_filenames += additional_tables
         super().__init__(force_table_update, table_filenames, special_case_funcs)
 
     @staticmethod
