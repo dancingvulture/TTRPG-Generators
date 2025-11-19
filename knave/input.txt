@@ -1,0 +1,84 @@
+1 Alaric 51 Jasper 2 Aldous 52 Jeremiah 3 Alton 53 Johan 4 Archibald 54 Jules 5 Arne 55 Kenric 6 Arthur 56 Leif 7 Balthazar 57 Leopold 8 Bard 58 Leoric 9 Bartholomew 59 Lothar
+10 Bartlett 60Lucian
+11 Basil 61 Merrick
+12 Baxton 62Milo
+13 Benedict 63 Mordred
+14 Bennett 64Mortimer
+15 Beorn 65 Neville
+16 Bertram 66 Odel
+17 Burchard 67 Ogden
+18 Cadman 68Orion
+19 Caspian 69 Orvyn
+20Chadwick 70 Osric
+21 Clovis 71 Oswald
+22Conrad 72 Paschal
+23 Corbett 73 Percival
+24Crispin 74 Peregrine
+25 Cyprian 75 Piers
+26Cyrus 76 Quentin
+27 Daegal 77 Randolf
+28Denis 78 Redmaine
+29Destrian 79 Reinhold
+30 Drogo 80Rex
+31 Eldon 81 Ricard
+32 Ellis 82Roland
+33 Elric 83 Rufus
+34 Emil 84 Silas
+35 Erasmus 85 Stilton
+36 Faustus 86 Stratford
+37 Felix 87 Sylvio
+38 Finn 88Tenpiece
+39 Finnian 89Thaddeus
+40Fitzhugh 90Torsten
+41 Florian 91 Tristan
+42Fox 92Urban
+43 Galileo 93 Valentin
+44Giles 94Valerian
+45 Godfrey 95 Virgil
+46Godwin 96Warrick
+47 Grimwald 97 Waverly
+48Hamlin 98Webster
+49Hannibal 99Wilkin
+50Hildebrand 00Wymond
+1 Adelaide 51 Ingrid 2 Agnes 52 Ione 3 Alma 53 Iris 4 Anastasia 54 Isabetta 5 Anika 55 Isolde 6 Annora 56 Jacquette 7 Astrid 57 Jeanne 8 Barsaba 58 Jessamine 9 Beatrix 59 Jilly
+10 Bethel 60Lavinia
+11 Bianca 61 Lisbet
+12 Blanche 62Madelena
+13 Bodil 63 Margot
+14 Bridget 64Marian
+15 Brunhilde 65 Marigold
+16 Calypso 66 Matilda
+17 Catalina 67 Melisande
+18 Cecilia 68Millicent
+19 Celeste 69 Minerva
+20Charlotte 70 Morgan
+21 Cleopha 71 Nerissa
+22Clotilde 72 Odette
+23 Clover 73 Olga
+24Colette 74 Olivia
+25 Constance 75 Orchid
+26Damaris 76 Pepper
+27 Daphne 77 Petra
+28Demona 78 Philomena
+29Desirae 79 Phoebe
+30 Ella 80Piety
+31 Elsbeth 81 Poppy
+32 Esme 82Portia
+33 Eulalia 83 Rosalind
+34 Euphemia 84Rose
+35 Eydis 85 Sabina
+36 Fern 86 Sif
+37 Fiora 87 Sigourney
+38 Fleur 88 Sigrid
+39 Florence 89 Silence
+40Francesca 90Sybil
+41 Gertrude 91 Tabitha
+42Giselle 92Trillby
+43 Godiva 93 Ulfhild
+44Guinevere 94 Ursula
+45 Heloise 95 Vivian
+46Henrietta 96Wendy
+47 Hester 97 Willow
+48Hippolyta 98Winifred
+49Honora 99Yvette
+50 Imogene 00Zora
