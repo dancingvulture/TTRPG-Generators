@@ -5,6 +5,7 @@ about all generators.
 
 
 import src.name_generators as name_generators
+import src.item_generators as item_generators
 
 
 class GeneratorLibrary:
@@ -39,11 +40,13 @@ class GeneratorLibrary:
             "humans": (
                 name_generators.Humans,
                 ["real names.txt", "people.txt"],
-                {"*name*": "_get_first_name", "*surname*": "_get_surname"}
+                {"*name*": "_get_first_name", "*surname*": "_get_surname"},
+                {}
             ),
             "inn": (
                 name_generators.Inn,
-                []
+                [],
+                {}
             ),
             "locations": (
                 name_generators.Locations,
@@ -59,10 +62,19 @@ class GeneratorLibrary:
             ),
             "spells": (
                 name_generators.Spells,
-                []
+                [],
+                {}
+            ),
+        }
+        self.item = {
+            "magic": (
+                item_generators.MagicItem,
+                [],
+                {"*item_base*": "_get_item_base"}
             ),
         }
 
         self.generators_by_type = {
             "name": self.name,
+            "item": self.item
         }

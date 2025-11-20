@@ -77,13 +77,6 @@ class _NameGenerator(Generator):
 
         return new_words.strip()
 
-    def _generator(self) -> str:
-        """
-        Placeholder meant to be overwritten by child classes.
-        """
-        raise NotImplementedError("You need to overwrite the _generator"
-                                  " method.")
-
 
 class Test(_NameGenerator):
     def _generator(self) -> str:

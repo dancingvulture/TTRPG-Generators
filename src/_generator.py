@@ -27,6 +27,13 @@ class Generator:
         self._update_tables(force_table_update, table_filenames_plus_directory)
         self._tables = self._get_tables(table_filenames_plus_directory)
 
+    def _generator(self) -> str:
+        """
+        Placeholder meant to be overwritten by child classes.
+        """
+        raise NotImplementedError("You need to overwrite the _generator"
+                                  " method.")
+
     def _get_tables(self, table_filenames: list[str]) -> dict[str, list]:
         """
         Using the table filenames grab all tables and compile them into
@@ -214,7 +221,8 @@ class KnaveGenerator(LinkedGenerator):
     """
     A base class for any generator using the Knave 2e tables.
     """
-    def __init__(self, force_table_update: bool, additional_tables: list[str]):
+    def __init__(self, force_table_update: bool, additional_tables: list[str],
+                 additional_special_case_funcs: dict[str, str]):
         special_case_funcs = {
             "*surname*": "_get_surname",
             "*inn*": "_get_inn_name",
@@ -223,6 +231,7 @@ class KnaveGenerator(LinkedGenerator):
         table_filenames = ["alchemy.txt", "civilization.txt", "delving.txt",
                            "equipment.txt", "monster.txt", "people.txt",
                            "spells.txt", "travel.txt"]
+        special_case_funcs = special_case_funcs | additional_special_case_funcs
         table_filenames += additional_tables
         super().__init__(force_table_update, table_filenames, special_case_funcs)
 
@@ -233,7 +242,7 @@ class KnaveGenerator(LinkedGenerator):
         contains '*spell*'.
         """
         Spells, *init_args = gen.GeneratorLibrary().name["spells"]
-        spell_generator = Spells(False)
+        spell_generator = Spells(False, [], {})
         spell_generator.generate(1, None, 0.10, True)
         return spell_generator.items[0]
 

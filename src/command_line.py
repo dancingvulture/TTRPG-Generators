@@ -7,6 +7,28 @@ import argparse
 from src.generators import GeneratorLibrary
 
 
+_KEYWORD_ARGS = {
+    "help": ("Results must contain these words; syntax for this command: "
+              "separate each keyword with a commas, but with no spaces"),
+    "type": lambda keywords: [x for x in keywords.lower().split(',')]
+}
+_MAXTIME_ARGS = {
+    "type": float,
+    "help": ("Maximum time the program tries to generate "
+              "names for in seconds, default is 5."),
+    "default": 5.0
+}
+_FORCE_UPDATE_ARGS = {
+    "help": "Force update of generator's table file.",
+    "action": "store_true",
+    "default": None
+}
+_COUNT_ARGS = {
+    "type": int,
+    "help": "Number to generate."
+}
+
+
 def parse_arguments() -> argparse.Namespace:
     """
     Parse command line arguments.
@@ -24,6 +46,7 @@ def parse_arguments() -> argparse.Namespace:
     library = GeneratorLibrary()
 
     _add_name_subparser(subparsers, library)
+    _add_item_subparser(subparsers, library)
 
     return parser.parse_args()
 
@@ -43,27 +66,29 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
         choices=generator_names,
         help="choose a generator."
     )
-    parser.add_argument(
-        "-kw", "--keywords",
-        help=("Results must contain these words; syntax for this command: "
-              "separate each keyword with a commas, but with no spaces"),
-        type=lambda keywords: [x for x in keywords.lower().split(',')]
+    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
+    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
+    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
+
+
+def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
+    """
+    Subparser for using the name generators.
+    """
+    parser = subparsers.add_parser(
+        "item",
+        help="Generate items.",
     )
+    generator_names = library.item.keys()
+
     parser.add_argument(
-        "-mt", "--maxtime",
-        type=float,
-        help=("Maximum time the program tries to generate "
-              "names for in seconds, default is 5."),
-        default=5.0
+        "generator",
+        choices=generator_names,
+        help="choose a generator."
     )
-    parser.add_argument(
-        "-up", "--update",
-        help="Force update of generator's table file.",
-        action="store_true",
-        default=None
-    )
-    parser.add_argument(
-        "count",
-        type=int,
-        help="Number of names to generate."
-    )
+    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
+    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
+    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
+

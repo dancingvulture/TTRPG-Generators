@@ -14,7 +14,11 @@ def main():
     generator_class, *default_init_args = get_gen[args.type][args.generator]
 
     if args.type == "name":
-        command_line_init_args = [args.update,]
+        command_line_init_args = [args.update]
+        generator_args = (args.count, args.keywords, args.maxtime)
+
+    elif args.type == "item":
+        command_line_init_args = [args.update]
         generator_args = (args.count, args.keywords, args.maxtime)
 
     else:
