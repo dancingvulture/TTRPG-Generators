@@ -42,7 +42,6 @@ class GeneratorLibrary:
                 name_generators.Humans,
                 ["real names.txt", "people.txt"],
                 {"*name*": "_get_first_name", "*surname*": "_get_surname"},
-                {}
             ),
             "inn": (
                 name_generators.Inn,
@@ -95,5 +94,6 @@ class GeneratorLibrary:
 
         self.generators_by_type = {
             "name": self.name,
-            "item": self.item
+            "item": self.item,
+            "npc": self.npc,
         }

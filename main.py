@@ -21,6 +21,10 @@ def main():
         command_line_init_args = [args.update]
         generator_args = (args.count, args.keywords, args.maxtime)
 
+    elif args.type == "npc":
+        command_line_init_args = [args.update]
+        generator_args = (args.count, args.keywords, args.maxtime)
+
     else:
         raise Exception(f"Invalid type: {args.type}")
 

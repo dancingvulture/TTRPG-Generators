@@ -8,7 +8,7 @@ import time
 import os
 import re
 from random import choice
-import src.generators as generators  # Absolute import to avoid
+import src.generators as generators  # Absolute import to avoid circular conflict.
 
 
 class Creation:
@@ -155,6 +155,18 @@ class Generator:
             message = f"{filename} updated"
             display = len(message) * '-' + '\n' + message + '\n' + len(message) * '-'
             print(display)
+
+    @staticmethod
+    def _get_other_generator_output(generator_type: str, generator_name: str):
+        """
+        Use the GeneratorLibrary interface to call any other generator by
+        specifying the type of generator, and its name.
+        """
+        library = generators.GeneratorLibrary().generators_by_type
+        generator_class, *init_args = library[generator_type][generator_name]
+        generator = generator_class(False, *init_args)
+        generator.generate(1, None, 0.1, suppress_print=True)
+        return generator.items[0]
 
 
 class LinkedGenerator(Generator):

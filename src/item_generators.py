@@ -56,10 +56,13 @@ class FantasyMundane(KnaveGenerator, _NameGenerator):
 
             "*item trait* *tool*",
             "*item trait* *misc. item*",
-            "*item trait* book of *book*",
+            "*item trait* book: *book*",
             "*item trait* *clothing*",
             "*item trait* *treasure*",
             "*item trait* *weapon*",
         )
         template_chosen = choice(templates)
         return self._substitute_headers(template_chosen)
+
+
+
