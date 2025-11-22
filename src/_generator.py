@@ -8,7 +8,16 @@ import time
 import os
 import re
 from random import choice
-import src.generators as gen  # Absolute import to avoid
+import src.generators as generators  # Absolute import to avoid
+
+
+class Creation:
+    """
+    Base class for generator output, may be a good idea so outputs can be
+    dealt with using a common interface.
+    """
+    def __init__(self):
+        raise NotImplementedError("Still not sure if I need this")
 
 
 class Generator:
@@ -241,7 +250,7 @@ class KnaveGenerator(LinkedGenerator):
         Get a single spell, used for when the input into _substitute_headers
         contains '*spell*'.
         """
-        Spells, *init_args = gen.GeneratorLibrary().name["spells"]
+        Spells, *init_args = generators.GeneratorLibrary().name["spells"]
         spell_generator = Spells(False, [], {})
         spell_generator.generate(1, None, 0.10, True)
         return spell_generator.items[0]

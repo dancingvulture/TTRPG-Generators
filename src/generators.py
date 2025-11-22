@@ -6,6 +6,7 @@ about all generators.
 
 import src.name_generators as name_generators
 import src.item_generators as item_generators
+import src.npc_generators as npc_generators
 
 
 class GeneratorLibrary:
@@ -68,10 +69,28 @@ class GeneratorLibrary:
         }
         self.item = {
             "magic": (
-                item_generators.MagicItem,
+                item_generators.Magic,
                 [],
                 {"*item_base*": "_get_item_base"}
             ),
+            "fantasy-mundane": (
+                item_generators.FantasyMundane,
+                [],
+                {}
+            )
+        }
+        self.npc = {
+            "fantasy": (
+                npc_generators.FantasyNPCs,
+                [],
+                {"*name_and_race*": "_get_name_and_race",
+                 "*human_name*": "_get_human_name",
+                 "*dwarf_name*": "_get_dwarf_name",
+                 "*elf_name*": "_get_elf_name",
+                 "*detail*": "_get_detail",
+                 "*mundane item*": "_get_fantasy_mundane",
+                 }
+            )
         }
 
         self.generators_by_type = {
