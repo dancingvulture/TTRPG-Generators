@@ -4,11 +4,10 @@ Generate various kinds of items.
 
 
 from src._generator import KnaveGenerator
-from src.name_generators import _NameGenerator
 from random import choice
 
 
-class Magic(KnaveGenerator, _NameGenerator):
+class Magic(KnaveGenerator):
     """
     Generate magic items using the Knave 2e tables.
     """
@@ -26,7 +25,7 @@ class Magic(KnaveGenerator, _NameGenerator):
         return self._substitute_headers(chosen_base)
 
 
-class FantasyMundane(KnaveGenerator, _NameGenerator):
+class FantasyMundane(KnaveGenerator):
     """
     Generate mundane fantasy items.
     """

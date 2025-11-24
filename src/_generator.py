@@ -36,12 +36,95 @@ class Generator:
         self._update_tables(force_table_update, table_filenames_plus_directory)
         self._tables = self._get_tables(table_filenames_plus_directory)
 
+    def generate(self, count: int, keywords: list[str] | None,
+                 max_time: float, suppress_print=False) -> None:
+        """
+        This method belongs to the base Generator class. Although not useful in
+        that class itself, any derived name generators use this to actually run
+        their generators. Adding all results to the .items property (a list).
+            - count: Number to generate.
+            - keywords: If not None, results will only include those that contain
+                        the given keywords.
+            - max_time: Usually only comes up if keywords is being used, the
+                        generator will just keep going until it generates 'count'
+                        results, rejecting any that don't contain all keywords.
+                        If this takes longer than 'max_time', the generator stops
+                        and just shows what it has.
+            - supress_print=False: stops the generator from printing to stdout
+                                   while running. This is used primarily when
+                                   generators call other generators, so as not
+                                   to flood stdout with redundant messages.
+        """
+        start = time.time()  # Used to prevent the program from stalling out here.
+        if keywords is None:  # If the optional argument is not used.
+
+            for _ in range(count):
+                self.items.append(self._generator())
+
+        else:  # Generate names until we have count names containing the keywords.
+            tries = 0
+            while len(self.items) < count:
+                tries += 1
+                creation = self._generator()
+                for keyword in keywords:
+                    if keyword not in creation.lower():
+                        break
+                    elif creation.lower() == keyword:  # Mostly for epithets.
+                        break
+                    elif creation in self.items:  # No duplicates.
+                        break
+
+                else:  # Only add the name if all keywords are in the generated name.
+                    self.items.append(creation)
+
+                if time.time() - start > max_time:
+                    if not suppress_print:
+                        print(f"Program took longer than {max_time} seconds, "
+                              "forcing print.")
+                    break
+            if not suppress_print:
+                print(f"Total of {tries:,} results generated.", end=' ')
+
+    def show(self) -> None:
+        """
+        Takes any results produced by the generator and prints them.
+        """
+        if self.items:
+            longest_result = max(map(len, self.items))
+            print(f"Displaying {len(self.items)} results\n" + longest_result * '-')
+
+            for result in self.items:
+                print(self._capitalize(result))
+
+            print(longest_result * '-')
+
+        else:
+            print("No results to display")
+
     def _generator(self) -> str:
         """
         Placeholder meant to be overwritten by child classes.
         """
         raise NotImplementedError("You need to overwrite the _generator"
                                   " method.")
+
+    @staticmethod
+    def _capitalize(words: str) -> str:
+        """
+        Takes a string and makes the first letter of each word (separated
+        by spaces) a capital and makes all others lowercase, then returns
+        this new string. Ignores connected words, like 'the, of, etc.'
+        """
+        connectors = ["the", "of", "in", "is"]
+        new_words = ''
+        for word in words.lower().split():
+            if word in connectors:
+                new_words += word + ' '
+            else:
+                new_words += word[0].upper() + word[1:] + ' '
+        new_words = new_words[0].upper() + new_words[1:]  # Capitalize first letter
+
+        return new_words.strip()
 
     def _get_tables(self, table_filenames: list[str]) -> dict[str, list]:
         """

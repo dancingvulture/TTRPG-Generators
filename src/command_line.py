@@ -52,15 +52,15 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
     """
     Subparser for using the name generators.
     """
     parser = subparsers.add_parser(
-        "name",
-        help="Generate names.",
+        "item",
+        help="Generate items.",
     )
-    generator_names = library.name.keys()
+    generator_names = library.item.keys()
 
     parser.add_argument(
         "generator",
@@ -73,15 +73,15 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
     """
     Subparser for using the name generators.
     """
     parser = subparsers.add_parser(
-        "item",
-        help="Generate items.",
+        "name",
+        help="Generate names.",
     )
-    generator_names = library.item.keys()
+    generator_names = library.name.keys()
 
     parser.add_argument(
         "generator",
@@ -112,4 +112,19 @@ def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
     parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
     parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
+
+
+def _add_unit_test_subparser(subparsers, library: GeneratorLibrary)  -> None:
+    parser = subparsers.add_parser(
+        "unit-test",
+        help="Run unit tests",
+    )
+    generator_names = library.npc.keys()
+
+    parser.add_argument(
+        "test",
+        choices=generator_names,
+        help="choose a unit test."
+    )
     parser.add_argument("count", **_COUNT_ARGS)

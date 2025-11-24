@@ -4,12 +4,10 @@ Generate various types of NPCs.
 
 
 from src._generator import KnaveGenerator
-from src.name_generators import _NameGenerator
-import src.generators as generators
 from random import choice, choices
 
 
-class FantasyNPCs(KnaveGenerator, _NameGenerator):
+class FantasyNPCs(KnaveGenerator):
     """
     Generate Fantasy NPCs
     """

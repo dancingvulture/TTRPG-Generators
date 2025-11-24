@@ -1,84 +1,11 @@
 """For storing name generator classes. This is the real core of the program.
 """
 
-import time
 from random import choice, choices, randint
 from src._generator import Generator, LinkedGenerator, KnaveGenerator
 
 
-class _NameGenerator(Generator):
-    """
-    Base name generator class, not much use on its own, but it has some
-    mechanics useful to all name generator objects.
-    """
-    def generate(self, count: int, keywords: list[str] | None,
-                 max_time: float, suppress_print=False) -> None:
-        """
-        Generates names using the classes built in name generator.
-        """
-        start = time.time()  # Used to prevent the program from stalling out here.
-        if keywords is None:  # If the optional argument is not used.
-
-            for _ in range(count):
-                self.items.append(self._generator())
-
-        else:  # Generate names until we have count names containing the keywords.
-            tries = 0
-            while len(self.items) < count:
-                tries += 1
-                name = self._generator()
-                for keyword in keywords:
-                    if keyword not in name.lower():
-                        break
-                    elif name.lower() == keyword:  # Mostly for epithets.
-                        break
-                    elif name in self.items:  # No duplicates.
-                        break
-
-                else:  # Only add the name if all keywords are in the generated name.
-                    self.items.append(name)
-
-                if time.time() - start > max_time:
-                    if not suppress_print:
-                        print(f"Program took longer than {max_time} seconds, "
-                              "forcing print.")
-                    break
-            if not suppress_print:
-                print(f"Total of {tries:,} names generated.", end=' ')
-
-    def show(self) -> None:
-        if self.items:
-            longest_name = max(map(len, self.items))
-            print(f"Displaying {len(self.items)} names\n" + longest_name * '-')
-
-            for name in self.items:
-                print(self._capitalize(name))
-
-            print(longest_name * '-')
-
-        else:
-            print("No names to display")
-
-    @staticmethod
-    def _capitalize(words: str) -> str:
-        """
-        Takes a string and makes the first letter of each word (separated
-        by spaces) a capital and makes all others lowercase, then returns
-        this new string. Ignores connected words, like 'the, of, etc.'
-        """
-        connectors = ["the", "of", "in", "is"]
-        new_words = ''
-        for word in words.lower().split():
-            if word in connectors:
-                new_words += word + ' '
-            else:
-                new_words += word[0].upper() + word[1:] + ' '
-        new_words = new_words[0].upper() + new_words[1:]  # Capitalize first letter
-
-        return new_words.strip()
-
-
-class Test(_NameGenerator):
+class Test(Generator):
     def _generator(self) -> str:
         part1 = choice(self._tables["header0"])
         part2 = choice(self._tables["header1"])
@@ -87,7 +14,7 @@ class Test(_NameGenerator):
         return test_name
 
 
-class Dwarves(_NameGenerator):
+class Dwarves(Generator):
     """
     Format is Surname + Epithet + Lineage + Lineage + Title. Rarely
     will a name use all of these, but usually some combination of them.
@@ -166,7 +93,7 @@ class Dwarves(_NameGenerator):
         return layout.format(honorific, adjective, location)
 
 
-class Elves(_NameGenerator):
+class Elves(Generator):
     """
     A computerized version of table 5-6: Fair & Noble, on pages 186-187
     of Gary Gygax's Extraordinary Book of Names.
@@ -184,7 +111,7 @@ class Elves(_NameGenerator):
         return elf
 
 
-class Epithets(_NameGenerator):
+class Epithets(Generator):
     """
     This is inspired by Gary Gygax's Extraordinary Book of Names,
     pages 133-138. I've stolen most of the adjectives, nouns, and verbs
@@ -206,7 +133,7 @@ class Epithets(_NameGenerator):
         return epithet.strip()
 
 
-class Humans(_NameGenerator, LinkedGenerator):
+class Humans(LinkedGenerator):
     """
     Generate human names using the Knave 2e tables. I may want to get
     more surnames.
@@ -252,7 +179,7 @@ class Humans(_NameGenerator, LinkedGenerator):
                 f"{self._substitute_headers("*surname 2*")}")
 
 
-class Inn(KnaveGenerator, _NameGenerator):
+class Inn(KnaveGenerator):
     """
     Generate inn names using the Knave 2e tables.
     """
@@ -260,7 +187,7 @@ class Inn(KnaveGenerator, _NameGenerator):
         return self._get_inn_name()
 
 
-class Locations(_NameGenerator):
+class Locations(Generator):
     """
     A computerized version of the locations tables from the Tomb of
     Adventure Design, 2nd Edition, pages 8-14. Largely unchanged, except
@@ -284,7 +211,7 @@ class Locations(_NameGenerator):
         return location_
 
 
-class MinorGods(_NameGenerator):
+class MinorGods(Generator):
     """
     A computerized version of the Generating Minor Gods table from
     the Tomb of Adventure Design, 2nd Edition, pages 276-277.
@@ -299,7 +226,7 @@ class MinorGods(_NameGenerator):
         return minor_god
 
 
-class MysticOrders(_NameGenerator):
+class MysticOrders(Generator):
     """
     Inspired by Gary Gygax's Extraordinary Book of Names, Table 3-6:
     Mystic Order Names, pages 145-146. Streamlined and with many of my
@@ -329,7 +256,7 @@ class MysticOrders(_NameGenerator):
         return mystic_order
 
 
-class Spells(KnaveGenerator, _NameGenerator):
+class Spells(KnaveGenerator):
     """
     Spell generator using the knave 2e tables.
     """
