@@ -5,8 +5,9 @@
 - See if there is some way you can't save the random seed used for a given run, so bugs can be easier to recreate.
 - See if you can't get `Generator._capitalize` to have a smarter implementation.
 - Add a generic version of "get attributes" to `CreationWithAttributes`.
-- Ooze generator.
 - Clean-up unit test functions.
+- See if you cant make the skeleton option in the embedded ooze table link to a skeleton table.
+- Might be worth using rich (or doing your own thing) to make large multi-line outputs read cleaner, and not break the display bars.
 # Procedures
 ## Add a new generator 
 1. Find or create a generator category.

@@ -84,6 +84,7 @@ class Generator:
         self._tables_directory = "tables//"
         self._last_runtime_filename = "last_runtime.txt"
         self.items = []
+        self._demarcation_char = " | "
 
         self._table_filenames = table_filenames
         table_filenames_plus_directory = [self._tables_directory + x for x in table_filenames]
@@ -180,8 +181,7 @@ class Generator:
                     tables[header] = content
         return tables
 
-    @staticmethod
-    def _text_file_to_dict(filename: str) -> dict:
+    def _text_file_to_dict(self, filename: str) -> dict:
         """Used to convert the contents of a text file into a dictionary
         whose entries are lists of strings. The strings are intended to be
         the individual elements we generate random names from, each entry is
@@ -198,6 +198,7 @@ class Generator:
         - Empty lines (i.e. containing only whitespace) are skipped"""
         contents = {}
         current_list = None
+        demar = self._demarcation_char
         for line in open(filename):
             line = line.strip()
 
@@ -208,7 +209,7 @@ class Generator:
                 current_list = line[1:].strip()
 
             elif line:
-                contents[current_list] = [x.strip() for x in line.split('| ')]
+                contents[current_list] = [x.strip() for x in line.split(demar)]
 
         return contents
 
@@ -252,6 +253,7 @@ class Generator:
         Updates the specified table(s) associated .txt files. Putting
         the contents  in alphabetical order and
         """
+        demar = self._demarcation_char
         for filename in table_filenames:
             contents = self._text_file_to_dict(filename)
 
@@ -266,7 +268,7 @@ class Generator:
             text = ''
             for key in contents:
                 text += "# " + key + "\n"
-                text += ", ".join(contents[key]) + "\n\n"
+                text += demar.join(contents[key]) + "\n\n"
 
             # And then we update the text file.
             with open(filename, "w") as file:

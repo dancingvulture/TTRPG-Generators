@@ -52,6 +52,7 @@ def parse_arguments() -> argparse.Namespace:
     _add_name_subparser(subparsers, library)
     _add_item_subparser(subparsers, library)
     _add_npc_subparser(subparsers, library)
+    _add_monster_subparser(subparsers, library)
 
     return parser.parse_args()
 
@@ -102,13 +103,35 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
 
 def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
     """
-    Subparsers for using the npc generators.
+    Subparser for using the npc generators.
     """
     parser = subparsers.add_parser(
         "npc",
-        help="generate NPCs.",
+        help="Generate NPCs.",
     )
     generator_names = library.npc.keys()
+
+    parser.add_argument(
+        "generator",
+        choices=generator_names,
+        help="choose a generator."
+    )
+    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
+    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
+    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
+
+
+def _add_monster_subparser(subparsers, library: GeneratorLibrary) -> None:
+    """
+    Subparser for using the monster generators.
+    """
+    parser = subparsers.add_parser(
+        "monster",
+        help="Generate monsters."
+    )
+    generator_names = library.monster.keys()
 
     parser.add_argument(
         "generator",

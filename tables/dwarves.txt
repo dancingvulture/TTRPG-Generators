@@ -1,27 +1,27 @@
 # Prefix
-bal| bord| born| brim| brod| brokk| brom| bru| bur| burl| da| dal| dolg| dor| dorm| dral| drim| drom| dur| durm| durn| far| from| fror| fuld| fund| gim| glo| gond| gord| gorm| grad| grim| grod| grom| guld| gund| gur| hord| horn| hra| na| nor| nord| orm| skand| skond| storn| strom| stur| sturl| sund| thor| thorn| thra| thro| throl| thror| thru| thrur| thund
+bal | bord | born | brim | brod | brokk | brom | bru | bur | burl | da | dal | dolg | dor | dorm | dral | drim | drom | dur | durm | durn | far | from | fror | fuld | fund | gim | glo | gond | gord | gorm | grad | grim | grod | grom | guld | gund | gur | hord | horn | hra | na | nor | nord | orm | skand | skond | storn | strom | stur | sturl | sund | thor | thorn | thra | thro | throl | thror | thru | thrur | thund
 
 # Masc Suffix
-bor| din| in| ir| li| lin| nir| or| ri| rin| rok| ror| rur| vi| vir| vor
+bor | din | in | ir | li | lin | nir | or | ri | rin | rok | ror | rur | vi | vir | vor
 
 # Fem Suffix
-bis| da| dis| ga| hild| is| lif| lind| lis| na| nis| ris| rith| run| vis
+bis | da | dis | ga | hild | is | lif | lind | lis | na | nis | ris | rith | run | vis
 
 # Adjective
-ashen| black| bold| brave| dark| deft| fierce| fiery| fire| fleet| frost| gold| golden| grey| grim| iron| keen| noble| oaken| red| sharp| shrewd| silver| split| stalwart| steel| stone| stout| strong| white| wild
+ashen | black | bold | brave | dark | deft | fierce | fiery | fire | fleet | frost | gold | golden | grey | grim | iron | keen | noble | oaken | red | sharp | shrewd | silver | split | stalwart | steel | stone | stout | strong | white | wild
 
 # Noun
-arrow| axe| beard| blade| bolt| brand| eye| fist| foot| forge| gate| hammer| mine| shield| spear| sword| tower
+arrow | axe | beard | blade | bolt | brand | eye | fist | foot | forge | gate | hammer | mine | shield | spear | sword | tower
 
 # Masc Honorific
-baron| champion| defender| duke| emperor| governor| great steward| guardian| head| keeper| king| lord| maintainer| master| monarch| overlord| preserver| protector| ruler| sovereign| sustainer| suzerain| thane| upholder| warder
+baron | champion | defender | duke | emperor | governor | great steward | guardian | head | keeper | king | lord | maintainer | master | monarch | overlord | preserver | protector | ruler | sovereign | sustainer | suzerain | thane | upholder | warder
 
 # Fem Honorific
-baroness| champion| defender| duchess| empress| governess| great steward| guardian| head| keeper| lady| maintainer| mistress| monarch| overlord| preserver| protector| queen| ruler| sovereign| sustainer| suzerain| thane| upholder| warder
+baroness | champion | defender | duchess | empress | governess | great steward | guardian | head | keeper | lady | maintainer | mistress | monarch | overlord | preserver | protector | queen | ruler | sovereign | sustainer | suzerain | thane | upholder | warder
 
 # Location Adjective
-amber| ash| azure| black| blue| brass| bright| bronze| brown| burning| clear| cold| copper| coral| crimson| dark| deft| dire| fair| far| fell| fleet| free| frozen| gem| gold| golden| green| grey| high| indigo| iron| jade| jewel| oak| orange| pale| proud| purple| red| scarlet| sharp| silver| steel| stone| strong| sure| swift| tan| true| violet| white| wild| wise| wood| yellow
+amber | ash | azure | black | blue | brass | bright | bronze | brown | burning | clear | cold | copper | coral | crimson | dark | deft | dire | fair | far | fell | fleet | free | frozen | gem | gold | golden | green | grey | high | indigo | iron | jade | jewel | oak | orange | pale | proud | purple | red | scarlet | sharp | silver | steel | stone | strong | sure | swift | tan | true | violet | white | wild | wise | wood | yellow
 
 # Location
-castle| caverns| cities| city| crag| deep| dell| desert| foam| forest| forge| grove| hall| hill| hinterland| isle| isles| keep| lake| lakes| lands| marches| marsh| mountain| mountains| ocean| palace| path| plains| province| range| river| rock| sands| sea| shore| spire| stone| stream| temple| tower| towers| trail| valley| wall| waters| way| woods
+castle | caverns | cities | city | crag | deep | dell | desert | foam | forest | forge | grove | hall | hill | hinterland | isle | isles | keep | lake | lakes | lands | marches | marsh | mountain | mountains | ocean | palace | path | plains | province | range | river | rock | sands | sea | shore | spire | stone | stream | temple | tower | towers | trail | valley | wall | waters | way | woods
 

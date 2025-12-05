@@ -13,15 +13,7 @@ def main():
     get_gen = GeneratorLibrary().generators_by_type
     generator_class, *default_init_args = get_gen[args.type][args.generator]
 
-    if args.type == "name":
-        command_line_init_args = [args.update]
-        generator_args = (args.count, args.keywords, args.maxtime)
-
-    elif args.type == "item":
-        command_line_init_args = [args.update]
-        generator_args = (args.count, args.keywords, args.maxtime)
-
-    elif args.type == "npc":
+    if args.type in ("name", "item", "npc", "monster"):
         command_line_init_args = [args.update]
         generator_args = (args.count, args.keywords, args.maxtime)
 
