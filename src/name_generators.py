@@ -10,31 +10,6 @@ class Name(Creation):
     """
     A class whose instance contains a single name.
     """
-    def __init__(self, name: str):
-        self.name = name
-
-    def __contains__(self, item) -> bool:
-        """
-        Meant to assist with keyword searches in the generate method.
-        """
-        item = item.lower()
-        name = self.name.lower()
-        if item in name and item != name:
-            return True
-        else:
-            return False
-
-    def __eq__(self, other: 'Name') -> bool:
-        if other.name.lower() == self.name.lower():
-            return True
-        else:
-            return False
-
-    def __len__(self) -> int:
-        return len(self.name)
-
-    def __repr__(self):
-        return self._capitalize(self.name)
 
 
 class Test(Generator):
