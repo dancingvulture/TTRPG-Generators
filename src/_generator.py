@@ -208,7 +208,7 @@ class Generator:
                 current_list = line[1:].strip()
 
             elif line:
-                contents[current_list] = [x.strip() for x in line.split(', ')]
+                contents[current_list] = [x.strip() for x in line.split('| ')]
 
         return contents
 
