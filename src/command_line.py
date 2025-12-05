@@ -21,11 +21,15 @@ _MAXTIME_ARGS = {
 _FORCE_UPDATE_ARGS = {
     "help": "Force update of generator's table file.",
     "action": "store_true",
-    "default": None
 }
 _COUNT_ARGS = {
     "type": int,
     "help": "Number to generate."
+}
+_SUPPRESS_PRINT_ARGS = {
+    "help": "Suppress the print output of the main generator, mainly for"
+            " debugging purposes",
+    "action": "store_true",
 }
 
 
@@ -70,6 +74,7 @@ def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
     parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
     parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
     parser.add_argument("count", **_COUNT_ARGS)
 
 
@@ -91,6 +96,7 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
     parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
     parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
     parser.add_argument("count", **_COUNT_ARGS)
 
 
@@ -112,19 +118,5 @@ def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
     parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
     parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_unit_test_subparser(subparsers, library: GeneratorLibrary)  -> None:
-    parser = subparsers.add_parser(
-        "unit-test",
-        help="Run unit tests",
-    )
-    generator_names = library.npc.keys()
-
-    parser.add_argument(
-        "test",
-        choices=generator_names,
-        help="choose a unit test."
-    )
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
     parser.add_argument("count", **_COUNT_ARGS)

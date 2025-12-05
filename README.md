@@ -3,7 +3,10 @@
 
 # To-Do
 - See if there is some way you can't save the random seed used for a given run, so bugs can be easier to recreate.
-
+- See if you can't get `Generator._capitalize` to have a smarter implementation.
+- Add a generic version of "get attributes" to `CreationWithAttributes`.
+- Ooze generator.
+- Clean-up unit test functions.
 # Procedures
 ## Add a new generator 
 1. Find or create a generator category.
@@ -17,6 +20,8 @@
 4. Done! The generator will appear as an option in `main`, and can be used inside other generators.
 ## Add a new generator category
 1. Create an appropriately named module.
+   1. At the top of the module create a class that represents generator output. Must be a subclass of `Creation`. You'll need to make sure all appropriate methods are overridden.
+   2. Add a new generator (see above).
 2. Create entries in `GeneratorLibrary`
    1. Make sure your module is imported in absolute terms: `src.new_module as new_module`. Otherwise there will be a circular import error.
    2. Create an appropriately named dictionary to `GeneratorLibrary`'s init, e.g. `self.new_module`.

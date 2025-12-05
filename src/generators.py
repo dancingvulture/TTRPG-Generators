@@ -70,7 +70,7 @@ class GeneratorLibrary:
             "magic": (
                 item_generators.Magic,
                 [],
-                {"*item_base*": "_get_item_base"}
+                {}
             ),
             "fantasy-mundane": (
                 item_generators.FantasyMundane,
@@ -82,13 +82,7 @@ class GeneratorLibrary:
             "fantasy": (
                 npc_generators.FantasyNPCs,
                 [],
-                {"*name_and_race*": "_get_name_and_race",
-                 "*human_name*": "_get_human_name",
-                 "*dwarf_name*": "_get_dwarf_name",
-                 "*elf_name*": "_get_elf_name",
-                 "*detail*": "_get_detail",
-                 "*mundane item*": "_get_fantasy_mundane",
-                 }
+                {"*mundane item*": "_get_fantasy_mundane"},
             )
         }
 

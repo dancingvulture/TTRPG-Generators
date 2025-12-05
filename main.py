@@ -31,8 +31,9 @@ def main():
     init_args = command_line_init_args + default_init_args
     generator = generator_class(*init_args)
 
-    generator.generate(*generator_args)
-    generator.show()
+    generator.generate(*generator_args, suppress_print=args.suppress_print)
+    if not args.suppress_print:
+        generator.show()
 
 
 if __name__ == "__main__":

@@ -13,11 +13,65 @@ import src.generators as generators  # Absolute import to avoid circular conflic
 
 class Creation:
     """
-    Base class for generator output, may be a good idea so outputs can be
-    dealt with using a common interface.
+    Base class for generator output, this allows the use of a common and simply
+    implemented interface for all generator outputs. Init requires a name and
+    an arbitrary list of attributes represented with 0 or more 2-tuples. The
+    first entry of the tuple is the attribute's name, the second is the
+    attribute's value.
     """
-    def __init__(self):
-        raise NotImplementedError("Still not sure if I need this")
+
+    def __init__(self, name: str, *attribute: tuple[str, str]):
+        self.name = name
+        self.attributes = {name_: value for name_, value in attribute}
+        self.nested = 0
+
+    @staticmethod
+    def _capitalize(words: str) -> str:
+        """
+        Takes a string and makes the first letter of each word (separated
+        by spaces) a capital and makes all others lowercase, then returns
+        this new string. Ignores connected words, like 'the, of, etc.'
+        """
+        connectors = ["the", "of", "in", "is"]
+        new_words = ''
+        for word in words.lower().split():
+            if word in connectors:
+                new_words += word + ' '
+            else:
+                new_words += word[0].upper() + word[1:] + ' '
+        new_words = new_words[0].upper() + new_words[1:]  # Capitalize first letter
+
+        return new_words.strip()
+
+    def __contains__(self, item: str) -> bool:
+        if item in str(self):
+            return True
+        else:
+            return False
+
+    def __eq__(self, other: 'Creation') -> bool:
+        if other.name == self.name and other.attributes == self.attributes:
+            return True
+        else:
+            return False
+
+    def __len__(self):
+        """
+        Returns the length of the longest line.
+        """
+        lines = str(self).split('\n')
+        return max(map(len, lines))
+
+    def __repr__(self) -> str:
+        display = self._capitalize(self.name)
+        for attribute_label, attribute in self.attributes.items():
+            display += "\n  "
+            if isinstance(attribute, Creation):
+                attribute.nested += self.nested + 1
+            for _ in range(self.nested):
+                display += "  "
+            display += f"- {attribute_label}: {attribute}"
+        return display
 
 
 class Generator:
@@ -37,7 +91,7 @@ class Generator:
         self._tables = self._get_tables(table_filenames_plus_directory)
 
     def generate(self, count: int, keywords: list[str] | None,
-                 max_time: float, suppress_print=False) -> None:
+                 max_time: float, suppress_print=False) -> list[Creation]:
         """
         This method belongs to the base Generator class. Although not useful in
         that class itself, any derived name generators use this to actually run
@@ -50,10 +104,10 @@ class Generator:
                         results, rejecting any that don't contain all keywords.
                         If this takes longer than 'max_time', the generator stops
                         and just shows what it has.
-            - supress_print=False: stops the generator from printing to stdout
-                                   while running. This is used primarily when
-                                   generators call other generators, so as not
-                                   to flood stdout with redundant messages.
+            - suppress_print=False: stops the generator from printing to stdout
+                                    while running. This is used primarily when
+                                    generators call other generators, so as not
+                                    to flood stdout with redundant messages.
         """
         start = time.time()  # Used to prevent the program from stalling out here.
         if keywords is None:  # If the optional argument is not used.
@@ -67,9 +121,7 @@ class Generator:
                 tries += 1
                 creation = self._generator()
                 for keyword in keywords:
-                    if keyword not in creation.lower():
-                        break
-                    elif creation.lower() == keyword:  # Mostly for epithets.
+                    if keyword not in creation:
                         break
                     elif creation in self.items:  # No duplicates.
                         break
@@ -85,6 +137,8 @@ class Generator:
             if not suppress_print:
                 print(f"Total of {tries:,} results generated.", end=' ')
 
+        return self.items
+
     def show(self) -> None:
         """
         Takes any results produced by the generator and prints them.
@@ -94,37 +148,20 @@ class Generator:
             print(f"Displaying {len(self.items)} results\n" + longest_result * '-')
 
             for result in self.items:
-                print(self._capitalize(result))
+                print(result, end="\n")
 
             print(longest_result * '-')
 
         else:
             print("No results to display")
 
-    def _generator(self) -> str:
+    def _generator(self) -> Creation:
         """
         Placeholder meant to be overwritten by child classes.
         """
         raise NotImplementedError("You need to overwrite the _generator"
                                   " method.")
 
-    @staticmethod
-    def _capitalize(words: str) -> str:
-        """
-        Takes a string and makes the first letter of each word (separated
-        by spaces) a capital and makes all others lowercase, then returns
-        this new string. Ignores connected words, like 'the, of, etc.'
-        """
-        connectors = ["the", "of", "in", "is"]
-        new_words = ''
-        for word in words.lower().split():
-            if word in connectors:
-                new_words += word + ' '
-            else:
-                new_words += word[0].upper() + word[1:] + ' '
-        new_words = new_words[0].upper() + new_words[1:]  # Capitalize first letter
-
-        return new_words.strip()
 
     def _get_tables(self, table_filenames: list[str]) -> dict[str, list]:
         """
@@ -240,7 +277,8 @@ class Generator:
             print(display)
 
     @staticmethod
-    def _get_other_generator_output(generator_type: str, generator_name: str):
+    def _get_other_generator_output(generator_type: str, generator_name: str
+                                    ) -> Creation:
         """
         Use the GeneratorLibrary interface to call any other generator by
         specifying the type of generator, and its name.
@@ -248,8 +286,8 @@ class Generator:
         library = generators.GeneratorLibrary().generators_by_type
         generator_class, *init_args = library[generator_type][generator_name]
         generator = generator_class(False, *init_args)
-        generator.generate(1, None, 0.1, suppress_print=True)
-        return generator.items[0]
+        items = generator.generate(1, None, 0.1, suppress_print=True)
+        return items[0]
 
 
 class LinkedGenerator(Generator):
@@ -274,7 +312,7 @@ class LinkedGenerator(Generator):
         super().__init__(force_table_update, table_filenames)
         self._special_case_funcs = self._get_special_case_funcs(special_case_names)
 
-    def _substitute_headers(self, entry: str) -> str:
+    def _substitute_headers(self, entry: str | Creation) -> str | Creation:
         """
         This function searches entry for any *headers*, each header consists of
         one or more words that are bookended by asterisks. A header links to
@@ -304,7 +342,12 @@ class LinkedGenerator(Generator):
                 new_entry = choice(self._tables[hdr[1:-1]])  # Trim asterisks.
                 new_entry = self._substitute_headers(new_entry)
 
-                # Our new entry obtained, we substitute it into our entry
+            # Some special exception functions produce Creations instead of
+            # strings, we have to handle them differently.
+            if isinstance(new_entry, Creation):
+                return new_entry
+
+            # Our new entry obtained, we substitute it into our entry
             entry = entry.replace(hdr, new_entry, 1)
 
         return entry
@@ -320,6 +363,7 @@ class LinkedGenerator(Generator):
         for special_case, func_name in func_map.items():
             special_case_funcs[special_case] = getattr(self, func_name)
         return special_case_funcs
+
 
 class KnaveGenerator(LinkedGenerator):
     """
@@ -339,21 +383,18 @@ class KnaveGenerator(LinkedGenerator):
         table_filenames += additional_tables
         super().__init__(force_table_update, table_filenames, special_case_funcs)
 
-    @staticmethod
-    def _get_spell() -> str:
+    def _get_spell(self) -> str:
         """
         Get a single spell, used for when the input into _substitute_headers
         contains '*spell*'.
         """
-        Spells, *init_args = generators.GeneratorLibrary().name["spells"]
-        spell_generator = Spells(False, [], {})
-        spell_generator.generate(1, None, 0.10, True)
-        return spell_generator.items[0]
+        spell = self._get_other_generator_output("name", "spells")
+        return str(spell)
 
-    def _get_surname(self):
+    def _get_surname(self) -> str:
         return (f"{self._substitute_headers("*surname 1*")}"
                 f"{self._substitute_headers("*surname 2*")}")
 
-    def _get_inn_name(self):
+    def _get_inn_name(self) -> str:
         return (f"{self._substitute_headers("*inn name 1*")}"
                 f" {self._substitute_headers("*inn name 2*")}")

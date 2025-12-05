@@ -3,47 +3,77 @@ Generate various types of NPCs.
 """
 
 
-from src._generator import KnaveGenerator
-from random import choice, choices
+from src._generator import Creation, KnaveGenerator
+from random import choices, shuffle
+
+
+class NPC(Creation):
+    """
+    A class whose instance represents an NPC.
+    """
 
 
 class FantasyNPCs(KnaveGenerator):
     """
-    Generate Fantasy NPCs
+    Generate Fantasy NPCs.
     """
-    def _generator(self) -> str:
-        templates = (
-            "*name_and_race* (*detail*)",
-        )
-        chosen_template = choice(templates)
-        return self._substitute_headers(chosen_template)
+    def _generator(self) -> NPC:
+        race = self._get_race()
+        name = self._get_name(race)
+        attributes = [("race", race)]
 
-    def _get_name_and_race(self) -> str:
-        templates_and_weights = [
-            ("*human_name*", 0.5),
-            ("*dwarf_name*", 0.25),
-            ("*elf_name*", 0.25)
+        additional_attribute_chances = [
+            (1, 0.5),
+            (2, 0.3),
+            (3, 0.2),
         ]
-        templates, weights = zip(*templates_and_weights)
-        template_chosen = choices(templates, weights=weights)[0]
-        return self._substitute_headers(template_chosen)
+        attribute_counts, weights = zip(*additional_attribute_chances)
+        attribute_count = choices(attribute_counts, weights=weights)[0]
+        additional_attributes = self._get_attributes(attribute_count)
+        attributes = attributes + additional_attributes
 
-    def _get_human_name(self) -> str:
-        return self._get_other_generator_output("name", "humans")
+        return NPC(name, *attributes)
 
-    def _get_dwarf_name(self) -> str:
-        return self._get_other_generator_output("name", "dwarves")
+    @staticmethod
+    def _get_race() -> str:
+        races_and_weights = [
+            ("human", 0.5),
+            ("dwarf", 0.25),
+            ("elf", 0.25)
+        ]
+        races, weights = zip(*races_and_weights)
+        race_chosen = choices(races, weights=weights)[0]
+        return race_chosen
 
-    def _get_elf_name(self) -> str:
-        return self._get_other_generator_output("name", "elves")
-
-    def _get_fantasy_mundane(self) -> str:
+    def _get_fantasy_mundane(self) -> Creation:
         return self._get_other_generator_output("item", "fantasy-mundane")
 
-    def _get_detail(self) -> str:
-        templates = (
-            "*archetype*", "*personality*", "*npc detail*", "asset:*asset*",
-            "liability:*liability*", "mannerism:*mannerism*", "has *mundane item*"
-        )
-        template_chosen = choice(templates)
-        return self._substitute_headers(template_chosen)
+    def _get_name(self, race: str) -> str:
+        templates = {
+            "human": "humans",
+            "dwarf": "dwarves",
+            "elf": "elves",
+        }
+        generator_type = "name"
+        generator_name = templates[race]
+        return str(self._get_other_generator_output(generator_type, generator_name))
+
+    def _get_attributes(self, count: int) -> list[tuple[str, str | Creation]]:
+        attributes = []
+        attribute_types = [
+            ("archetype", "*archetype*"),
+            ("personality", "*personality*"),
+            ("npc detail", "*npc detail*"),
+            ("asset", "*asset*"),
+            ("liability", "*liability*"),
+            ("mannerism", "*mannerism*"),
+            ("item", "*mundane item*"),
+        ]
+        shuffle(attribute_types)
+
+        for _ in range(count):
+            name, value = attribute_types.pop()
+            value = self._substitute_headers(value)
+            attributes.append((name, value))
+
+        return attributes

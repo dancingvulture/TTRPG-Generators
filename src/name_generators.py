@@ -1,17 +1,49 @@
-"""For storing name generator classes. This is the real core of the program.
+"""
+For storing name generator classes.
 """
 
 from random import choice, choices, randint
-from src._generator import Generator, LinkedGenerator, KnaveGenerator
+from src._generator import Generator, Creation, LinkedGenerator, KnaveGenerator
+
+
+class Name(Creation):
+    """
+    A class whose instance contains a single name.
+    """
+    def __init__(self, name: str):
+        self.name = name
+
+    def __contains__(self, item) -> bool:
+        """
+        Meant to assist with keyword searches in the generate method.
+        """
+        item = item.lower()
+        name = self.name.lower()
+        if item in name and item != name:
+            return True
+        else:
+            return False
+
+    def __eq__(self, other: 'Name') -> bool:
+        if other.name.lower() == self.name.lower():
+            return True
+        else:
+            return False
+
+    def __len__(self) -> int:
+        return len(self.name)
+
+    def __repr__(self):
+        return self._capitalize(self.name)
 
 
 class Test(Generator):
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         part1 = choice(self._tables["header0"])
         part2 = choice(self._tables["header1"])
         test_name = part1 + part2
 
-        return test_name
+        return Name(test_name)
 
 
 class Dwarves(Generator):
@@ -24,7 +56,7 @@ class Dwarves(Generator):
     Names, Table 5-5: Doughty & Homely, page 186. For Epithets and
     Titles I'm pulling from the same book, pages 133-141.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         dwarf_name, dwarf_gender = self._surname()
         title_gender = dwarf_gender  # Gender of the honorific in the title.
         if randint(1, 4) == 1:
@@ -49,7 +81,7 @@ class Dwarves(Generator):
         if randint(1, 10) == 1:
             dwarf_name += ", " + self._title(title_gender)
 
-        return dwarf_name
+        return Name(dwarf_name)
 
     def _surname(self) -> tuple[str, str]:
         gender = choice(["Son", "Daughter"])
@@ -98,7 +130,7 @@ class Elves(Generator):
     A computerized version of table 5-6: Fair & Noble, on pages 186-187
     of Gary Gygax's Extraordinary Book of Names.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         layout = choices(["1{}{}{}", "2{}{}"], weights=[6, 1])[0]
         prefix = choice(self._tables["Prefix"])
         suffix = choice(self._tables["Suffix"])
@@ -108,7 +140,7 @@ class Elves(Generator):
             elf = layout[1:].format(prefix, middle, suffix)
         else:
             elf = layout[1:].format(prefix, suffix)
-        return elf
+        return Name(elf)
 
 
 class Epithets(Generator):
@@ -122,7 +154,7 @@ class Epithets(Generator):
     improves this. I wonder if I should have it work closer to the book,
     or try something else.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         layout = choice([["Adjective"], ["Noun"], ["Verb"],
                          ["Adjective", "Noun"], ["Adjective", "Verb"],
                          ["Noun", "Noun"], ["Noun", "Verb"]])
@@ -130,7 +162,7 @@ class Epithets(Generator):
         for thing in layout:
             epithet += choice(self._tables[thing]) + " "
 
-        return epithet.strip()
+        return Name(epithet.strip())
 
 
 class Humans(LinkedGenerator):
@@ -138,7 +170,7 @@ class Humans(LinkedGenerator):
     Generate human names using the Knave 2e tables. I may want to get
     more surnames.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         templates_and_weights =  [
             ("*name*", 0.3),
             ("*name* *surname*", 0.2),
@@ -150,9 +182,9 @@ class Humans(LinkedGenerator):
         ]
         choice_args = zip(*templates_and_weights)
         template_chosen = choices(*choice_args)[0]
-        return self._substitute_headers(template_chosen)
+        return Name(self._substitute_headers(template_chosen))
 
-    def _get_first_name(self):
+    def _get_first_name(self) -> str:
         """
         Using names across multiple different tables.
         """
@@ -169,7 +201,7 @@ class Humans(LinkedGenerator):
         header_chosen = choices(*choice_args)[0]
         return self._substitute_headers(header_chosen)
 
-    def _get_surname(self):
+    def _get_surname(self) -> str:
         """
         Method copied from KnaveGenerator, I don't lik the repeat code
         but subclassing KnaveGenerator for this one method seems like
@@ -183,8 +215,8 @@ class Inn(KnaveGenerator):
     """
     Generate inn names using the Knave 2e tables.
     """
-    def _generator(self) -> str:
-        return self._get_inn_name()
+    def _generator(self) -> Name:
+        return Name(self._get_inn_name())
 
 
 class Locations(Generator):
@@ -193,7 +225,7 @@ class Locations(Generator):
     Adventure Design, 2nd Edition, pages 8-14. Largely unchanged, except
     that I've mixed both tables together.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         approach = choices(["overview", "purpose"], [5, 1])[0]
 
         if approach == "overview":
@@ -201,14 +233,14 @@ class Locations(Generator):
             location = choice(self._tables["Location"])
             feature1 = choice(self._tables["Feature 1"])
             feature2 = choice(self._tables["Feature 2"])
-            location_ = (description + " " + location + " of the " + feature1 + " "
+            location = (description + " " + location + " of the " + feature1 + " "
                          + feature2)
 
         else:  # approach == "purpose"
             word1 = choice(self._tables["Word 1"])
             word2 = choice(self._tables["Word 2"])
-            location_ = word1 + " " + word2
-        return location_
+            location = word1 + " " + word2
+        return Name(location)
 
 
 class MinorGods(Generator):
@@ -216,14 +248,14 @@ class MinorGods(Generator):
     A computerized version of the Generating Minor Gods table from
     the Tomb of Adventure Design, 2nd Edition, pages 276-277.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         name1 = choice(self._tables['Name1'])
         name2 = choice(self._tables['Name2'])
         title1 = choice(self._tables['Title1'])
         title2 = choice(self._tables['Title2'])
         minor_god = name1 + name2 + " " + title1 + " " + title2
 
-        return minor_god
+        return Name(minor_god)
 
 
 class MysticOrders(Generator):
@@ -232,7 +264,7 @@ class MysticOrders(Generator):
     Mystic Order Names, pages 145-146. Streamlined and with many of my
     own words added to each section, and a few modified or removed.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         layout = choices([
             "1{} of the {}",
             "2{} of the {} {}",
@@ -253,14 +285,14 @@ class MysticOrders(Generator):
             mystic_order = layout[1:].format(descr[0], group, descr[1], entity)
         else:  # layout[0] == "4":
             mystic_order = layout[1:].format(descr[0], group)
-        return mystic_order
+        return Name(mystic_order)
 
 
 class Spells(KnaveGenerator):
     """
     Spell generator using the knave 2e tables.
     """
-    def _generator(self) -> str:
+    def _generator(self) -> Name:
         templates = {
             (1, 2, 3): "{} {}",
             (4, 5, 6): "The {} {} {}",
@@ -295,4 +327,4 @@ class Spells(KnaveGenerator):
         # we have a spell.
         entry = template_chosen.format(*headers[headers_chosen])
         spell = self._substitute_headers(entry)
-        return spell
+        return Name(spell)
