@@ -78,6 +78,10 @@ class GeneratorLibrary:
                 item_generators.FantasyMundane,
                 [],
                 {}
+            ),
+            "gem": (
+                item_generators.Gem,
+                ["rocks.txt"],
             )
         }
         self.npc = {

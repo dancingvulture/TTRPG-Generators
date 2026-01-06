@@ -52,13 +52,13 @@ class Creation:
         return attributes, unlabelled_attributes
 
     @staticmethod
-    def _capitalize(words: str) -> str:
+    def _capitalize(words: str | None) -> str:
         """
         Takes a string and makes the first letter of each word (separated
         by spaces) a capital and makes all others lowercase, then returns
         this new string. Ignores connected words, like 'the, of, etc.'
         """
-        if not words: return words
+        if not words: return ""
         connectors = ["the", "of", "in", "is"]
         new_words = ''
         for word in words.lower().split():

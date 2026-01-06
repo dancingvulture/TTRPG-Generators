@@ -88,5 +88,34 @@ class Gem(Generator):
     Generate Gems using the tables from Geologists Primer (pp. 302-305)
     """
     def _generator(self) -> Creation:
-        pass
+        name = self._get_entry("name 1") + " " + self._get_entry("name 2")
+        attributes = [
+            ("rarity", self._get_entry("rarity")),
+            ("type", self._get_entry("type")),
+            ("form", self._get_entry("form")),
+            ("location", self._get_entry("location")),
+            ("quirk", self._get_entry("quirk")),
+            ("complication", self._get_entry("complication")),
+        ]
+        count_distribution = {
+            0: 0.28,
+            1: 0.28,
+            2: 0.28,
+            3: 0.1,
+            4: 0.06,
+        }
+        use_count = self._choose_from_dist(1, count_distribution)
+        all_uses = [self._get_use() for _ in range(use_count)]
+        if all_uses:
+            known_uses = ("known uses", Creation(None, *all_uses))
+            attributes.append(known_uses)
+        return Item(name, *attributes)
 
+    def _get_use(self) -> tuple[str, str]:
+        """
+        Get a random use.
+        """
+        use_type = self._get_entry("use type")
+        use = self._get_entry(use_type)
+        method = self._get_entry("method")
+        return "", f"When {method}, it will {use}."
