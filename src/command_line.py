@@ -53,6 +53,7 @@ def parse_arguments() -> argparse.Namespace:
     _add_item_subparser(subparsers, library)
     _add_npc_subparser(subparsers, library)
     _add_monster_subparser(subparsers, library)
+    _add_misc_subparser(subparsers, library)
 
     return parser.parse_args()
 
@@ -137,6 +138,28 @@ def _add_monster_subparser(subparsers, library: GeneratorLibrary) -> None:
         "generator",
         choices=generator_names,
         help="choose a generator."
+    )
+    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
+    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
+    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
+
+
+def _add_misc_subparser(subparsers, library: GeneratorLibrary) -> None:
+    """
+    Subparser for using the miscellaneous generator.
+    """
+    parser = subparsers.add_parser(
+        "misc",
+        help="Miscellaneous generators"
+    )
+    generator_names = library.misc.keys()
+
+    parser.add_argument(
+        "generator",
+        choices=generator_names,
+        help="Choose a generator."
     )
     parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
     parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)

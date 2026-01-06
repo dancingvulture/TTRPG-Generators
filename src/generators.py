@@ -8,6 +8,7 @@ import src.name_generators as name_generators
 import src.item_generators as item_generators
 import src.npc_generators as npc_generators
 import src.monster_generators as monster_generators
+import src.misc_generators as misc_generators
 
 
 class GeneratorLibrary:
@@ -93,10 +94,17 @@ class GeneratorLibrary:
                 {}
             ),
         }
+        self.misc = {
+            "plants": (
+                misc_generators.Plant,
+                ["herbs.txt"]
+            )
+        }
 
         self.generators_by_type = {
             "name": self.name,
             "item": self.item,
             "npc": self.npc,
             "monster": self.monster,
+            "misc": self.misc
         }

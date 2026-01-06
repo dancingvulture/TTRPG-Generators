@@ -8,12 +8,14 @@
 - Clean-up unit test functions.
 - See if you cant make the skeleton option in the embedded ooze table link to a skeleton table.
 - Might be worth using rich (or doing your own thing) to make large multi-line outputs read cleaner, and not break the display bars.
+- `Creation._get_attr_display` and `Creation._get_unlabelled_attr_display` re-use too much code from each other, find a way to factor that out.
 # Procedures
 ## Add a new generator 
 1. Find or create a generator category.
 2. Add the generator and its logic to the generator category's module. 
    1. Make sure to make it a child class of whatever base generators(s) make the most sense. At the very minimum you will need to subclass the base `Generator` class.
-   2. Override the `_generator` method with whatever logic is needed for this new generator. The output of this method is always a single output (usually a string).
+   2. Override the `_generator` method with whatever logic is needed for this new generator. The output of this method is always a `Creation` instance.
+   3. There is also a chance you will be creating one or more new table sets, add these as `.txt` files to the `tables` directory.
 3. Create an entry in the `GeneratorLibrary` class for this generator.
    1. Each category has a dictionary inside `GeneratorLibrary`, the key is the name of the generator in the form of a string(e.g. "humans", "locations", etc.) The value is a tuple containing the generator and its init arguments.
    2. Decide on the string name, remember this will be used in the command line interface to actually use the generator.

@@ -2,12 +2,12 @@
 Module containing the base generator class and the child classes which are
 easily applicable to more than one type of generator.
 """
-
-
 import time
 import os
 import re
-from random import choice
+import random
+from copy import deepcopy
+from typing import Any
 import src.generators as generators  # Absolute import to avoid circular conflict.
 
 
@@ -20,10 +20,27 @@ class Creation:
     attribute's value.
     """
 
-    def __init__(self, name: str, *attribute: tuple[str, str]):
+    def __init__(self, name: str | None, *attribute: tuple[str, str | 'Creation']):
         self.name = name
-        self.attributes = {name_: value for name_, value in attribute}
+        self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
         self.nested = 0
+
+    @staticmethod
+    def _collect_attributes(*attribute: tuple[str, str | 'Creation']
+                            ) -> tuple[dict[str, str | 'Creation'], list[str | 'Creation']]:
+        """
+        Take in a number of attribute 2-tuples and collect the labelled
+        attributes into a dictionary, and the unlabelled ones into a list.
+        """
+        attributes = {}
+        unlabelled_attributes = []
+        for attribute_label, value in attribute:
+            if not attribute_label:
+                unlabelled_attributes.append(value)
+            else:
+                attributes[attribute_label] = value
+
+        return attributes, unlabelled_attributes
 
     @staticmethod
     def _capitalize(words: str) -> str:
@@ -32,6 +49,7 @@ class Creation:
         by spaces) a capital and makes all others lowercase, then returns
         this new string. Ignores connected words, like 'the, of, etc.'
         """
+        if not words: return words
         connectors = ["the", "of", "in", "is"]
         new_words = ''
         for word in words.lower().split():
@@ -65,14 +83,42 @@ class Creation:
     def __repr__(self) -> str:
         display = self._capitalize(self.name)
         for attribute_label, attribute in self.attributes.items():
-            display += "\n  "
-            if isinstance(attribute, Creation):
-                attribute.nested += self.nested + 1
-            for _ in range(self.nested):
-                display += "  "
-            display += f"- {attribute_label}: {attribute}"
+            display += self._get_attr_display(attribute_label, attribute)
+
+        for attribute in self.unlabelled_attributes:
+            display += self._get_unlabelled_attr_display(attribute)
+
         return display
 
+    def _get_attr_display(self,
+                          attribute_label: str,
+                          attribute: str | 'Creation'
+                          ) -> str:
+        """
+        Given an attribute and its label, give the display value, and account
+        for arbitrary nesting.
+        """
+        display = "\n  "
+        if isinstance(attribute, Creation):
+            attribute.nested += self.nested + 1
+        for _ in range(self.nested):
+            display += "  "
+        display += f"- {attribute_label}: {attribute}"
+        return display
+
+    def _get_unlabelled_attr_display(self,
+                                     attribute: str | 'Creation'
+                                     ) -> str:
+        """
+        Makes the display value for attributes without labels
+        """
+        display = "\n  "
+        if isinstance(attribute, Creation):
+            attribute.nested += self.nested + 1
+        for _ in range(self.nested):
+            display += "  "
+        display += f"- {attribute}"
+        return display
 
 class Generator:
     """
@@ -163,7 +209,6 @@ class Generator:
         raise NotImplementedError("You need to overwrite the _generator"
                                   " method.")
 
-
     def _get_tables(self, table_filenames: list[str]) -> dict[str, list]:
         """
         Using the table filenames grab all tables and compile them into
@@ -180,6 +225,12 @@ class Generator:
                 else:
                     tables[header] = content
         return tables
+
+    def _get_entry(self, table_name: str) -> str:
+        """
+        Get a random entry from the given table.
+        """
+        return random.choice(self._tables[table_name])
 
     def _text_file_to_dict(self, filename: str) -> dict:
         """Used to convert the contents of a text file into a dictionary
@@ -291,6 +342,34 @@ class Generator:
         items = generator.generate(1, None, 0.1, suppress_print=True)
         return items[0]
 
+    @staticmethod
+    def _choose_from_dist(count: int,
+                          distribution: dict[Any, int | float],
+                          repeats=True,
+                          ) -> Any | list[Any]:
+        """
+        Given a distribution, represented by a dictionary whose keys are the
+        things we're picking, and whose values are is the probability of being
+        chosen, or the weight.
+        We return count items from the distribution. The kwarg repeats tells us
+        whether multiple identical items can be chosen from the distribution
+        (True by default).
+        """
+        distribution_copy = deepcopy(distribution)
+        if repeats:
+            values, weights = zip(*distribution_copy.items())
+            chosen_values = random.choices(values, weights=weights, k=count)
+        else:
+            chosen_values = []
+            for _ in range(count):
+                values, weights = zip(*distribution_copy.items())
+                current_value = random.choices(values, weights=weights)[0]
+                chosen_values.append(current_value)
+                distribution_copy.pop(current_value)
+
+        return chosen_values if count > 1 else chosen_values[0]
+
+
 
 class LinkedGenerator(Generator):
     """
@@ -341,7 +420,7 @@ class LinkedGenerator(Generator):
                 # For the general case, We pick a random entry from the table
                 # indicated by the header. Because this new entry could also be
                 # a header, we apply this method to it.
-                new_entry = choice(self._tables[hdr[1:-1]])  # Trim asterisks.
+                new_entry = random.choice(self._tables[hdr[1:-1]])  # Trim asterisks.
                 new_entry = self._substitute_headers(new_entry)
 
             # Some special exception functions produce Creations instead of

@@ -1,0 +1,45 @@
+# name 1
+arrow | blood | crimson | death | dragon | fire | gold | good | ice | life | raven | snake | spear | spirit | star | sword | truth | witch | wolf | worm
+
+# name 2
+bane | bark | bean | berry | bush | fern | flower | fruit | grass | leaf | nut | plant | root | seed | spice | thorn | tree | weed | wood | wort
+
+# rarity
+abundant | common | endangered | legendary | mythical | near-extinct | popular | rare | uncommon | widespread
+
+# habit
+herb | shrub | tree
+
+# property
+culinary | industrial | magical | medicinal | ornamental | poisonous
+
+# climate
+arctic | arid | boreal | cold | continental | dry | high-altitude | hot | humid | ice-bound | island | marine | monsoon | oceanic | polar | subarctic | temperate | tropical | wet
+
+# biome
+caves | deserts | forests | gardens | hills | lakes | meadows | mountains | plains | plantations | riverbanks | roadsides | seas | shores | shrublands | streams | swamps | urban areas | volcanoes | wastes
+
+# quirk
+attracts all kinds of insects | causes a strong allergic reaction | grows almost entirely underground | grows in the tree crowns | grows incredibly fast | has a lovely, sweet flavor | has a strong, pleasant aroma | is a favorite snack of many animals | is always warm to the touch | is carnivorous | is covered in a sticky sap | is covered in sharp spikes | is parasitic | is poisonous to other plants | is symbiotic with another plant | often hosts bird nests | only blooms at night | produces a lot of pollen | smells of rotting meat | stores water in the stems
+
+# plant material
+balsam | bark | buds | bulbs | cones | flowers | fruits | galls | gum | juice | leaves | petals | pollen | resin | rhizomes | root | seeds | stems | timber | tubers
+
+# method
+applied top an inanimate object | burned as incense | carried | chewed | distilled | drank as tea | grown | held under the tongue | ingested | juiced and injected | mixed with alcohol | placed under a pillow | powdered and inhaled | rubbed on skin | scattered on the wind | sewn inside clothing | swallowed whole | thrown at a target | torn or shredded | worn
+
+# effect type
+magical effect | medicinal effect | poisonous effect
+
+# medicinal effect
+aid digestion | alleviate allergy | cure wounds | destroy viruses | fight the flu | improve focus | kill bacteria | lower blood pressure | mend bones | neutralize poison | reduce inflammation | remove itching | remove nausea | remove pain | sanitize the wound | soothe the skin | stop bleeding | stop cough | strengthen the heart | strengthen the immune system
+
+# poisonous effect
+cause acute pain | cause bleeding | cause coma | cause contact allergy | cause death | cause diarrhea | cause dizziness | cause hallucinations | cause inflammation | cause itching | cause nausea | cause neurological damage | cause paralysis | cause swelling | cause violent spasms | raise blood pressure | remove a sense | stop breathing | stop the heart | turn blood to ichor
+
+# magical effect
+alert about danger | allow seeing in the dark | allow speaking with animals | animate objects | attract feyfolk | attract love | attract wealth | bestow courage | bestow luck | bless the user | break curses | bring luck in games of chance | bring prophetic visions | calm animals | cause fear | conjure spirits | create a circle of protection | cure all diseases | cure all wounds | detect enemies | detect lies | divert lightning | douse flames | enforce telling the truth | exorcise spirits | explode | find hidden treasures | find water | grand immortality | grant a sense of direction | grant flight | grant invisibility | grant safe travel | grant second sight | grant wishes | keep wild animals at bay | make the user beautiful | open a portal to another realm | open locks | prolong life | protect from compulsion | protect from evil | protect from harm | purify the area | put undead to rest | raise the dead | reflect malicious magic | remove negative energy | remove toxins | stop shapeshifting
+
+# complication
+dangerous animals often protect it | it attracts mosquitoes | it grows in a desolate, far away place | it is a deadly poison | it is easy to mistake with a toxic plant | it is highly addictive | it is under the protection of the local law | it needs to be used within minutes of gathering | it spontaneously combusts | it tastes like three week old garbage | its juice stains everything it touches | nobody has seen it in the last century | possession is illegal | special set of tools is needed for harvesting | the demand is higher than the supply | the harvest time is just a single day | the rumors say it brings bad luck | the stench sticks around for weeks | touching it causes intense pain | using it requires an obscure, elaborate ritual
+
