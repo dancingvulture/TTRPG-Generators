@@ -20,7 +20,7 @@ class Creation:
     attribute's value.
     """
 
-    def __init__(self, name: str | None, *attribute: tuple[str, str | 'Creation']):
+    def __init__(self, name: str | None, *attribute: 'tuple[str, str | Creation]'):
         self.name = name
         self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
         self.nested = 0
@@ -35,8 +35,8 @@ class Creation:
         return "\n"
 
     @staticmethod
-    def _collect_attributes(*attribute: tuple[str, str | 'Creation']
-                            ) -> tuple[dict[str, str | 'Creation'], list[str | 'Creation']]:
+    def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
+                            ) -> 'tuple[dict[str, str | Creation], list[str | Creation]]':
         """
         Take in a number of attribute 2-tuples and collect the labelled
         attributes into a dictionary, and the unlabelled ones into a list.
@@ -108,7 +108,7 @@ class Creation:
         return display
 
     def _add_display_nesting(self,
-                             attribute: str | 'Creation'="",
+                             attribute: 'str | Creation'="",
                              extra_nesting=0,
                              ) -> str:
         """
