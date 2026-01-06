@@ -24,6 +24,15 @@ class Creation:
         self.name = name
         self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
         self.nested = 0
+        self.nesting_chars = "  "
+
+    @property
+    def preferred_spacing(self) -> str:
+        """
+        Gives the preferred whitespace that should exist between entries of this
+        generator when displayed on the terminal.
+        """
+        return "\n"
 
     @staticmethod
     def _collect_attributes(*attribute: tuple[str, str | 'Creation']
@@ -61,6 +70,12 @@ class Creation:
 
         return new_words.strip()
 
+    def __bool__(self) -> bool:
+        if self.name is None and not self.attributes and not self.unlabelled_attributes:
+            return False
+        else:
+            return True
+
     def __contains__(self, item: str) -> bool:
         if item in str(self):
             return True
@@ -83,42 +98,27 @@ class Creation:
     def __repr__(self) -> str:
         display = self._capitalize(self.name)
         for attribute_label, attribute in self.attributes.items():
-            display += self._get_attr_display(attribute_label, attribute)
+            display += self._add_display_nesting(attribute, 1)
+            display += f"- {attribute_label}: {attribute}"
 
         for attribute in self.unlabelled_attributes:
-            display += self._get_unlabelled_attr_display(attribute)
+            display += self._add_display_nesting(attribute, 1)
+            display += f"- {attribute}"
 
         return display
 
-    def _get_attr_display(self,
-                          attribute_label: str,
-                          attribute: str | 'Creation'
-                          ) -> str:
+    def _add_display_nesting(self,
+                             attribute: str | 'Creation'="",
+                             extra_nesting=0,
+                             ) -> str:
         """
-        Given an attribute and its label, give the display value, and account
-        for arbitrary nesting.
+        Given an attribute, add the appropriate newline and the proper number
+        of spaces so that the arbitrary nesting works.
         """
-        display = "\n  "
         if isinstance(attribute, Creation):
-            attribute.nested += self.nested + 1
-        for _ in range(self.nested):
-            display += "  "
-        display += f"- {attribute_label}: {attribute}"
-        return display
+            attribute.nested += self.nested + extra_nesting
 
-    def _get_unlabelled_attr_display(self,
-                                     attribute: str | 'Creation'
-                                     ) -> str:
-        """
-        Makes the display value for attributes without labels
-        """
-        display = "\n  "
-        if isinstance(attribute, Creation):
-            attribute.nested += self.nested + 1
-        for _ in range(self.nested):
-            display += "  "
-        display += f"- {attribute}"
-        return display
+        return "\n" + self.nesting_chars * (self.nested + extra_nesting)
 
 class Generator:
     """
@@ -129,7 +129,7 @@ class Generator:
     def __init__(self, force_table_update: bool, table_filenames: list[str]):
         self._tables_directory = "tables//"
         self._last_runtime_filename = "last_runtime.txt"
-        self.items = []
+        self.items: list[Creation] = []
         self._demarcation_char = " | "
 
         self._table_filenames = table_filenames
@@ -195,7 +195,7 @@ class Generator:
             print(f"Displaying {len(self.items)} results\n" + longest_result * '-')
 
             for result in self.items:
-                print(result, end="\n")
+                print(result, end=result.preferred_spacing)
 
             print(longest_result * '-')
 

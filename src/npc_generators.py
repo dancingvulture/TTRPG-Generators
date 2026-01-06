@@ -11,6 +11,9 @@ class NPC(Creation):
     """
     A class whose instance represents an NPC.
     """
+    @property
+    def preferred_spacing(self) -> str:
+        return "\n\n"
 
 
 class FantasyNPCs(KnaveGenerator):

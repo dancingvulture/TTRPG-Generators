@@ -7,6 +7,43 @@ I'll probably end up moving things out of this frequently.
 from src._generator import Creation, Generator
 
 
+class _Plant(Creation):
+    """
+    Child class to implement a unique __repr__.
+    """
+    def __repr__(self):
+        name = self._capitalize(self.name)
+        rarity = self.attributes["rarity"]
+        habit = self.attributes["habit"]
+        prop = self.attributes["property"]
+        climate = self.attributes["climate"]
+        biome = self.attributes["biome"]
+        quirk = self.attributes["quirk"]
+        complication = self.attributes["complication"]
+        if "known effects" in self.attributes:
+            known_effects = self.attributes["known effects"]
+        else:
+            known_effects = Creation(None)
+
+        display = (f"{name} is a {rarity} {habit}, mostly prized for its"
+                  f" {prop} value. It is native to the {climate} {biome}."
+                  f" interestingly, it {quirk}.")
+
+        if known_effects:
+            display += "\n"
+            for effect in known_effects.unlabelled_attributes:
+                display += self._add_display_nesting(effect, 1)
+                display += f"- {effect}"
+
+        display += self._add_display_nesting()
+        display += f"\nUnfortunately, {complication}"
+        return display
+
+    @property
+    def preferred_spacing(self) -> str:
+        return "\n\n\n"
+
+
 class Plant(Generator):
     """
     Create plants using the tables in the Herbalist's Primer (pp. 298-301)
@@ -45,9 +82,9 @@ class Plant(Generator):
             all_effects.append(effect)
 
         if all_effects:
-            properties.append(("Known Effects", Creation("", *all_effects)))
+            properties.append(("known effects", Creation("", *all_effects)))
 
-        return Creation(name, *properties)
+        return _Plant(name, *properties)
 
 
     @staticmethod

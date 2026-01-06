@@ -3,7 +3,7 @@ Generate various kinds of items.
 """
 
 
-from src._generator import Creation, Creation, KnaveGenerator
+from src._generator import Creation, Generator, KnaveGenerator
 from random import choice, choices, shuffle
 
 
@@ -11,7 +11,9 @@ class Item(Creation):
     """
     A class instance represents an item.
     """
-
+    @property
+    def preferred_spacing(self) -> str:
+        return "\n\n"
 
 
 class Magic(KnaveGenerator):
@@ -19,7 +21,7 @@ class Magic(KnaveGenerator):
     Generate magic items using the Knave 2e tables.
     """
     def _generator(self) -> Creation:
-        item_base = "Magical" + self._get_item_base()
+        item_base = "Magical " + self._get_item_base()
         attributes = [("effect", self._substitute_headers("*effect*"))]
 
         return Item(item_base, *attributes)
@@ -78,4 +80,13 @@ class FantasyMundane(KnaveGenerator):
             value = chosen_attributes[index][1]
             chosen_attributes[index] = (name, self._substitute_headers(value))
 
-        return Creation(item, *chosen_attributes)
+        return Item(item, *chosen_attributes)
+
+
+class Gem(Generator):
+    """
+    Generate Gems using the tables from Geologists Primer (pp. 302-305)
+    """
+    def _generator(self) -> Creation:
+        pass
+

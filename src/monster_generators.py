@@ -12,6 +12,9 @@ class Monster(Creation):
     """
     Class for containing monster information.
     """
+    @property
+    def preferred_spacing(self) -> str:
+        return "\n\n"
 
 
 class Oozes(LinkedGenerator):
