@@ -4,6 +4,7 @@ Generate various kinds of items.
 
 
 from src._generator import Creation, Generator, KnaveGenerator
+from src.dice import Roller
 from random import choice, choices, shuffle
 
 
@@ -119,3 +120,55 @@ class Gem(Generator):
         use = self._get_entry(use_type)
         method = self._get_entry("method")
         return "", f"When {method}, it will {use}."
+
+
+class WHScroll(Item):
+    """
+    A whitehack scroll.
+    """
+    def __repr__(self):
+        spell = self.attributes["spell"]
+        magnitude = self._capitalize(self.attributes["magnitude"])
+        cost = self.attributes["cost"]
+        fabric = self.attributes["fabric"]
+        return f"{magnitude} ({cost} HP) {fabric} scroll of {spell}"
+
+    @property
+    def preferred_spacing(self) -> str:
+        return "\n"
+
+
+class WhitehackScroll(KnaveGenerator):
+    """
+    Generate scrolls for use in the whitehack 4e system.
+    """
+    def _generator(self) -> Creation:
+        magnitude_dist = {
+            "trivial": 0.20,
+            "simple": 0.20,
+            "standard": 0.45,
+            "major": 0.10,
+            "powerful": 0.05,
+        }
+        attributes = [
+            ("magnitude", magnitude := self._choose_from_dist(1, magnitude_dist)),
+            ("cost", self._get_cost(magnitude)),
+            ("spell", self._get_other_generator_output("name", "spells")),
+            ("fabric", self._substitute_headers("*fabric*")),
+        ]
+        return WHScroll("Spell Scroll", *attributes)
+
+    @staticmethod
+    def _get_cost(magnitude) -> int:
+        """
+        Based on the magnitude, get the cost of the scroll
+        """
+        roller = Roller()
+        cost_table = {
+            "trivial": 0,
+            "simple": 1,
+            "standard": 2,
+            "major": roller.sum("1d6"),
+            "powerful": roller.sum("2d6"),
+        }
+        return cost_table[magnitude]

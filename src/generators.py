@@ -82,7 +82,12 @@ class GeneratorLibrary:
             "gem": (
                 item_generators.Gem,
                 ["rocks.txt"],
-            )
+            ),
+            "wh-scroll": (
+                item_generators.WhitehackScroll,
+                [],
+                {}
+            ),
         }
         self.npc = {
             "fantasy": (
