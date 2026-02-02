@@ -160,13 +160,14 @@ class Creation:
         if not attributes and not unlabelled_attributes: return name
 
         settings = {
-            "title": f"[b]{name}[/b]",
             "title_justify": "left",
             "show_header": False,
             "box": _EMPTY,
             "pad_edge": False,
             "padding": 0,
+            "show_edge": False,
         }
+        if name: settings["title"] = f"[b]{name}[/b]"
 
         table = Table(**settings)
         table.add_column(header="Attribute", justify="right")
@@ -190,6 +191,9 @@ class Creation:
                 table.add_row("-", attribute.table)
             else:
                 table.add_row("-", attribute)
+                
+        if (attributes or unlabelled_attributes) and name:
+            table.add_row()
 
         return table
 
