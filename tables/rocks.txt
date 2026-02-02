@@ -1,0 +1,42 @@
+# name 1
+butter | deep | diamond | dragon | fey | fire | gold | iron | lava | moon | raven | reef | shadow | silver | sky | smoke | snake | sparkle | water | wind
+
+# name 2
+bone | coal | crust | crystal | dusk | dust | earth | gem | glaze | gravel | ite | jewel | mantle | ore | rock | shard | sheet | slate | stone
+
+# rarity
+abundant | common | legendary | mythical | near-depleted | over-mined | popular | rare | uncommon | widespread
+
+# type
+elemental metal | elemental nonmetal | fossil | metal alloy | mineral | mineral aggregate | organic material | rock
+
+# form
+clusters | cubes | geodes | growths | layers | masses | mineral inclusions | needles | nuggets | pebbles | perfect crystals | polished gems | powders | prisms | rock inclusions | rough chunks | single crystals | stalactites | veins
+
+# location
+alchemical workshops | areas changed by magic | ash fields | deepest canyons | deserts | elemental planes | highest mountains | icebergs | living beings | metamorphic rocks | natural caves | organic waste | planet's core | reefs | rich soil | rivers | seabeds | sediments | underground lakes | volcanoes
+
+# quirk
+absorbs heat from its surroundings | burns in contact with air | can only be seen from one angle | cannot be located with magic | changes color according to temperature | contains lots of water | glows in the dark | is indestructible | is quite nutritious | is technically an egg | leaves a greasy film on everything it touches | makes the skin tingle | melts when held in a hand | originated outside of the material plane | reflects no light | smells funky | splits into sharp needles | tastes like chicken | turns the soil red | was once a living being
+
+# method
+added to food | burnt | cut into blocks | cut into gems | engraved | ground | inhaled | kept in mouth | meditated with | melted | mixed with paint | pondered | powdered | pressed to skin | sculpted | set in gold | smoked | swallowed | tumbled | worn or carried
+
+# use type
+culinary use | decorative use | industrial use | magical use
+
+# industrial use
+absorb toxins | become buoyant | cast rainbows | clean surfaces | conduct electricity | conduct heat | fertilize the soil | kill microorganisms | make a good road | polish materials | provide insulation | provide shelter | purify materials | reflect light | reinforce structures | repel water | shine a light | start a fire | store liquids | strengthen alloys
+
+# decorative use
+add shine to paints | allow to be sculpted | be a collector's item | blend colors | color things blue | darken any hue | emit beautiful sound | enhance saturation | increase brightness | increase value | keep items clean | make a great gem | protect artworks | provide inspiration | removed shadows | sell for a great price | sharpen senses | take a great polish | turn to clay | work as a pigment
+
+# culinary use
+act as a diuretic | activate yeast | add saltiness | bring out bitter notes | cause dehydration | control temperature | enhance sweetness | heat the food | help digestion | impart a metallic flavor | increase appetite | leave a chalky aftertaste | make a healthy broth | poison the food | promote gut health | protect the food from spoiling | remove lumps in the batter | spice the food | strengthen enamel | turn food rancid
+
+# magical use
+alert to danger | allow divination | allow shapechanging | animate objects | attract bees | bestow visions of future | blight the land | boister courage | bring about the end of the world | bring luck | calm emotions | calm winds | cause hauntings | color user's skin green | consecrate the area | contact deities | cook a meal | cure diseases | cut the thread of life | destroy civilizations | detect magic | detect treasures | dispel enchantments | empower magical rituals | enrage animals | exorcise spirits | explode | grant wishes | ground excess energy | heal wounds | make items indestructible | make shadows tangible | neutralize poisons | open locks | open portals between worlds | prolong life | protect from insects | provide breathable air | raise the dead | raise the vibrations | remove curses | slow down time | spontaneously combust | store souls | straighten paths | summon elementals | summon furniture | turn user invisible | twist fate into a pretzel
+
+# complication
+all previous owners died in mysterious circumstances | dragons lay claim to all specimens | extraction requires specialized tools | it attracts malicious spirits | it brings bad luck | it can only be found in a dangerous location | it has a mind of its own | it must be stored in subzero temperatures | it seems to disappear when you need it | it stains everything puke-green | it weighs more than it's worth | its dust is poisonous | its extremely brittle | its possession is illegal | nobody has seen it in centuries | the nearest source is depleted | the only specimen is highly guarded | touching it causes intense pain | wasps love to nest in it | water instantly dissolves it
+
