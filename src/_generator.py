@@ -2,14 +2,49 @@
 Module containing the base generator class and the child classes which are
 easily applicable to more than one type of generator.
 """
+import src.generators as generators  # Absolute import to avoid circular conflict.
+from rich.table import Table
+from rich.console import Console
+from rich.box import Box
 import time
 import os
 import re
 import random
 from copy import deepcopy
 from typing import Any
-import src.generators as generators  # Absolute import to avoid circular conflict.
 
+
+_EMPTY = Box(
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+)
+
+_BORDER = Box(
+    "╔══╗\n"
+    "║  ║\n"
+    "║  ║\n"
+    "║  ║\n"
+    "║  ║\n"
+    "║  ║\n"
+    "║  ║\n"
+    "╚══╝\n"
+)
+_TOP_AND_BOTTOM = Box(
+    " ── \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    "    \n"
+    " ── \n"
+)
 
 class Creation:
     """
@@ -19,20 +54,12 @@ class Creation:
     first entry of the tuple is the attribute's name, the second is the
     attribute's value.
     """
-
     def __init__(self, name: str | None, *attribute: 'tuple[str, str | Creation]'):
         self.name = name
         self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
         self.nested = 0
         self.nesting_chars = "  "
-
-    @property
-    def preferred_spacing(self) -> str:
-        """
-        Gives the preferred whitespace that should exist between entries of this
-        generator when displayed on the terminal.
-        """
-        return "\n"
+        self.table = self._create_display_table(name, self.attributes, self.unlabelled_attributes)
 
     @staticmethod
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
@@ -120,6 +147,53 @@ class Creation:
 
         return "\n" + self.nesting_chars * (self.nested + extra_nesting)
 
+
+    def _create_display_table(self,
+                              name: str | None,
+                              attributes: 'dict[str, str | Creation]',
+                              unlabelled_attributes: 'list[str | Creation]'
+                              ) -> Table | str:
+        """
+        Create a rich table for a better display.
+        """
+        name = self._capitalize(name)
+        if not attributes and not unlabelled_attributes: return name
+
+        settings = {
+            "title": f"[b]{name}[/b]",
+            "title_justify": "left",
+            "show_header": False,
+            "box": _EMPTY,
+            "pad_edge": False,
+            "padding": 0,
+        }
+
+        table = Table(**settings)
+        table.add_column(header="Attribute", justify="right")
+        table.add_column(header="Description")
+
+        for label, attribute in attributes.items():
+            label = self._capitalize(label)
+            label = f"[u]{label}[/u]"
+            if isinstance(attribute, Creation):
+                table.add_row(label, attribute.table)
+
+            elif isinstance(attribute, str):
+                table.add_row(label, attribute)
+
+            else:
+                attribute = str(attribute)
+                table.add_row(label, attribute)
+
+        for attribute in unlabelled_attributes:
+            if isinstance(attribute, Creation):
+                table.add_row("-", attribute.table)
+            else:
+                table.add_row("-", attribute)
+
+        return table
+
+
 class Generator:
     """
     Base generator class, from which all the other base generator classes
@@ -129,7 +203,7 @@ class Generator:
     def __init__(self, force_table_update: bool, table_filenames: list[str]):
         self._tables_directory = "tables//"
         self._last_runtime_filename = "last_runtime.txt"
-        self.items: list[Creation] = []
+        self.creations: list[Creation] = []
         self._demarcation_char = " | "
 
         self._table_filenames = table_filenames
@@ -160,21 +234,21 @@ class Generator:
         if keywords is None:  # If the optional argument is not used.
 
             for _ in range(count):
-                self.items.append(self._generator())
+                self.creations.append(self._generator())
 
         else:  # Generate names until we have count names containing the keywords.
             tries = 0
-            while len(self.items) < count:
+            while len(self.creations) < count:
                 tries += 1
                 creation = self._generator()
                 for keyword in keywords:
                     if keyword not in creation:
                         break
-                    elif creation in self.items:  # No duplicates.
+                    elif creation in self.creations:  # No duplicates.
                         break
 
                 else:  # Only add the name if all keywords are in the generated name.
-                    self.items.append(creation)
+                    self.creations.append(creation)
 
                 if time.time() - start > max_time:
                     if not suppress_print:
@@ -184,23 +258,18 @@ class Generator:
             if not suppress_print:
                 print(f"Total of {tries:,} results generated.", end=' ')
 
-        return self.items
+        return self.creations
 
     def show(self) -> None:
         """
-        Takes any results produced by the generator and prints them.
+        Print all Creations to stdout.
         """
-        if self.items:
-            longest_result = max(map(len, self.items))
-            print(f"Displaying {len(self.items)} results\n" + longest_result * '-')
-
-            for result in self.items:
-                print(result, end=result.preferred_spacing)
-
-            print(longest_result * '-')
-
-        else:
+        if not self.creations:
             print("No results to display")
+        else:
+            console = Console()
+            for result in self.creations:
+                console.print(result.table)
 
     def _generator(self) -> Creation:
         """

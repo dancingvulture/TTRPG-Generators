@@ -39,10 +39,6 @@ class _Plant(Creation):
         display += f"\nUnfortunately, {complication}"
         return display
 
-    @property
-    def preferred_spacing(self) -> str:
-        return "\n\n\n"
-
 
 class Plant(Generator):
     """

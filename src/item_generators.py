@@ -12,9 +12,6 @@ class Item(Creation):
     """
     A class instance represents an item.
     """
-    @property
-    def preferred_spacing(self) -> str:
-        return "\n\n"
 
 
 class Magic(KnaveGenerator):
@@ -132,10 +129,6 @@ class WHScroll(Item):
         cost = self.attributes["cost"]
         fabric = self.attributes["fabric"]
         return f"{magnitude} ({cost} HP) {fabric} scroll of {spell}"
-
-    @property
-    def preferred_spacing(self) -> str:
-        return "\n"
 
 
 class WhitehackScroll(KnaveGenerator):
