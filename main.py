@@ -1,6 +1,5 @@
 """
-A program for generating random names! Options given on the command line
-using argparse. I've tried my best to make it easy to add new ones.
+Program for generating random things for TTRPG games.
 """
 
 from src.generators import GeneratorLibrary

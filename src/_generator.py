@@ -25,26 +25,6 @@ _EMPTY = Box(
     "    \n"
 )
 
-_BORDER = Box(
-    "╔══╗\n"
-    "║  ║\n"
-    "║  ║\n"
-    "║  ║\n"
-    "║  ║\n"
-    "║  ║\n"
-    "║  ║\n"
-    "╚══╝\n"
-)
-_TOP_AND_BOTTOM = Box(
-    " ── \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    " ── \n"
-)
 
 class Creation:
     """
@@ -57,9 +37,17 @@ class Creation:
     def __init__(self, name: str | None, *attribute: 'tuple[str, str | Creation]'):
         self.name = name
         self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
-        self.nested = 0
-        self.nesting_chars = "  "
-        self.table = self._create_display_table(name, self.attributes, self.unlabelled_attributes)
+
+    @property
+    def display(self) -> Table | str:
+        """
+        Returns the intended display value of the creation, written as a property
+        so it can be overwritten by a child class if needed.
+        """
+        display = self._create_display(self.name,
+                                       self.attributes,
+                                       self.unlabelled_attributes)
+        return display
 
     @staticmethod
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
@@ -115,44 +103,11 @@ class Creation:
         else:
             return False
 
-    def __len__(self):
-        """
-        Returns the length of the longest line.
-        """
-        lines = str(self).split('\n')
-        return max(map(len, lines))
-
-    def __repr__(self) -> str:
-        display = self._capitalize(self.name)
-        for attribute_label, attribute in self.attributes.items():
-            display += self._add_display_nesting(attribute, 1)
-            display += f"- {attribute_label}: {attribute}"
-
-        for attribute in self.unlabelled_attributes:
-            display += self._add_display_nesting(attribute, 1)
-            display += f"- {attribute}"
-
-        return display
-
-    def _add_display_nesting(self,
-                             attribute: 'str | Creation'="",
-                             extra_nesting=0,
-                             ) -> str:
-        """
-        Given an attribute, add the appropriate newline and the proper number
-        of spaces so that the arbitrary nesting works.
-        """
-        if isinstance(attribute, Creation):
-            attribute.nested += self.nested + extra_nesting
-
-        return "\n" + self.nesting_chars * (self.nested + extra_nesting)
-
-
-    def _create_display_table(self,
-                              name: str | None,
-                              attributes: 'dict[str, str | Creation]',
-                              unlabelled_attributes: 'list[str | Creation]'
-                              ) -> Table | str:
+    def _create_display(self,
+                        name: str | None,
+                        attributes: 'dict[str, str | Creation]',
+                        unlabelled_attributes: 'list[str | Creation]'
+                        ) -> Table | str:
         """
         Create a rich table for a better display.
         """
@@ -177,18 +132,18 @@ class Creation:
             label = self._capitalize(label)
             label = f"[u]{label}[/u]"
             if isinstance(attribute, Creation):
-                table.add_row(label, attribute.table)
+                table.add_row(label, attribute.display)
 
             elif isinstance(attribute, str):
                 table.add_row(label, attribute)
 
-            else:
+            else:  # We need to try to make it a renderable, or rich will die.
                 attribute = str(attribute)
                 table.add_row(label, attribute)
 
         for attribute in unlabelled_attributes:
             if isinstance(attribute, Creation):
-                table.add_row("-", attribute.table)
+                table.add_row("-", attribute.display)
             else:
                 table.add_row("-", attribute)
                 
@@ -273,7 +228,7 @@ class Generator:
         else:
             console = Console()
             for result in self.creations:
-                console.print(result.table)
+                console.print(result.display)
 
     def _generator(self) -> Creation:
         """
@@ -441,7 +396,6 @@ class Generator:
                 distribution_copy.pop(current_value)
 
         return chosen_values if count > 1 else chosen_values[0]
-
 
 
 class LinkedGenerator(Generator):
