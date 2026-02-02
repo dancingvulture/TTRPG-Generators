@@ -278,7 +278,7 @@ class Generator:
         contents = {}
         current_list = None
         demar = self._demarcation_char
-        for line in open(filename):
+        for line in open(filename, encoding='utf-8'):
             line = line.strip()
 
             if not line:  # Skip empty lines.

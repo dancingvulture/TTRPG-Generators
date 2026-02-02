@@ -1,7 +1,7 @@
 """
 Generate various kinds of items.
 """
-
+from rich.table import Table
 
 from src._generator import Creation, Generator, KnaveGenerator
 from src.dice import Roller
@@ -123,7 +123,8 @@ class WHScroll(Item):
     """
     A whitehack scroll.
     """
-    def __repr__(self):
+    @property
+    def display(self) -> str:
         spell = self.attributes["spell"]
         magnitude = self._capitalize(self.attributes["magnitude"])
         cost = self.attributes["cost"]
@@ -146,7 +147,7 @@ class WhitehackScroll(KnaveGenerator):
         attributes = [
             ("magnitude", magnitude := self._choose_from_dist(1, magnitude_dist)),
             ("cost", self._get_cost(magnitude)),
-            ("spell", self._get_other_generator_output("name", "spells")),
+            ("spell", self._get_other_generator_output("name", "spells").display),
             ("fabric", self._substitute_headers("*fabric*")),
         ]
         return WHScroll("Spell Scroll", *attributes)
