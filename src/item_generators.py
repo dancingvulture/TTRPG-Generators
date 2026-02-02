@@ -1,7 +1,7 @@
 """
 Generate various kinds of items.
 """
-from rich.table import Table
+
 
 from src._generator import Creation, Generator, KnaveGenerator
 from src.dice import Roller
@@ -144,12 +144,15 @@ class WhitehackScroll(KnaveGenerator):
             "major": 0.10,
             "powerful": 0.05,
         }
+        magnitude = self._choose_from_dist(1, magnitude_dist)
+
         attributes = [
-            ("magnitude", magnitude := self._choose_from_dist(1, magnitude_dist)),
             ("cost", self._get_cost(magnitude)),
             ("spell", self._get_other_generator_output("name", "spells").display),
             ("fabric", self._substitute_headers("*fabric*")),
         ]
+        attributes.insert(0, ("magnitude", self._add_rarity_coloring(magnitude)))
+
         return WHScroll("Spell Scroll", *attributes)
 
     @staticmethod
@@ -166,3 +169,18 @@ class WhitehackScroll(KnaveGenerator):
             "powerful": roller.sum("2d6"),
         }
         return cost_table[magnitude]
+
+    @staticmethod
+    def _add_rarity_coloring(magnitude: str) -> str:
+        """
+        Based off of the magnitude, add coloring to the text.
+        """
+        color_table = {
+            "trivial": 244,   # Grey
+            "simple": 34,     # Green
+            "standard": 75,   # Blue
+            "major": 201,     # Purple
+            "powerful": 202,  # Orange
+        }
+        color = color_table[magnitude]
+        return f"[color({color})]{magnitude}[/color({color})]"
