@@ -45,7 +45,7 @@ class GeneratorLibrary:
                 ["real names.txt", "people.txt"],
                 {"*name*": "_get_first_name", "*surname*": "_get_surname"},
             ),
-            "inn": (
+            "inns": (
                 name_generators.Inn,
                 [],
                 {}
@@ -79,11 +79,11 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
-            "gem": (
+            "gems": (
                 item_generators.Gem,
                 ["rocks.txt"],
             ),
-            "wh-scroll": (
+            "wh-scrolls": (
                 item_generators.WhitehackScroll,
                 [],
                 {}
