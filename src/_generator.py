@@ -6,6 +6,7 @@ import src.generators as generators  # Absolute import to avoid circular conflic
 from rich.table import Table
 from rich.console import Console
 from rich.box import Box
+from rich.protocol import is_renderable
 import time
 import os
 import re
@@ -42,7 +43,13 @@ class Creation:
                                              self.unlabelled_attributes)
 
     def __repr__(self) -> str:
-        return self.name
+        if self.name:
+            return self.name
+        else:
+            attr_count = len(self.attributes)
+            un_attr_count = len(self.unlabelled_attributes)
+            return (f"Unnamed Creation with {attr_count} attributes and"
+                    f" {un_attr_count} unlabelled attributes")
 
     def __rich__(self) -> Table:
         """
@@ -113,9 +120,34 @@ class Creation:
         """
         Create a rich table for a better display.
         """
+        # If the creation has no attributes then it's just a name, so we
+        # can skip the rest of this method.
         name = self._capitalize(name)
         if not attributes and not unlabelled_attributes: return name
 
+        table = self._initialize_table(name)
+        for label, attribute in attributes.items():
+            label = self._capitalize(label)
+            label = f"[u]{label}[/u]"
+            self._add_row(table, label, attribute)
+
+        for attribute in unlabelled_attributes:
+            self._add_row(table, "-", attribute)
+
+        # If we have any attributes at all, AND this is a named Creation,
+        # we add an extra row at the bottom for spacing. This is purely
+        # because it makes separate entries clearer visually.
+        if (attributes or unlabelled_attributes) and name:
+            table.add_row()
+
+        return table
+
+    @staticmethod
+    def _initialize_table(name: str) -> Table:
+        """
+        Initialize a rich display table, loaded with all settings and columns
+        used to display Creations.
+        """
         settings = {
             "title_justify": "left",
             "show_header": False,
@@ -129,38 +161,21 @@ class Creation:
         table = Table(**settings)
         table.add_column(header="Attribute", justify="right")
         table.add_column(header="Description")
-
-        for label, attribute in attributes.items():
-            label = self._capitalize(label)
-            label = f"[u]{label}[/u]"
-            if isinstance(attribute, Creation):
-                table.add_row(label, attribute)
-
-            elif isinstance(attribute, str):
-                table.add_row(label, attribute)
-
-            else:  # We need to try to make it a renderable, or rich will die.
-                attribute = str(attribute)
-                table.add_row(label, attribute)
-
-        for attribute in unlabelled_attributes:
-            bullet = "-" if len(unlabelled_attributes) > 1 else ""
-            if isinstance(attribute, Creation):
-                table.add_row(bullet, attribute)
-            else:
-                table.add_row(bullet, attribute)
-                
-        if (attributes or unlabelled_attributes) and name:
-            table.add_row()
-
         return table
 
-    def _add_row(self, table: Table, *cells: Any) -> None:
+    @staticmethod
+    def _add_row(table: Table, *cells: Any) -> None:
         """
         Adds zero or more cells to a new row in the rich table. Taking
         particular care to handle Creation objects correctly.
         """
+        renderables = []
+        # First we need to make sure that
+        for entry in cells:
+            entry = entry if is_renderable(entry) else str(entry)
+            renderables.append(entry)
 
+        table.add_row(*renderables)
 
 
 class Generator:
