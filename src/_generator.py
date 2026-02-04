@@ -37,17 +37,19 @@ class Creation:
     def __init__(self, name: str | None, *attribute: 'tuple[str, str | Creation]'):
         self.name = name
         self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
+        self._display = self._create_display(self.name,
+                                             self.attributes,
+                                             self.unlabelled_attributes)
 
-    @property
-    def display(self) -> Table | str:
+    def __repr__(self) -> str:
+        return self.name
+
+    def __rich__(self) -> Table:
         """
-        Returns the intended display value of the creation, written as a property
-        so it can be overwritten by a child class if needed.
+        Rich dunder that gives rich the intended display table when it tries to
+        create a renderable out of Creation object.
         """
-        display = self._create_display(self.name,
-                                       self.attributes,
-                                       self.unlabelled_attributes)
-        return display
+        return self._display
 
     @staticmethod
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
@@ -132,7 +134,7 @@ class Creation:
             label = self._capitalize(label)
             label = f"[u]{label}[/u]"
             if isinstance(attribute, Creation):
-                table.add_row(label, attribute.display)
+                table.add_row(label, attribute)
 
             elif isinstance(attribute, str):
                 table.add_row(label, attribute)
@@ -142,15 +144,23 @@ class Creation:
                 table.add_row(label, attribute)
 
         for attribute in unlabelled_attributes:
+            bullet = "-" if len(unlabelled_attributes) > 1 else ""
             if isinstance(attribute, Creation):
-                table.add_row("-", attribute.display)
+                table.add_row(bullet, attribute)
             else:
-                table.add_row("-", attribute)
+                table.add_row(bullet, attribute)
                 
         if (attributes or unlabelled_attributes) and name:
             table.add_row()
 
         return table
+
+    def _add_row(self, table: Table, *cells: Any) -> None:
+        """
+        Adds zero or more cells to a new row in the rich table. Taking
+        particular care to handle Creation objects correctly.
+        """
+
 
 
 class Generator:
@@ -228,7 +238,7 @@ class Generator:
         else:
             console = Console()
             for result in self.creations:
-                console.print(result.display)
+                console.print(result)
 
     def _generator(self) -> Creation:
         """

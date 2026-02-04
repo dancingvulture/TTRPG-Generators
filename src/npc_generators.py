@@ -56,7 +56,7 @@ class FantasyNPCs(KnaveGenerator):
         }
         generator_type = "name"
         generator_name = templates[race]
-        return self._get_other_generator_output(generator_type, generator_name).display
+        return self._get_other_generator_output(generator_type, generator_name).name
 
     def _get_attributes(self, count: int) -> list[tuple[str, str | Creation]]:
         attributes = []

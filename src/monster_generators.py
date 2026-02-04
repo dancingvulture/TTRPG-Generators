@@ -21,7 +21,7 @@ class Oozes(LinkedGenerator):
     def _generator(self) -> Creation:
         attributes_template = [
             ("type", "*type*"),
-            ("embedded in the ooze", "*embedded*"),
+            ("embedded", "*embedded*"),
             ("twist", "*twist*"),
             ("texture", "*ooze texture*"),
             ("local use", "*ooze use*")

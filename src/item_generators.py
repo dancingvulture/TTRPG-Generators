@@ -123,8 +123,7 @@ class WHScroll(Item):
     """
     A whitehack scroll.
     """
-    @property
-    def display(self) -> str:
+    def __rich__(self) -> str:
         spell = self.attributes["spell"]
         magnitude = self._capitalize(self.attributes["magnitude"])
         cost = self.attributes["cost"]
@@ -148,7 +147,7 @@ class WhitehackScroll(KnaveGenerator):
 
         attributes = [
             ("cost", self._get_cost(magnitude)),
-            ("spell", self._get_other_generator_output("name", "spells").display),
+            ("spell", self._get_other_generator_output("name", "spells")),
             ("fabric", self._substitute_headers("*fabric*")),
         ]
         attributes.insert(0, ("magnitude", self._add_rarity_coloring(magnitude)))
