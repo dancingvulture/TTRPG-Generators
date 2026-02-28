@@ -148,7 +148,7 @@ class WhitehackScroll(KnaveGenerator):
         attributes = [
             ("cost", self._get_cost(magnitude)),
             ("spell", self._get_other_generator_output("name", "spells")),
-            ("fabric", self._substitute_headers("*fabric*")),
+            ("fabric", self._get_fabric()),
         ]
         attributes.insert(0, ("magnitude", self._add_rarity_coloring(magnitude)))
 
@@ -183,3 +183,14 @@ class WhitehackScroll(KnaveGenerator):
         }
         color = color_table[magnitude]
         return f"[color({color})]{magnitude}[/color({color})]"
+
+    def _get_fabric(self) -> str:
+        """\
+        Randomly choose the fabric the scroll is made from, favoring parchment
+        over other more exotic types.\
+        """
+        fabric = choices(
+            ["parchment", self._substitute_headers("*fabric*")],
+            weights=[0.75, 0.25],
+        )
+        return fabric[0]
