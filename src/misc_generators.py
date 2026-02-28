@@ -1,10 +1,12 @@
-"""
+"""\
 Shoving any generator in here that doesn't fit with a particular category,
-I'll probably end up moving things out of this frequently.
+I'll probably end up moving things out of this frequently.\
 """
 
 
-from src._generator import Creation, Generator
+import random
+
+from src._generator import Creation, Generator, LinkedGenerator
 
 
 class Plant(Generator):
@@ -73,3 +75,47 @@ class Plant(Generator):
         method = self._get_entry("method")
         effect = self._get_entry(effect_type)
         return "", f"Its {plant_material}, when {method}, will {effect}"
+
+
+class MagicalSymbol(Creation):
+    """\
+    Description of a magical symbol.\
+    """
+    def __rich__(self) -> str:
+        basic_form = self.attributes["basic form"]
+        first_change = self.attributes["first change"]
+        second_change = self.attributes["second change"]
+
+        symbol = basic_form + ", " + first_change
+        if second_change != "no further modification":
+            symbol += ", " + second_change
+
+        return symbol
+
+
+class MagicSymbol(LinkedGenerator):
+    """\
+    Generate descriptions of magical symbols. Using tables in the Tome of
+    Adventure Design (2nd edition), pg. 146.\
+    """
+    def _generator(self) -> Creation:
+        properties = [
+            ("basic form", self._substitute_headers("*basic form*")),
+            ("first change", self._substitute_headers("*first change*")),
+            ("second change", self._substitute_headers("*second change*")),
+        ]
+        return MagicalSymbol("Magical Symbol", *properties)
+
+    def _get_second_change(self) -> str:
+        """\
+        The table has a 20% chance of no second change, increasing the number
+        of entries has thrown the probability, so I'm preserving it here.\
+        """
+        second_change = random.choices(
+            [
+                "no further modification",
+                self._substitute_headers("*second change*")
+            ],
+            weights=[0.8, 0.2]
+        )
+        return second_change[0]

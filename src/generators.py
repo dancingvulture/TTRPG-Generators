@@ -93,7 +93,7 @@ class GeneratorLibrary:
             "fantasy": (
                 npc_generators.FantasyNPCs,
                 [],
-                {"*mundane item*": "_get_fantasy_mundane"},
+                {"*mundane item*": "_get_fantasy_mundane"}
             )
         }
         self.monster = {
@@ -107,6 +107,11 @@ class GeneratorLibrary:
             "plants": (
                 misc_generators.Plant,
                 ["herbs.txt"]
+            ),
+            "magic-symbols": (
+                misc_generators.MagicSymbol,
+                ["magic symbols.txt"],
+                {}
             )
         }
 
