@@ -15,8 +15,8 @@ class Name(Creation):
 
 class Test(Generator):
     def _generator(self) -> Name:
-        part1 = choice(self._tables["header0"])
-        part2 = choice(self._tables["header1"])
+        part1 = self._get_entry("header0")
+        part2 = self._get_entry("header1")
         test_name = part1 + part2
 
         return Name(test_name)
@@ -61,12 +61,12 @@ class Dwarves(Generator):
 
     def _surname(self) -> tuple[str, str]:
         gender = choice(["Son", "Daughter"])
-        dwarf = choice(self._tables["Prefix"])
+        dwarf = self._get_entry("Prefix")
 
         if gender == "Son":
-            dwarf += choice(self._tables["Masc Suffix"])
+            dwarf += self._get_entry("Masc Suffix")
         else:
-            dwarf += choice(self._tables["Fem Suffix"])
+            dwarf += self._get_entry("Fem Suffix")
 
         return dwarf, gender
 
@@ -79,14 +79,17 @@ class Dwarves(Generator):
         )
 
         if layout[0] == "1":
-            adjective = choice(self._tables["Adjective"])
+            adjective = self._get_entry("Adjective")
             epithet_ = layout[1:].format(adjective)
 
         elif layout[0] == "2":
-            adjective = choice(self._tables["Adjective"])
-            noun = choice(self._tables["Noun"])
+            adjective = self._get_entry("Adjective")
+            noun = self._get_entry("Noun")
             epithet_ = layout[1:].format(adjective, noun)
-        # noinspection PyUnboundLocalVariable
+
+        else:
+            raise Exception("How did you get here??")
+
         return epithet_
 
     def _title(self, gender: str) -> str:
@@ -94,9 +97,9 @@ class Dwarves(Generator):
         layout = "{} of the {} {}"
 
         honor_input = "Masc Honorific" if gender == "Son" else "Fem Honorific"
-        honorific = choice(self._tables[honor_input])
-        adjective = choice(self._tables["Location Adjective"])
-        location = choice(self._tables["Location"])
+        honorific = self._get_entry(honor_input)
+        adjective = self._get_entry("Location Adjective")
+        location = self._get_entry("Location")
 
         return layout.format(honorific, adjective, location)
 
@@ -108,11 +111,11 @@ class Elves(Generator):
     """
     def _generator(self) -> Name:
         layout = choices(["1{}{}{}", "2{}{}"], weights=[6, 1])[0]
-        prefix = choice(self._tables["Prefix"])
-        suffix = choice(self._tables["Suffix"])
+        prefix = self._get_entry("Prefix")
+        suffix = self._get_entry("Suffix")
 
         if layout[0] == "1":
-            middle = choice(self._tables["Middle"])
+            middle = self._get_entry("Middle")
             elf = layout[1:].format(prefix, middle, suffix)
         else:
             elf = layout[1:].format(prefix, suffix)
@@ -136,7 +139,7 @@ class Epithets(Generator):
                          ["Noun", "Noun"], ["Noun", "Verb"]])
         epithet = ''
         for thing in layout:
-            epithet += choice(self._tables[thing]) + " "
+            epithet += self._get_entry(thing) + " "
 
         return Name(epithet.strip())
 
@@ -205,16 +208,16 @@ class Locations(ToadGenerator):
         approach = choices(["overview", "purpose"], [5, 1])[0]
 
         if approach == "overview":
-            description = choice(self._tables["location description"])
-            location = choice(self._tables["location"])
-            feature1 = choice(self._tables["feature 1"])
-            feature2 = choice(self._tables["feature 2"])
+            description = self._get_entry("location description")
+            location = self._get_entry("location")
+            feature1 = self._get_entry("feature 1")
+            feature2 = self._get_entry("feature 2")
             location = (description + " " + location + " of the " + feature1 + " "
                          + feature2)
 
         else:  # approach == "purpose"
-            word1 = choice(self._tables["word 1"])
-            word2 = choice(self._tables["word 2"])
+            word1 = self._get_entry("word 1")
+            word2 = self._get_entry("word 2")
             location = word1 + " " + word2
         return Name(location)
 
@@ -225,10 +228,10 @@ class MinorGods(ToadGenerator):
     the Tomb of Adventure Design, 2nd Edition, pages 276-277.
     """
     def _generator(self) -> Name:
-        name1 = choice(self._tables['Name1'])
-        name2 = choice(self._tables['Name2'])
-        title1 = choice(self._tables['Title1'])
-        title2 = choice(self._tables['Title2'])
+        name1 = self._get_entry('Name1')
+        name2 = self._get_entry('Name2')
+        title1 = self._get_entry('Title1')
+        title2 = self._get_entry('Title2')
         minor_god = name1 + name2 + " " + title1 + " " + title2
 
         return Name(minor_god)
@@ -247,20 +250,21 @@ class MysticOrders(ToadGenerator):
             "3{} {} of the {} {}",
             "4{} {}"],
             weights=[1, 7, 1, 1])[0]
-        group = choices(self._tables["Group"])[0]
-        entity = choices(self._tables["Entity"])[0]
-        descr = choices(self._tables["Description"], k=2)
+        group = self._get_entry("Group")
+        entity = self._get_entry("Entity")
+        descr0 = self._get_entry("Description")
+        descr1 = self._get_entry("Description")
 
         if layout[0] == "1":
             mystic_order = layout[1:].format(group, entity)
         elif layout[0] == "2":
-            mystic_order = layout[1:].format(group, descr[0], entity)
+            mystic_order = layout[1:].format(group, descr0, entity)
         elif layout[0] == "3":
-            while descr[0] == descr[1]:
-                descr[1] = choice(self._tables["Description"])  # No duplicates.
-            mystic_order = layout[1:].format(descr[0], group, descr[1], entity)
+            while descr0 == descr1:
+                descr1 = self._get_entry("Description")  # No duplicates.
+            mystic_order = layout[1:].format(descr0, group, descr1, entity)
         else:  # layout[0] == "4":
-            mystic_order = layout[1:].format(descr[0], group)
+            mystic_order = layout[1:].format(descr0, group)
         return Name(mystic_order)
 
 
