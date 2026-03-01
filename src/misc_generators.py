@@ -6,7 +6,7 @@ I'll probably end up moving things out of this frequently.\
 
 import random
 
-from src._generator import Creation, Generator, LinkedGenerator, ToadGenerator
+from src._generator import Creation, Generator, ToadGenerator
 
 
 class Plant(Generator):
@@ -119,3 +119,11 @@ class MagicSymbol(ToadGenerator):
             weights=[0.8, 0.2]
         )
         return second_change[0]
+
+
+class Sarcophagus(ToadGenerator):
+    """\
+    Generate Sarcophagi using the tables in the Tomb of Adventure Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        pass

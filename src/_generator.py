@@ -562,7 +562,9 @@ class ToadGenerator(LinkedGenerator):
                  additional_tables: list[str],
                  additional_special_case_funcs: dict[str, str]
                  ):
-        special_case_funcs = {}
+        special_case_funcs = {
+            "*magic symbol*": "_get_magic_symbol",
+        }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
                            "mystic orders.txt", "sarcophagus.txt"]
         special_case_funcs = special_case_funcs | additional_special_case_funcs
@@ -572,3 +574,9 @@ class ToadGenerator(LinkedGenerator):
                          special_case_funcs,
                          "tables/toad/"
                          )
+
+    def _get_magic_symbol(self) -> Creation:
+        """\
+        Get a magical symbol using the magic symbol generator.\
+        """
+        return self._get_other_generator_output("misc", "magic-symbol")
