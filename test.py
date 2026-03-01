@@ -5,7 +5,7 @@ Run unit tests on the generator program.
 
 import argparse
 import subprocess
-import sys
+import os
 from src.generators import GeneratorLibrary
 
 
@@ -48,7 +48,7 @@ def run_all_via_cmd(count: int, suppress_print: bool) -> None:
     the full flow of the program is tested.
     """
     library = GeneratorLibrary()
-    py_cmd = "py" if sys.platform == 'windows' else 'python3'
+    py_cmd = "py" if os.name == 'nt' else 'python3'
 
     # First we gather all command line inputs and displays in a list.
     all_inputs_and_displays = []
