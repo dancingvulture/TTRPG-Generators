@@ -184,19 +184,27 @@ class Generator:
     are derived. Contains the machinery to grab and compile tables from
     the given filenames and update said files if needed.
     """
-    def __init__(self, force_table_update: bool, table_filenames: list[str]):
-        self._tables_directory = "tables//"
+    def __init__(self,
+                 force_table_update: bool,
+                 table_filenames: list[str],
+                 table_directory: str="tables/",
+                 ):
+        self._tables_directory = table_directory
         self._last_runtime_filename = "last_runtime.txt"
         self.creations: list[Creation] = []
         self._demarcation_char = " | "
 
         self._table_filenames = table_filenames
-        table_filenames_plus_directory = [self._tables_directory + x for x in table_filenames]
-        self._update_tables(force_table_update, table_filenames_plus_directory)
-        self._tables = self._get_tables(table_filenames_plus_directory)
+        table_paths = [self._tables_directory + x for x in table_filenames]
+        self._update_tables(force_table_update, table_paths)
+        self._tables = self._get_tables(table_paths)
 
-    def generate(self, count: int, keywords: list[str] | None,
-                 max_time: float, suppress_print=False) -> list[Creation]:
+    def generate(self,
+                 count: int,
+                 keywords: list[str] | None,
+                 max_time: float,
+                 suppress_print=False
+                 ) -> list[Creation]:
         """
         This method belongs to the base Generator class. Although not useful in
         that class itself, any derived name generators use this to actually run
@@ -383,7 +391,8 @@ class Generator:
             print(display)
 
     @staticmethod
-    def _get_other_generator_output(generator_type: str, generator_name: str
+    def _get_other_generator_output(generator_type: str,
+                                    generator_name: str
                                     ) -> Creation:
         """
         Use the GeneratorLibrary interface to call any other generator by
@@ -440,9 +449,13 @@ class LinkedGenerator(Generator):
     method. The key is the header (including asterisks) and the value is
     the special case function.
     """
-    def __init__(self, force_table_update: bool, table_filenames: list[str],
-                 special_case_names: dict[str, str]):
-        super().__init__(force_table_update, table_filenames)
+    def __init__(self,
+                 force_table_update: bool,
+                 table_filenames: list[str],
+                 special_case_names: dict[str, str],
+                 table_directory: str = "tables//",
+                 ):
+        super().__init__(force_table_update, table_filenames, table_directory)
         self._special_case_funcs = self._get_special_case_funcs(special_case_names)
 
     def _substitute_headers(self, entry: str | Creation) -> str | Creation:
@@ -502,8 +515,11 @@ class KnaveGenerator(LinkedGenerator):
     """
     A base class for any generator using the Knave 2e tables.
     """
-    def __init__(self, force_table_update: bool, additional_tables: list[str],
-                 additional_special_case_funcs: dict[str, str]):
+    def __init__(self,
+                 force_table_update: bool,
+                 additional_tables: list[str],
+                 additional_special_case_funcs: dict[str, str]
+                 ):
         special_case_funcs = {
             "*surname*": "_get_surname",
             "*inn*": "_get_inn_name",
@@ -514,7 +530,11 @@ class KnaveGenerator(LinkedGenerator):
                            "spells.txt", "travel.txt"]
         special_case_funcs = special_case_funcs | additional_special_case_funcs
         table_filenames += additional_tables
-        super().__init__(force_table_update, table_filenames, special_case_funcs)
+        super().__init__(force_table_update,
+                         table_filenames,
+                         special_case_funcs,
+                         "tables/knave/"
+                         )
 
     def _get_spell(self) -> str:
         """
@@ -531,3 +551,24 @@ class KnaveGenerator(LinkedGenerator):
     def _get_inn_name(self) -> str:
         return (f"{self._substitute_headers("*inn name 1*")}"
                 f" {self._substitute_headers("*inn name 2*")}")
+
+
+class ToadGenerator(LinkedGenerator):
+    """\
+    A base class for any generator using the Tomb of Adventure Design (2nd ed).\
+    """
+    def __init__(self,
+                 force_table_update: bool,
+                 additional_tables: list[str],
+                 additional_special_case_funcs: dict[str, str]
+                 ):
+        special_case_funcs = {}
+        table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
+                           "mystic orders.txt", "sarcophagus.txt"]
+        special_case_funcs = special_case_funcs | additional_special_case_funcs
+        table_filenames += additional_tables
+        super().__init__(force_table_update,
+                         table_filenames,
+                         special_case_funcs,
+                         "tables/toad/"
+                         )

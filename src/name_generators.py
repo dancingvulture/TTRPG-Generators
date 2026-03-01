@@ -3,7 +3,8 @@ For storing name generator classes.
 """
 
 from random import choice, choices, randint
-from src._generator import Generator, Creation, LinkedGenerator, KnaveGenerator
+from src._generator import (Generator, Creation, LinkedGenerator,
+                            KnaveGenerator, ToadGenerator)
 
 
 class Name(Creation):
@@ -194,7 +195,7 @@ class Inn(KnaveGenerator):
         return Name(self._get_inn_name())
 
 
-class Locations(Generator):
+class Locations(ToadGenerator):
     """
     A computerized version of the locations tables from the Tomb of
     Adventure Design, 2nd Edition, pages 8-14. Largely unchanged, except
@@ -204,21 +205,21 @@ class Locations(Generator):
         approach = choices(["overview", "purpose"], [5, 1])[0]
 
         if approach == "overview":
-            description = choice(self._tables["Description"])
-            location = choice(self._tables["Location"])
-            feature1 = choice(self._tables["Feature 1"])
-            feature2 = choice(self._tables["Feature 2"])
+            description = choice(self._tables["location description"])
+            location = choice(self._tables["location"])
+            feature1 = choice(self._tables["feature 1"])
+            feature2 = choice(self._tables["feature 2"])
             location = (description + " " + location + " of the " + feature1 + " "
                          + feature2)
 
         else:  # approach == "purpose"
-            word1 = choice(self._tables["Word 1"])
-            word2 = choice(self._tables["Word 2"])
+            word1 = choice(self._tables["word 1"])
+            word2 = choice(self._tables["word 2"])
             location = word1 + " " + word2
         return Name(location)
 
 
-class MinorGods(Generator):
+class MinorGods(ToadGenerator):
     """
     A computerized version of the Generating Minor Gods table from
     the Tomb of Adventure Design, 2nd Edition, pages 276-277.
@@ -233,7 +234,7 @@ class MinorGods(Generator):
         return Name(minor_god)
 
 
-class MysticOrders(Generator):
+class MysticOrders(ToadGenerator):
     """
     Inspired by Gary Gygax's Extraordinary Book of Names, Table 3-6:
     Mystic Order Names, pages 145-146. Streamlined and with many of my

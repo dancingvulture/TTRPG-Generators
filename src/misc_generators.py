@@ -6,7 +6,7 @@ I'll probably end up moving things out of this frequently.\
 
 import random
 
-from src._generator import Creation, Generator, LinkedGenerator
+from src._generator import Creation, Generator, LinkedGenerator, ToadGenerator
 
 
 class Plant(Generator):
@@ -93,7 +93,7 @@ class MagicalSymbol(Creation):
         return symbol
 
 
-class MagicSymbol(LinkedGenerator):
+class MagicSymbol(ToadGenerator):
     """\
     Generate descriptions of magical symbols. Using tables in the Tome of
     Adventure Design (2nd edition), pg. 146.\

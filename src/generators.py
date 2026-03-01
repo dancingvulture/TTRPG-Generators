@@ -42,7 +42,7 @@ class GeneratorLibrary:
             ),
             "humans": (
                 name_generators.Humans,
-                ["real names.txt", "people.txt"],
+                ["real names.txt", "knave//people.txt"],
                 {"*name*": "_get_first_name", "*surname*": "_get_surname"},
             ),
             "inns": (
@@ -52,15 +52,18 @@ class GeneratorLibrary:
             ),
             "locations": (
                 name_generators.Locations,
-                ["locations.txt"]
+                [],
+                {}
             ),
             "minor-gods": (
                 name_generators.MinorGods,
-                ["minor gods.txt"]
+                [],
+                {}
             ),
             "mystic-orders": (
                 name_generators.MysticOrders,
-                ["mystic orders.txt"]
+                [],
+                {}
             ),
             "spells": (
                 name_generators.Spells,
@@ -110,7 +113,7 @@ class GeneratorLibrary:
             ),
             "magic-symbols": (
                 misc_generators.MagicSymbol,
-                ["magic symbols.txt"],
+                [],
                 {}
             )
         }
