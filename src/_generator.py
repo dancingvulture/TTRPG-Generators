@@ -618,7 +618,7 @@ class KnaveGenerator(LinkedGenerator):
         table_filenames = ["alchemy.txt", "civilization.txt", "delving.txt",
                            "equipment.txt", "monster.txt", "people.txt",
                            "spells.txt", "travel.txt"]
-        special_case_funcs = special_case_funcs | additional_special_case_funcs
+        special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
                          table_filenames,
@@ -654,12 +654,12 @@ class ToadGenerator(LinkedGenerator):
                  ):
         special_case_funcs = {
             "*magic symbol*": "_get_magic_symbol",
-            "*trap gas*": "_get_trap_gas",
-            "*missile trap*": "_get_missile_trap",
+            "*gem*": "_get_gem",
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
-                           "mystic orders.txt", "sarcophagus.txt", "traps.txt"]
-        special_case_funcs = special_case_funcs | additional_special_case_funcs
+                           "mystic orders.txt", "sarcophagus.txt", "traps.txt",
+                           "clues.txt", "items.txt"]
+        special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
                          table_filenames,
@@ -673,14 +673,5 @@ class ToadGenerator(LinkedGenerator):
         """
         return self._get_other_generator_output("misc", "magic-symbol")
 
-    def _get_trap_gas(self) -> Creation:
-        """\
-        Get a gas meant to be part of a trap.\
-        """
-        return self._get_other_generator_output("dungeon", "trap-gas")
-
-    def _get_missile_trap(self) -> Creation:
-        """\
-        Get a basic missile trap.\
-        """
-        return self._get_other_generator_output("dungeon", "missile-trap")
+    def _get_gem(self) -> Creation:
+        return self._get_other_generator_output("item", "gems")

@@ -202,7 +202,7 @@ class Books(KnaveGenerator):
     """
     def _generator(self) -> Creation:
         properties = {
-            ("subject", self._substitute_headers("subject")),
+            ("subject", self._substitute_headers("*book*")),
             ("fabric", self._substitute_headers("*fabric*")),
             ("decoration", self._substitute_headers("*decoration*")),
             ("item trait", self._substitute_headers("*item trait*"))

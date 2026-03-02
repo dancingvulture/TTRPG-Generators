@@ -11,6 +11,20 @@ class BasicMechanicalTraps(ToadGenerator):
     Generates basic mechanical traps using the Tome of Adventure Design (2nd edition)
     table 3-126, pg. 217.\
     """
+    def _generator(self) -> Creation:
+        pass
+
+    def _get_trap_gas(self) -> Creation:
+        """\
+        Get a gas meant to be part of a trap.\
+        """
+        return self._get_other_generator_output("dungeon", "trap-gas")
+
+    def _get_missile_trap(self) -> Creation:
+        """\
+        Get a basic missile trap.\
+        """
+        return self._get_other_generator_output("dungeon", "missile-trap")
 
 
 class TrapGasses(ToadGenerator):
