@@ -194,3 +194,17 @@ class WhitehackScroll(KnaveGenerator):
             weights=[0.75, 0.25],
         )
         return fabric[0]
+
+
+class Books(KnaveGenerator):
+    """\
+    Generate books using the tables from Knave 2e.\
+    """
+    def _generator(self) -> Creation:
+        properties = {
+            ("subject", self._substitute_headers("subject")),
+            ("fabric", self._substitute_headers("*fabric*")),
+            ("decoration", self._substitute_headers("*decoration*")),
+            ("item trait", self._substitute_headers("*item trait*"))
+        }
+        return Creation("book", *properties)
