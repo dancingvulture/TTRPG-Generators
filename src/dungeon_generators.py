@@ -41,7 +41,6 @@ class MissileTraps(ToadGenerator):
             return Creation("missile trap", missile_type, special)
 
 
-
 class Sarcophagus(ToadGenerator):
     """\
     Generate Sarcophagi using the tables in the Tomb of Adventure Design (2nd edition).\

@@ -2,6 +2,8 @@
 Module containing the base generator class and the child classes which are
 easily applicable to more than one type of generator.
 """
+
+
 import src.generators as generators  # Absolute import to avoid circular conflict.
 from rich.table import Table
 from rich.console import Console
