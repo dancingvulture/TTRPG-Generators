@@ -652,7 +652,8 @@ class ToadGenerator(LinkedGenerator):
                  ):
         special_case_funcs = {
             "*magic symbol*": "_get_magic_symbol",
-            "*trap gas*": "_get_trap_gas"
+            "*trap gas*": "_get_trap_gas",
+            "*missile trap*": "_get_missile_trap",
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
                            "mystic orders.txt", "sarcophagus.txt", "traps.txt"]
@@ -674,5 +675,10 @@ class ToadGenerator(LinkedGenerator):
         """\
         Get a gas meant to be part of a trap.\
         """
-        return self._get_other_generator_output("misc", "trap-gas")
+        return self._get_other_generator_output("dungeon", "trap-gas")
 
+    def _get_missile_trap(self) -> Creation:
+        """\
+        Get a basic missile trap.\
+        """
+        return self._get_other_generator_output("dungeon", "missile-trap")

@@ -108,6 +108,11 @@ class GeneratorLibrary:
             ),
         }
         self.dungeon = {
+            "missile-traps": (
+                dungeon_generators.MissileTraps,
+                [],
+                {}
+            ),
             "trap-gasses": (
                 dungeon_generators.TrapGasses,
                 [],
