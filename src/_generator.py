@@ -652,9 +652,10 @@ class ToadGenerator(LinkedGenerator):
                  ):
         special_case_funcs = {
             "*magic symbol*": "_get_magic_symbol",
+            "*trap gas*": "_get_trap_gas"
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
-                           "mystic orders.txt", "sarcophagus.txt"]
+                           "mystic orders.txt", "sarcophagus.txt", "traps.txt"]
         special_case_funcs = special_case_funcs | additional_special_case_funcs
         table_filenames += additional_tables
         super().__init__(force_table_update,
@@ -668,3 +669,10 @@ class ToadGenerator(LinkedGenerator):
         Get a magical symbol using the magic symbol generator.\
         """
         return self._get_other_generator_output("misc", "magic-symbol")
+
+    def _get_trap_gas(self) -> Creation:
+        """\
+        Get a gas meant to be part of a trap.\
+        """
+        return self._get_other_generator_output("misc", "trap-gas")
+

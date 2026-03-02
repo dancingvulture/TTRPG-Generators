@@ -93,7 +93,7 @@ class MagicalSymbol(Creation):
         return symbol
 
 
-class MagicSymbol(ToadGenerator):
+class MagicSymbols(ToadGenerator):
     """\
     Generate descriptions of magical symbols. Using tables in the Tome of
     Adventure Design (2nd edition), pg. 146.\
@@ -105,11 +105,3 @@ class MagicSymbol(ToadGenerator):
             ("second change", self._substitute_headers("*second change*")),
         ]
         return MagicalSymbol("Magical Symbol", *properties)
-
-
-class Sarcophagus(ToadGenerator):
-    """\
-    Generate Sarcophagi using the tables in the Tomb of Adventure Design (2nd edition).\
-    """
-    def _generator(self) -> Creation:
-        pass

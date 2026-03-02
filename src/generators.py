@@ -8,6 +8,7 @@ import src.name_generators as name_generators
 import src.item_generators as item_generators
 import src.npc_generators as npc_generators
 import src.monster_generators as monster_generators
+import src.dungeon_generators as dungeon_generators
 import src.misc_generators as misc_generators
 
 
@@ -106,13 +107,20 @@ class GeneratorLibrary:
                 {}
             ),
         }
+        self.dungeon = {
+            "trap-gasses": (
+                dungeon_generators.TrapGasses,
+                [],
+                {}
+            )
+        }
         self.misc = {
             "plants": (
                 misc_generators.Plant,
                 ["herbs.txt"]
             ),
             "magic-symbols": (
-                misc_generators.MagicSymbol,
+                misc_generators.MagicSymbols,
                 [],
                 {}
             )
@@ -123,5 +131,6 @@ class GeneratorLibrary:
             "item": self.item,
             "npc": self.npc,
             "monster": self.monster,
-            "misc": self.misc
+            "dungeon": self.dungeon,
+            "misc": self.misc,
         }
