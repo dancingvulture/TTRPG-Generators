@@ -105,3 +105,44 @@ class MagicSymbols(ToadGenerator):
             ("second change", self._substitute_headers("*second change*")),
         ]
         return MagicalSymbol("Magical Symbol", *properties)
+
+
+class Clues(ToadGenerator):
+    """\
+    Generate clues using the tables on pp.140-145 from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        clue_types = {
+            "*coded and deliberate message*": 0.12,
+            "for anyone: *coded and deliberate message*": 0.13,
+            "*deliberate misdirection*": 0.13,
+            "a direct vision or memory imparted to someone": 0.13,
+            "*evidence of mechanism use*": 0.13,
+            "*writing*": 0.13,
+            "something that is an inherent part of the general decoration,"
+            " architecture, environment, or atmosphere": 0.13,
+            "remnants of a(n): *event type*": 0.10,
+        }
+        clue = self._choose_from_dist(1, clue_types)
+        clue = self._substitute_headers(clue)
+        return Creation("clue", ("content", clue))
+
+    def _get_writing(self) -> Creation:
+        return self._get_other_generator_output("misc", "writing")
+
+
+class Writing(ToadGenerator):
+    """\
+    Generate writing. Uses tables on pp.144-145 from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        writing = ("nature", self._substitute_headers("*nature of writing*"))
+        return Creation("writing", writing)
+
+    def _get_knave_book(self) -> Creation:
+        return self._get_other_generator_output("item", "books")
+
+    def _get_item(self) -> Creation:
+        return self._get_other_generator_output("item", "fantasy-mundane")

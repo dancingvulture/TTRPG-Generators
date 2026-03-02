@@ -90,8 +90,13 @@ class GeneratorLibrary:
             "wh-scrolls": (
                 item_generators.WhitehackScroll,
                 [],
-                {}
+                {},
             ),
+            "books": (
+                item_generators.Books,
+                [],
+                {}
+            )
         }
         self.npc = {
             "fantasy": (
@@ -108,6 +113,14 @@ class GeneratorLibrary:
             ),
         }
         self.dungeon = {
+            "basic-mechanical-traps": (
+                dungeon_generators.BasicMechanicalTraps,
+                [],
+                {
+                    "*trap gas*": "_get_trap_gas",
+                    "*missile trap*": "_get_missile_trap",
+                }
+            ),
             "missile-traps": (
                 dungeon_generators.MissileTraps,
                 [],
@@ -128,6 +141,19 @@ class GeneratorLibrary:
                 misc_generators.MagicSymbols,
                 [],
                 {}
+            ),
+            "clues": (
+                misc_generators.Clues,
+                [],
+                {"*writing*": "_get_writing"}
+            ),
+            "writing": (
+                misc_generators.Writing,
+                [],
+                {
+                    "*knave book*": "_get_knave_book",
+                    "*item*": "_get_item",
+                }
             )
         }
 
