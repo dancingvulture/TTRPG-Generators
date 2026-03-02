@@ -6,7 +6,7 @@ Run unit tests on the generator program.
 import argparse
 import subprocess
 import os
-from src.generators import GeneratorLibrary
+from src.generators import GeneratorLibrary, get_generator
 
 
 
@@ -78,6 +78,15 @@ def run_all_via_cmd(count: int, suppress_print: bool) -> None:
             print(display)
             subprocess.run(cmd_input)
             print("")
+
+
+def get_generate_method(generator_type: str, generator_name: str):
+    """\
+    Get a call to a generator class's generate method, with the only input as
+    the count, and everything else filled in. Used for quick testing.\
+    """
+    generator = get_generator(generator_type, generator_name)
+    return lambda x: generator.generate(x, None, 1)
 
 
 def main():
