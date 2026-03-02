@@ -106,20 +106,6 @@ class MagicSymbol(ToadGenerator):
         ]
         return MagicalSymbol("Magical Symbol", *properties)
 
-    def _get_second_change(self) -> str:
-        """\
-        The table has a 20% chance of no second change, increasing the number
-        of entries has thrown the probability, so I'm preserving it here.\
-        """
-        second_change = random.choices(
-            [
-                "no further modification",
-                self._substitute_headers("*second change*")
-            ],
-            weights=[0.8, 0.2]
-        )
-        return second_change[0]
-
 
 class Sarcophagus(ToadGenerator):
     """\

@@ -192,7 +192,9 @@ class Generator:
         self._tables_directory = table_directory
         self._last_runtime_filename = "last_runtime.txt"
         self.creations: list[Creation] = []
-        self._demarcation_char = " | "
+        self._entry_demarcation_char = " | "
+        self._weight_demarcation_char = " :: "
+        self._manual_weights = {}
 
         self._table_filenames = table_filenames
         table_paths = [self._tables_directory + x for x in table_filenames]
@@ -270,7 +272,7 @@ class Generator:
         raise NotImplementedError("You need to overwrite the _generator"
                                   " method.")
 
-    def _get_tables(self, table_filenames: list[str]) -> dict[str, list]:
+    def _get_tables(self, table_filenames: list[str]) -> dict[str, dict[str, float]]:
         """
         Using the table filenames grab all tables and compile them into
         a single dictionary.
@@ -287,30 +289,35 @@ class Generator:
                     tables[header] = content
         return tables
 
-    def _get_entry(self, table_name: str) -> str:
+    def _get_entry(self, column_name: str) -> str:
         """
-        Get a random entry from the given table.
+        Get a random entry from the given column.
         """
-        return random.choice(self._tables[table_name])
+        distribution = self._tables[column_name]
+        return self._choose_from_dist(1, distribution)
 
-    def _text_file_to_dict(self, filename: str) -> dict:
-        """Used to convert the contents of a text file into a dictionary
-        whose entries are lists of strings. The strings are intended to be
-        the individual elements we generate random names from, each entry is
-        some kind of category useful to whatever name generator we're using.
+    def _text_file_to_dict(self, filename: str) -> dict[str, dict[str, float]]:
+        """\
+        Convert a text file, representing a table into a dictionary. The keys of
+        this dictionary are the column names (str), and the values are themselves
+        dictionaries. Each key of this dictionary is an entry in the column (str),
+        the value is a float representing the weight of that particular entry.
         Syntax in this text file is as follows:
         - If a line starts with #, the remaining text on the line (sans
-          whitespace) will be interpreted as the key to a new entry in the
-          dictionary (always a string).
-        - Any non-empty line (that doesn't start with a #), is interpreted
-          as the contents of the current dictionary entry. The line will be
-          split into a list at the commas, whitespace will be cleaned up.
-          You're meant to include everything on this one line, if you do
-          another it'll just overwrite the previous.
-        - Empty lines (i.e. containing only whitespace) are skipped"""
+          whitespace) will be interpreted as the name of the current column.
+        - Any non-empty line (that doesn't start with a #), is interpreted as
+          the entire contents of the column. Each entry and weight pair is
+          separated by the default entry demarcation character (defined in init),
+          and within each entry, if an explicit weight is included, it is separated
+          from the entry itself by the default weight demarcation character.
+          Weights are not required for each entry, if no weight is defined, then
+          the program will simply assign it one, by default it goes for an even
+          probability distribution. The contents of each column should be contained
+          on one and only one line.
+        - Empty lines (i.e. containing only whitespace) are skipped.\
+        """
         contents = {}
-        current_list = None
-        demar = self._demarcation_char
+        column_name = None
         for line in open(filename, encoding='utf-8'):
             line = line.strip()
 
@@ -318,12 +325,76 @@ class Generator:
                 pass
 
             elif line[0] == "#":  # The header for the column.
-                current_list = line[1:].strip()
+                column_name = line[1:].strip()
 
             elif line:
-                contents[current_list] = [x.strip() for x in line.split(demar)]
+                entries = line.split(self._entry_demarcation_char)
+                contents[column_name] = self._create_column_dict(column_name, *entries)
 
         return contents
+
+    def _create_column_dict(self, column_name, *entries: str) -> dict[str, float]:
+        """\
+        Given the entries for a table's column, return a dictionary whose keys
+        are the table's values, and whose values are the weights for each entry.\
+        """
+        column_dict = {}
+        for raw_entry in entries:
+            entry, weight = self._get_weights(column_name, raw_entry)
+            column_dict[entry] = weight
+
+        self._adjust_weights(column_dict)
+        return column_dict
+
+    def _get_weights(self, column_name: str, raw_entry: str) -> tuple[str, float]:
+        """\
+        Given a raw entry in a table's column direct from the text file, return
+        the value of the entry, and the weight. If no weight was written into
+        the column fort this entry, it defaults to zero.\
+        """
+        try:
+            entry, weight =  raw_entry.split(self._weight_demarcation_char)
+            entry = entry.strip()
+            self._save_manual_weight(column_name, entry, weight)
+            weight = float(weight)
+        except ValueError:
+            entry = raw_entry.strip()
+            weight = 0.0
+        return entry, weight
+
+    def _save_manual_weight(self, column_name: str, entry: str, weight: str) -> None:
+        """\
+        Saves the weight manually written into the given entry, just in case the
+        table file needs an update, we want to preserve these values.\
+        """
+        if column_name in self._manual_weights:
+            self._manual_weights[column_name][entry] = weight
+        else:
+            self._manual_weights[column_name] = {entry: weight}
+
+    @staticmethod
+    def _adjust_weights(column_dict: [str, float]) -> None:
+        """\
+        Given a column dict, search through and find all entries with weights
+        equal to zero, and give them all an even probability distribution.
+        Makes in-place changes to the dict.\
+        """
+        zeros = []
+        weight_sum = 0
+        for entry, weight in column_dict.items():
+            if weight == 0:
+                zeros.append(entry)
+            else:
+                weight_sum += weight
+
+        if weight_sum > 1:
+            raise ValueError(f"The sum of the weights in a column are greater"
+                             f" than 1! Column: {column_dict}")
+
+        zero_count = len(zeros)
+        prb = (1 - weight_sum) / zero_count
+        for entry in zeros:
+            column_dict[entry] = prb
 
     def _update_tables(self,
                        force_update: bool,
@@ -365,9 +436,10 @@ class Generator:
         Updates the specified table(s) associated .txt files. Putting
         the contents  in alphabetical order and
         """
-        demar = self._demarcation_char
+        demar = self._entry_demarcation_char
         for filename in table_filenames:
             contents = self._text_file_to_dict(filename)
+            self._add_manual_weights_back(contents)
 
             # First we alphabetize and eliminate redundant entries, we make
             # entries uniformly lowercase so identical entries with different
@@ -389,6 +461,22 @@ class Generator:
             message = f"{filename} updated"
             display = len(message) * '-' + '\n' + message + '\n' + len(message) * '-'
             print(display)
+            
+    def _add_manual_weights_back(self, 
+                                 table: dict[str, dict[str, float]]
+                                 ) -> None:
+        """\
+        When we update the table file, we need to make sure any manual weights
+        that were present originally are preserved. to do this we make in-place
+        changes to the dictionary of table columns from the table file.\
+        """
+        for column_name, entries in self._manual_weights.items():
+            for entry, weight in entries.items():
+                if column_name in table and entry in table[column_name]:
+                    table[column_name].pop(entry)
+                    weight = self._manual_weights[column_name][entry]
+                    new_entry = entry + self._weight_demarcation_char + weight
+                    table[column_name][new_entry] = float(weight)
 
     @staticmethod
     def _get_other_generator_output(generator_type: str,
@@ -485,7 +573,7 @@ class LinkedGenerator(Generator):
                 # For the general case, We pick a random entry from the table
                 # indicated by the header. Because this new entry could also be
                 # a header, we apply this method to it.
-                new_entry = random.choice(self._tables[hdr[1:-1]])  # Trim asterisks.
+                new_entry = self._get_entry(hdr[1:-1])  # Trim asterisks.
                 new_entry = self._substitute_headers(new_entry)
 
             # Some special exception functions produce Creations instead of
