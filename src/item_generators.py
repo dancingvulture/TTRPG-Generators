@@ -130,6 +130,10 @@ class WHScroll(Item):
         fabric = self.attributes["fabric"]
         return f"{magnitude} ({cost} HP) {fabric} scroll of {spell}"
 
+    @property
+    def spacing_preference(self) -> str | int:
+        return 0
+
 
 class WhitehackScroll(KnaveGenerator):
     """

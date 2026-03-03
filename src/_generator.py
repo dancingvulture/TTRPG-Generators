@@ -4,11 +4,7 @@ easily applicable to more than one type of generator.
 """
 
 
-import src.generators as generators  # Absolute import to avoid circular conflict.
-from rich.table import Table
-from rich.console import Console
-from rich.box import Box
-from rich.protocol import is_renderable
+
 import time
 import os
 import re
@@ -16,17 +12,14 @@ import random
 from copy import deepcopy
 from typing import Any
 
+from rich.table import Table
+from rich.console import Console
+from rich.protocol import is_renderable
 
-_EMPTY = Box(
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-    "    \n"
-)
+import src.generators as generators  # Absolute import to avoid circular conflict.
+from src._display import get_minimal_table_settings
+
+
 _EXHAUSTED_HDR_TEMPLATE = "[u]{}[/u]"
 
 
@@ -74,6 +67,14 @@ class Creation:
             raise Exception(f"__new must be str or Creation: type={type(__new)}")
 
         return self._new_instance(name, *attributes)
+
+    @property
+    def spacing_preference(self) -> str | int:
+        """\
+        The number of spaces to include between Creations when they are printed
+        by the Generator.show() method, return an int \
+        """
+        return "automatic"
 
     def __repr__(self) -> str:
         if self.name:
@@ -193,12 +194,6 @@ class Creation:
         for attribute in unlabelled_attributes:
             self._add_row(table, "-", attribute)
 
-        # If we have any attributes at all, AND this is a named Creation,
-        # we add an extra row at the bottom for spacing. This is purely
-        # because it makes separate entries clearer visually.
-        if (attributes or unlabelled_attributes) and name:
-            table.add_row()
-
         return table
 
     @staticmethod
@@ -207,14 +202,7 @@ class Creation:
         Initialize a rich display table, loaded with all settings and columns
         used to display Creations.
         """
-        settings = {
-            "title_justify": "left",
-            "show_header": False,
-            "box": _EMPTY,
-            "pad_edge": False,
-            "padding": 0,
-            "show_edge": False,
-        }
+        settings = get_minimal_table_settings()
         if name: settings["title"] = f"[b]{name}[/b]"
 
         table = Table(**settings)
@@ -323,6 +311,15 @@ class Generator:
             console = Console()
             for result in self.creations:
                 console.print(result)
+
+                if result.spacing_preference != "automatic":
+                    space_count: int = result.spacing_preference
+                elif self._has_attributes(result):
+                    space_count = 1
+                else:
+                    space_count = 0
+                for _ in range(space_count): console.print()
+
 
     def _generator(self) -> Creation:
         """
@@ -454,6 +451,17 @@ class Generator:
         prb = (1 - weight_sum) / zero_count
         for entry in zeros:
             column_dict[entry] = prb
+
+    @staticmethod
+    def _has_attributes(creation: Creation) -> bool:
+        """\
+        Returns true if creation.attributes or creation.unlabelled_attributes
+        are not empty, false otherwise.\
+        """
+        if creation.attributes or creation.unlabelled_attributes:
+            return True
+        else:
+            return False
 
     def _update_tables(self,
                        force_update: bool,
@@ -653,6 +661,12 @@ class LinkedGenerator(Generator):
             # on the entry string. We handle (4) in the 'if', and all other cases
             # in the 'else'.
             if isinstance(entry, str) and isinstance(substitute, Creation):
+                # In the case where an entry is entirely a single header, we
+                # return only the substitute, otherwise the formatting is really
+                # ugly. This is how the original version (designed around the
+                # knave tables) worked. If the substitute was a Creation, we'd
+                # just return the substitute.
+                if entry == hdr: return substitute
                 exhausted_hdr = _EXHAUSTED_HDR_TEMPLATE.format(hdr[1:-1])
                 entry_name = entry.replace(hdr, exhausted_hdr, 1)
                 entry = Creation(entry_name, (hdr[1:-1], substitute))
@@ -736,7 +750,7 @@ class ToadGenerator(LinkedGenerator):
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
-                         table_filenames,
+                          table_filenames,
                          special_case_funcs,
                          "tables/toad/"
                          )

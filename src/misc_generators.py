@@ -4,9 +4,10 @@ I'll probably end up moving things out of this frequently.\
 """
 
 
-import random
+from rich.table import Table
 
 from src._generator import Creation, Generator, ToadGenerator
+from src._display import get_minimal_table_settings
 
 
 class Plant(Generator):
@@ -92,6 +93,10 @@ class MagicalSymbol(Creation):
 
         return symbol
 
+    @property
+    def spacing_preference(self) -> str | int:
+        return 0
+
 
 class MagicSymbols(ToadGenerator):
     """\
@@ -132,6 +137,29 @@ class Clues(ToadGenerator):
         return self._get_other_generator_output("misc", "writing")
 
 
+class Written(Creation):
+    """\
+    A creation that represents writing.\
+    """
+    def __rich__(self) -> Table:
+        settings = get_minimal_table_settings()
+        table = Table(**settings)
+        table.add_column()
+        table.add_column()
+
+        writing = self.attributes["nature"]
+        table.add_row("[b][i]Writing:[/b][/i]", writing)
+        return table
+
+    @property
+    def spacing_preference(self) -> str | int:
+        writing = self.attributes["nature"]
+        if isinstance(writing, Creation):
+            return 1
+        else:
+            return 0
+
+
 class Writing(ToadGenerator):
     """\
     Generate writing. Uses tables on pp.144-145 from the Tomb of Adventure
@@ -139,7 +167,7 @@ class Writing(ToadGenerator):
     """
     def _generator(self) -> Creation:
         writing = ("nature", self._substitute_headers("*nature of writing*"))
-        return Creation("writing", writing)
+        return Written("writing", writing)
 
     def _get_knave_book(self) -> Creation:
         return self._get_other_generator_output("item", "books")
