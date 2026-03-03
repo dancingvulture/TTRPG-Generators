@@ -13,7 +13,7 @@ class Name(Creation):
     """
 
 
-class Test(Generator):
+class TestGenerator(Generator):
     def _generator(self) -> Name:
         part1 = self._get_entry("header0")
         part2 = self._get_entry("header1")
@@ -22,7 +22,7 @@ class Test(Generator):
         return Name(test_name)
 
 
-class Dwarves(Generator):
+class DwarfNameGenerator(Generator):
     """
     Format is Surname + Epithet + Lineage + Lineage + Title. Rarely
     will a name use all of these, but usually some combination of them.
@@ -104,7 +104,7 @@ class Dwarves(Generator):
         return layout.format(honorific, adjective, location)
 
 
-class Elves(Generator):
+class ElfNameGenerator(Generator):
     """
     A computerized version of table 5-6: Fair & Noble, on pages 186-187
     of Gary Gygax's Extraordinary Book of Names.
@@ -122,7 +122,7 @@ class Elves(Generator):
         return Name(elf)
 
 
-class Epithets(Generator):
+class EpithetGenerator(Generator):
     """
     This is inspired by Gary Gygax's Extraordinary Book of Names,
     pages 133-138. I've stolen most of the adjectives, nouns, and verbs
@@ -144,7 +144,7 @@ class Epithets(Generator):
         return Name(epithet.strip())
 
 
-class Humans(LinkedGenerator):
+class HumanNameGenerator(LinkedGenerator):
     """
     Generate human names using the Knave 2e tables. I may want to get
     more surnames.
@@ -190,7 +190,7 @@ class Humans(LinkedGenerator):
                 f"{self._substitute_headers("*surname 2*")}")
 
 
-class Inn(KnaveGenerator):
+class KnaveInnNameGenerator(KnaveGenerator):
     """
     Generate inn names using the Knave 2e tables.
     """
@@ -198,7 +198,7 @@ class Inn(KnaveGenerator):
         return Name(self._get_inn_name())
 
 
-class Locations(ToadGenerator):
+class ToadLocationGenerator(ToadGenerator):
     """
     A computerized version of the locations tables from the Tomb of
     Adventure Design, 2nd Edition, pages 8-14. Largely unchanged, except
@@ -222,7 +222,7 @@ class Locations(ToadGenerator):
         return Name(location)
 
 
-class MinorGods(ToadGenerator):
+class ToadMinorGodGenerator(ToadGenerator):
     """
     A computerized version of the Generating Minor Gods table from
     the Tomb of Adventure Design, 2nd Edition, pages 276-277.
@@ -237,7 +237,7 @@ class MinorGods(ToadGenerator):
         return Name(minor_god)
 
 
-class MysticOrders(ToadGenerator):
+class ToadMysticOrderGenerator(ToadGenerator):
     """
     Inspired by Gary Gygax's Extraordinary Book of Names, Table 3-6:
     Mystic Order Names, pages 145-146. Streamlined and with many of my
@@ -268,7 +268,7 @@ class MysticOrders(ToadGenerator):
         return Name(mystic_order)
 
 
-class Spells(KnaveGenerator):
+class KnaveSpellGenerator(KnaveGenerator):
     """
     Spell generator using the knave 2e tables.
     """

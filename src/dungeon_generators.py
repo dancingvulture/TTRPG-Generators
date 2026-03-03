@@ -6,7 +6,7 @@ Generators for things that are in dungeons, or parts of dungeons.\
 from src._generator import Creation, ToadGenerator
 
 
-class BasicMechanicalTraps(ToadGenerator):
+class ToadBasicMechanicalTrapGenerator(ToadGenerator):
     """\
     Generates basic mechanical traps using the Tome of Adventure Design (2nd edition)
     table 3-126, pg. 217.\
@@ -28,7 +28,7 @@ class BasicMechanicalTraps(ToadGenerator):
         return self._get_other_generator_output("dungeon", "missile-traps")
 
 
-class TrapGasses(ToadGenerator):
+class ToadTrapGasGenerator(ToadGenerator):
     """\
     Generate gasses meant to be part of a trap. Uses Tomb of Adventure Design (2nd end)
     pp. 219-220.\
@@ -41,7 +41,7 @@ class TrapGasses(ToadGenerator):
         return Creation("Gas", *properties)
 
 
-class MissileTraps(ToadGenerator):
+class ToadMissileTrapGenerator(ToadGenerator):
     """\
     Generate missile traps using the Tome of Adventure Design (2nd edition)\
     table 3-130, pg. 221.
@@ -56,7 +56,7 @@ class MissileTraps(ToadGenerator):
             return Creation("missile trap", missile_type, special)
 
 
-class Sarcophagus(ToadGenerator):
+class ToadSarcophagusGenerator(ToadGenerator):
     """\
     Generate Sarcophagi using the tables in the Tomb of Adventure Design (2nd edition).\
     """

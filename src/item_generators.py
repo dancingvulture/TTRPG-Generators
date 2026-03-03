@@ -14,7 +14,7 @@ class Item(Creation):
     """
 
 
-class Magic(KnaveGenerator):
+class MagicItemGenerator(KnaveGenerator):
     """
     Generate magic items using the Knave 2e tables.
     """
@@ -31,7 +31,7 @@ class Magic(KnaveGenerator):
         return self._substitute_headers(chosen_base)
 
 
-class FantasyMundane(KnaveGenerator):
+class MundaneFantasyItemGenerator(KnaveGenerator):
     """
     Generate mundane fantasy items.
     """
@@ -81,7 +81,7 @@ class FantasyMundane(KnaveGenerator):
         return Item(item, *chosen_attributes)
 
 
-class Gem(Generator):
+class GemGenerator(Generator):
     """
     Generate Gems using the tables from Geologists Primer (pp. 302-305)
     """
@@ -135,7 +135,7 @@ class WHScroll(Item):
         return 0
 
 
-class WhitehackScroll(KnaveGenerator):
+class WhitehackScrollGenerator(KnaveGenerator):
     """
     Generate scrolls for use in the whitehack 4e system.
     """
@@ -200,7 +200,7 @@ class WhitehackScroll(KnaveGenerator):
         return fabric[0]
 
 
-class Books(KnaveGenerator):
+class KnaveBookGenerator(KnaveGenerator):
     """\
     Generate books using the tables from Knave 2e.\
     """

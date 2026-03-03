@@ -13,7 +13,8 @@ class Monster(Creation):
     Class for containing monster information.
     """
 
-class _KnaveMonster(Monster):
+
+class KnaveMonster(Monster):
     """\
     Class containing knave monster information.\
     """
@@ -22,7 +23,7 @@ class _KnaveMonster(Monster):
         return 1
 
 
-class Oozes(LinkedGenerator):
+class OozeGenerator(LinkedGenerator):
     """
     Uses tables from the Monster Overhaul (pp. 57-58).
     """
@@ -66,7 +67,7 @@ class Oozes(LinkedGenerator):
         return ooze_type
 
 
-class KnaveMonster(KnaveGenerator):
+class KnaveMonsterGenerator(KnaveGenerator):
     """\
     Generate a monster using the knave tables.\
     """
@@ -84,5 +85,5 @@ class KnaveMonster(KnaveGenerator):
             trait = self._substitute_headers("*monster trait*")
             attributes.append((f"trait {trait_num}", trait))
 
-        return _KnaveMonster(monster_type, *attributes)
+        return KnaveMonster(monster_type, *attributes)
     

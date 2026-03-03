@@ -10,7 +10,7 @@ from src._generator import Creation, Generator, ToadGenerator
 from src._display import get_minimal_table_settings
 
 
-class Plant(Generator):
+class PlantGenerator(Generator):
     """
     Create plants using the tables in the Herbalist's Primer (pp. 298-301)
     """
@@ -98,7 +98,7 @@ class MagicalSymbol(Creation):
         return 0
 
 
-class MagicSymbols(ToadGenerator):
+class ToadMagicSymbolGenerator(ToadGenerator):
     """\
     Generate descriptions of magical symbols. Using tables in the Tome of
     Adventure Design (2nd edition), pg. 146.\
@@ -112,7 +112,7 @@ class MagicSymbols(ToadGenerator):
         return MagicalSymbol("Magical Symbol", *properties)
 
 
-class Clues(ToadGenerator):
+class ToadClueGenerator(ToadGenerator):
     """\
     Generate clues using the tables on pp.140-145 from the Tomb of Adventure
     Design (2nd edition).\
@@ -137,7 +137,7 @@ class Clues(ToadGenerator):
         return self._get_other_generator_output("misc", "writing")
 
 
-class Written(Creation):
+class Writing(Creation):
     """\
     A creation that represents writing.\
     """
@@ -160,14 +160,14 @@ class Written(Creation):
             return 0
 
 
-class Writing(ToadGenerator):
+class ToadWritingGenerator(ToadGenerator):
     """\
     Generate writing. Uses tables on pp.144-145 from the Tomb of Adventure
     Design (2nd edition).\
     """
     def _generator(self) -> Creation:
         writing = ("nature", self._substitute_headers("*nature of writing*"))
-        return Written("writing", writing)
+        return Writing("writing", writing)
 
     def _get_knave_book(self) -> Creation:
         return self._get_other_generator_output("item", "books")

@@ -27,100 +27,100 @@ class GeneratorLibrary:
         # (if they exist) are arguments used to initiate the generator class.
         self.name = {
             "test": (
-                name_generators.Test,
+                name_generators.TestGenerator,
                 ["test.txt"]
             ),
             "dwarves": (
-                name_generators.Dwarves,
+                name_generators.DwarfNameGenerator,
                 ["dwarves.txt"]
             ),
             "elves": (
-                name_generators.Elves,
+                name_generators.ElfNameGenerator,
                 ["elves.txt"]
             ),
             "epithets": (
-                name_generators.Epithets,
+                name_generators.EpithetGenerator,
                 ["epithets.txt"]
             ),
             "humans": (
-                name_generators.Humans,
+                name_generators.HumanNameGenerator,
                 ["real names.txt", "knave//people.txt"],
                 {"*name*": "_get_first_name", "*surname*": "_get_surname"},
             ),
             "inns": (
-                name_generators.Inn,
+                name_generators.KnaveInnNameGenerator,
                 [],
                 {}
             ),
             "locations": (
-                name_generators.Locations,
+                name_generators.ToadLocationGenerator,
                 [],
                 {}
             ),
             "minor-gods": (
-                name_generators.MinorGods,
+                name_generators.ToadMinorGodGenerator,
                 [],
                 {}
             ),
             "mystic-orders": (
-                name_generators.MysticOrders,
+                name_generators.ToadMysticOrderGenerator,
                 [],
                 {}
             ),
             "spells": (
-                name_generators.Spells,
+                name_generators.KnaveSpellGenerator,
                 [],
                 {}
             ),
         }
         self.item = {
             "magic": (
-                item_generators.Magic,
+                item_generators.MagicItemGenerator,
                 [],
                 {}
             ),
             "fantasy-mundane": (
-                item_generators.FantasyMundane,
+                item_generators.MundaneFantasyItemGenerator,
                 [],
                 {}
             ),
             "gems": (
-                item_generators.Gem,
+                item_generators.GemGenerator,
                 ["rocks.txt"],
             ),
             "wh-scrolls": (
-                item_generators.WhitehackScroll,
+                item_generators.WhitehackScrollGenerator,
                 [],
                 {},
             ),
             "books": (
-                item_generators.Books,
+                item_generators.KnaveBookGenerator,
                 [],
                 {}
             )
         }
         self.npc = {
             "fantasy": (
-                npc_generators.FantasyNPCs,
+                npc_generators.KnaveFantasyNPCGenerator,
                 [],
                 {"*mundane item*": "_get_fantasy_mundane"}
             )
         }
         self.monster = {
             "oozes": (
-                monster_generators.Oozes,
+                monster_generators.OozeGenerator,
                 ["oozes.txt"],
                 {}
             ),
             "knave-monsters" : (
-                monster_generators.KnaveMonster,
+                monster_generators.KnaveMonsterGenerator,
                 [],
                 {}
             )
         }
         self.dungeon = {
             "basic-mechanical-traps": (
-                dungeon_generators.BasicMechanicalTraps,
+                dungeon_generators.ToadBasicMechanicalTrapGenerator,
                 [],
                 {
                     "*trap gas*": "_get_trap_gas",
@@ -128,33 +128,33 @@ class GeneratorLibrary:
                 }
             ),
             "missile-traps": (
-                dungeon_generators.MissileTraps,
+                dungeon_generators.ToadMissileTrapGenerator,
                 [],
                 {}
             ),
             "trap-gasses": (
-                dungeon_generators.TrapGasses,
+                dungeon_generators.ToadTrapGasGenerator,
                 [],
                 {}
             )
         }
         self.misc = {
             "plants": (
-                misc_generators.Plant,
+                misc_generators.PlantGenerator,
                 ["herbs.txt"]
             ),
             "magic-symbols": (
-                misc_generators.MagicSymbols,
+                misc_generators.ToadMagicSymbolGenerator,
                 [],
                 {}
             ),
-            "clues": (
-                misc_generators.Clues,
-                [],
-                {"*writing*": "_get_writing"}
-            ),
+            # "clues": (
+            #     misc_generators.ToadClueGenerator,
+            #     [],
+            #     {"*writing*": "_get_writing"}
+            # ),
             "writing": (
-                misc_generators.Writing,
+                misc_generators.ToadWritingGenerator,
                 [],
                 {
                     "*knave book*": "_get_knave_book",

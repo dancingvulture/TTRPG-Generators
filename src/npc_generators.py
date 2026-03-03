@@ -13,7 +13,7 @@ class NPC(Creation):
     """
 
 
-class FantasyNPCs(KnaveGenerator):
+class KnaveFantasyNPCGenerator(KnaveGenerator):
     """
     Generate Fantasy NPCs.
     """
