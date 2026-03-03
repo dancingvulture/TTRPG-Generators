@@ -27,6 +27,7 @@ _EMPTY = Box(
     "    \n"
     "    \n"
 )
+_EXHAUSTED_HDR_TEMPLATE = "[u]{}[/u]"
 
 
 class Creation:
@@ -37,12 +38,42 @@ class Creation:
     first entry of the tuple is the attribute's name, the second is the
     attribute's value.
     """
-    def __init__(self, name: str | None, *attribute: 'tuple[str, str | Creation]'):
+    def __init__(self, name: str | None, *attributes: 'tuple[str, str | Creation]'):
         self.name = name
-        self.attributes, self.unlabelled_attributes = self._collect_attributes(*attribute)
+        self.attributes, self.unlabelled_attributes = self._collect_attributes(*attributes)
         self._display = self._create_display(self.name,
                                              self.attributes,
                                              self.unlabelled_attributes)
+
+    def replace(self,
+                __old: str,
+                __new: str | 'Creation',
+                __count=-1
+                ) -> 'Creation':
+        """\
+        Meant to override the string method, in this context this means replacing
+        a header present in self.name, and adding new object attributes.\
+        """
+        attributes = self._unpack_attributes()
+
+        # __old is always a string (present in self.name), but __new is either
+        # a string or a creation, these cases are handled separately.
+        if isinstance(__new, str):
+            # We just replace the header in the name with the substitute string.
+            name = self.name.replace(__old, __new, __count)
+
+        elif isinstance(__new, self.__class__):
+            # We take out the asterisks in the header in the name, and underline
+            # it instead. Then we add a new attribute, which has the name of
+            # the substitute, and whose content is the substitute.
+            exhausted_hdr =_EXHAUSTED_HDR_TEMPLATE.format(__old[1:-1])
+            name = self.name.replace(__old, exhausted_hdr, __count)
+            attributes.append(("", __new))
+
+        else:
+            raise Exception(f"__new must be str or Creation: type={type(__new)}")
+
+        return self._new_instance(name, *attributes)
 
     def __repr__(self) -> str:
         if self.name:
@@ -60,6 +91,16 @@ class Creation:
         """
         return self._display
 
+    @classmethod
+    def _new_instance(cls,
+                      name: str | None,
+                      *attributes: 'tuple[str, str | Creation]'
+                      ) -> 'Creation':
+        """\
+        Get a new instance of this creation class\
+        """
+        return cls(name, *attributes)
+
     @staticmethod
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
                             ) -> 'tuple[dict[str, str | Creation], list[str | Creation]]':
@@ -76,6 +117,20 @@ class Creation:
                 attributes[attribute_label] = value
 
         return attributes, unlabelled_attributes
+
+    def _unpack_attributes(self) -> list[tuple[str, str | 'Creation']]:
+        """\
+        Takes all attributes and unpacks them into the original form they
+        were in when they were passed into init.\
+        """
+        attributes = []
+        for label, value in self.attributes.items():
+            attributes.append((label, value))
+
+        for value in self.unlabelled_attributes:
+            attributes.append(("", value))
+
+        return attributes
 
     @staticmethod
     def _capitalize(words: str | None) -> str:
@@ -125,7 +180,9 @@ class Creation:
         # If the creation has no attributes then it's just a name, so we
         # can skip the rest of this method.
         name = self._capitalize(name)
-        if not attributes and not unlabelled_attributes: return name
+        if not attributes and not unlabelled_attributes:
+            name = f"[b][i]{name}[/b][/i]"
+            return name
 
         table = self._initialize_table(name)
         for label, attribute in attributes.items():
@@ -523,21 +580,18 @@ class Generator:
 
 
 class LinkedGenerator(Generator):
-    """
-    A base class containing the machinery to use linked tables. That is,
-    tables whose results have you roll on other tables to an arbitrarily
-    nested degree.
+    """\
+    A base class containing the machinery to use linked tables. That is, tables
+    whose results have you roll on other tables to an arbitrarily nested degree.
 
-    Links to other tables within table entries, also called headers, are
-    noted with a special syntax in the .txt file. Any text bookended by
-    asterisks (e.g. *city theme*) is the exact name of another table
-    (i.e. its header).
+    Links to other tables within table entries, also called headers, are noted
+    with a special syntax in the .txt file. Any text bookended by asterisks
+    (e.g. *city theme*) is the exact name of another table's column (i.e. its header).
 
-    Compared to the base Generator class, the LinkedGenerator has one
-    additional argument, special_case_funcs. This is for any headers that
-    require special treatment not covered in the _substitute_headers
-    method. The key is the header (including asterisks) and the value is
-    the special case function.
+    Compared to the base Generator class, the LinkedGenerator has one additional
+    argument, special_case_funcs. This is for any headers that require special
+    treatment not covered in the _substitute_headers() method. The key is the
+    header (including asterisks) and the value is the special case function.\
     """
     def __init__(self,
                  force_table_update: bool,
@@ -547,44 +601,64 @@ class LinkedGenerator(Generator):
                  ):
         super().__init__(force_table_update, table_filenames, table_directory)
         self._special_case_funcs = self._get_special_case_funcs(special_case_names)
+        self._get_all_headers = re.compile(r"\*[^*]*\*").findall
 
     def _substitute_headers(self, entry: str | Creation) -> str | Creation:
-        """
+        """\
         This function searches entry for any *headers*, each header consists of
-        one or more words that are bookended by asterisks. A header links to
-        another table with the matching header, when we find a header we
-        substitute *header* for a random entry on that header's table.
-        If that entry is another header, we roll on THAT header's table, and so
-        on and so on. This ends when we get an entry containing no headers, in
-        which case this function simply returns the entry unchanged.
+        one or more words that are bookended by asterisks. A header links to a
+        column in another table with the matching header, when we find a header
+        we substitute *header* for a random entry on that header's column. If
+        that entry is another header, we roll on THAT header's table, and so on
+        and so on. This ends when we get an entry containing no headers, in
+        which case this function simply returns the entry unchanged.\
         """
-        # First we search the entry for any headers it may have.
-        headers = re.compile(r"\*[^*]*\*").findall(entry)
+        # First we search the entry for any headers it may have. We apply the
+        # str function so if the entry is a Creation, it will search the name
+        # of the Creation for headers.
+        headers = self._get_all_headers(str(entry))
 
         # This loop will substitute each header present in our entry with a
-        # random new entry from that header's table. If there are no headers
+        # random new entry from that header's column. If there are no headers
         # present in entry, the loop won't execute and entry will be returned
         # unmodified.
         for hdr in headers:
-            # First we deal with special cases.
-            for special_case, func in self._special_case_funcs.items():
-                if hdr == special_case:
-                    new_entry = func()
-                    break  # To avoid executing the else clause below.
+            # Default behavior is to get an entry from the column whose header
+            # matches the header present in the entry. However, in some special
+            # cases a function has been defined to intercept this and output
+            # something, usually more complicated than can be defined in a
+            # single column's entry. These functions take no arguments, and
+            # output a string (or more commonly) a Creation.
+            if hdr in self._special_case_funcs:
+                substitute: str | Creation = self._special_case_funcs[hdr]()
             else:
-                # For the general case, We pick a random entry from the table
-                # indicated by the header. Because this new entry could also be
-                # a header, we apply this method to it.
-                new_entry = self._get_entry(hdr[1:-1])  # Trim asterisks.
-                new_entry = self._substitute_headers(new_entry)
+                substitute: str = self._get_entry(hdr[1:-1])
 
-            # Some special exception functions produce Creations instead of
-            # strings, we have to handle them differently.
-            if isinstance(new_entry, Creation):
-                return new_entry
+            # Regardless of whether the substitute is a Creation or string, it
+            # may itself contain headers which require substitution, so we apply
+            # the function recursively, as the rest of the loop hereafter assumes
+            # the substitute has no headers that need to be substituted.
+            substitute: str | Creation = self._substitute_headers(substitute)
 
-            # Our new entry obtained, we substitute it into our entry
-            entry = entry.replace(hdr, new_entry, 1)
+            # Now we are replacing the header with the substitute. Although this
+            # is an if-else loop, in reality we have four cases to deal with.
+            #   1.) Both entry and substitute are strings.
+            #   2.) Both entry and substitute are Creations.
+            #   3.) Entry is a Creation, and substitute is a string.
+            #   4.) Entry is a string, and substitute is a creation.
+            #
+            # For (1) we can simply use .replace(). For (2) and (3), I've
+            # defined Creation.replace() (using the same exact inputs as the
+            # string method). For (4), we need to define a new Creation based
+            # on the entry string. We handle (4) in the 'if', and all other cases
+            # in the 'else'.
+            if isinstance(entry, str) and isinstance(substitute, Creation):
+                exhausted_hdr = _EXHAUSTED_HDR_TEMPLATE.format(hdr[1:-1])
+                entry_name = entry.replace(hdr, exhausted_hdr, 1)
+                entry = Creation(entry_name, (hdr[1:-1], substitute))
+
+            else:
+                entry = entry.replace(hdr, substitute, 1)
 
         return entry
 

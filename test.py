@@ -85,8 +85,7 @@ def get_generate_method(generator_type: str, generator_name: str):
     Get a call to a generator class's generate method, with the only input as
     the count, and everything else filled in. Used for quick testing.\
     """
-    generator = get_generator(generator_type, generator_name)
-    return lambda x: generator.generate(x, None, 1)
+    return lambda x: get_generator(generator_type, generator_name).generate(x, None, 1)
 
 
 def main():

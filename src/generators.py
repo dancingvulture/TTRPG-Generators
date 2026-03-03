@@ -4,7 +4,7 @@ about all generators.
 """
 
 
-from src._generator import Generator
+import src._generator as generator
 import src.name_generators as name_generators
 import src.item_generators as item_generators
 import src.npc_generators as npc_generators
@@ -143,11 +143,11 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
-            "clues": (
-                misc_generators.Clues,
-                [],
-                {"*writing*": "_get_writing"}
-            ),
+            # "clues": (
+            #     misc_generators.Clues,
+            #     [],
+            #     {"*writing*": "_get_writing"}
+            # ),
             "writing": (
                 misc_generators.Writing,
                 [],
@@ -172,7 +172,7 @@ def get_generator(generator_type: str,
                   generator_name: str,
                   *,
                   force_update: bool=False,
-                  ) -> Generator:
+                  ) -> generator.Generator:
     """\
     Get a generator instance by specifying the type and name.\
     """

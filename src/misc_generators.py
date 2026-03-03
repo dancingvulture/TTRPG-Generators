@@ -86,7 +86,7 @@ class MagicalSymbol(Creation):
         first_change = self.attributes["first change"]
         second_change = self.attributes["second change"]
 
-        symbol = basic_form + ", " + first_change
+        symbol = f"[b]{basic_form}[/b]" + ", " + first_change
         if second_change != "no further modification":
             symbol += ", " + second_change
 
