@@ -12,19 +12,20 @@ class BasicMechanicalTraps(ToadGenerator):
     table 3-126, pg. 217.\
     """
     def _generator(self) -> Creation:
-        pass
+        trap = self._substitute_headers("*basic mechanical trap*")
+        return Creation("Trap, basic mechanical", ("Mechanism", trap))
 
     def _get_trap_gas(self) -> Creation:
         """\
         Get a gas meant to be part of a trap.\
         """
-        return self._get_other_generator_output("dungeon", "trap-gas")
+        return self._get_other_generator_output("dungeon", "trap-gasses")
 
     def _get_missile_trap(self) -> Creation:
         """\
         Get a basic missile trap.\
         """
-        return self._get_other_generator_output("dungeon", "missile-trap")
+        return self._get_other_generator_output("dungeon", "missile-traps")
 
 
 class TrapGasses(ToadGenerator):
