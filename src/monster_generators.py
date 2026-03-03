@@ -3,7 +3,7 @@ Contains monster generator classes.
 """
 
 
-from src._generator import Creation, LinkedGenerator
+from src._generator import Creation, LinkedGenerator, KnaveGenerator
 from src.dice import Roller
 import re
 
@@ -12,6 +12,14 @@ class Monster(Creation):
     """
     Class for containing monster information.
     """
+
+class _KnaveMonster(Monster):
+    """\
+    Class containing knave monster information.\
+    """
+    @property
+    def spacing_preference(self) -> str | int:
+        return 1
 
 
 class Oozes(LinkedGenerator):
@@ -56,3 +64,25 @@ class Oozes(LinkedGenerator):
         sentences = re.compile(r"[\w ]*.").findall(text)
         ooze_type = sentences[0][:-1]
         return ooze_type
+
+
+class KnaveMonster(KnaveGenerator):
+    """\
+    Generate a monster using the knave tables.\
+    """
+    def _generator(self) -> Creation:
+        monster_type = self._substitute_headers("*monster*")
+        trait_dist = {
+            0: 0.15,
+            1: 0.60,
+            2: 0.30,
+            3: 0.05,
+        }
+        trait_count = self._choose_from_dist(1, trait_dist)
+        attributes = []
+        for trait_num in range(1, trait_count + 1):
+            trait = self._substitute_headers("*monster trait*")
+            attributes.append((f"trait {trait_num}", trait))
+
+        return _KnaveMonster(monster_type, *attributes)
+    

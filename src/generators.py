@@ -112,6 +112,11 @@ class GeneratorLibrary:
                 ["oozes.txt"],
                 {}
             ),
+            "knave-monsters" : (
+                monster_generators.KnaveMonster,
+                [],
+                {}
+            )
         }
         self.dungeon = {
             "basic-mechanical-traps": (
@@ -143,11 +148,11 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
-            # "clues": (
-            #     misc_generators.Clues,
-            #     [],
-            #     {"*writing*": "_get_writing"}
-            # ),
+            "clues": (
+                misc_generators.Clues,
+                [],
+                {"*writing*": "_get_writing"}
+            ),
             "writing": (
                 misc_generators.Writing,
                 [],
