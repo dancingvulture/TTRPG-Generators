@@ -67,9 +67,6 @@ class ToadPitTrapGenerator(ToadGenerator):
         type_ = ("type", self._substitute_headers("*pit trap*"))
         return Creation("pit trap", type_)
 
-    def _get_ooze(self) -> Creation:
-        return self._get_other_generator_output("monster", "oozes")
-
 
 class ToadSarcophagusGenerator(ToadGenerator):
     """\
@@ -77,4 +74,3 @@ class ToadSarcophagusGenerator(ToadGenerator):
     """
     def _generator(self) -> Creation:
         pass
-

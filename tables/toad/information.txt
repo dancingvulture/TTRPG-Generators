@@ -1,32 +1,20 @@
-# coded message author
+# from whom
 *monster* | a fugitive | a person who was cheated | adventurer | an architect or engineer involved in construction | controller or powerful figure in the location | insane person | one who cannot write; a scribe was involved | one who has been cursed or influence by spell | one who is afraid for their life | one who is believed dead | one who is hidden or guarded | one who is sick or on the verge of death | performer or artist | prisoner | protector in adventure area | religious leader | second in command | slave | someone held for ransom
 
-# coded message recipient
+# to whom
 a devoutly religious person or zealot | a friend | a healer | a historian or sage | a person seeking vengeance | a potential rescuer | a skilled negotiator or possible intermediary | a spy | a thief or thieves' guild | a wanton hussy | a war leader | a wizard | an ally | an employer | an enemy | another member of the same racial group | one who is believed dead | one who provides supplies of some kind | patron elsewhere | relative, clan member, or family
 
-# coded message content of interest
+# useful information
 how to avoid or disarm a trap | how to find another important piece of information | how to open a trick door or secret door | how to operate a piece of machinery | how to work a particular trick most beneficially | information about a major *monster*: how to avoid it |
 
-# deliberate misdirection content
-tbr
-
-# deliberate misdirection nature
-tbr
-
 # evidence of mechanism use
-tbr
+cleaned room: evidences recent use, presence of an *ooze*, or removal of evidence | furnishings | holes in walls or floor | operating machinery | pockmarks or corrosion on wall | presence of tools | recent painting or carving | scratches on walls for floor | warning signs
 
 # event type
 agreement or treaty | battle | betrayal | cave-in | execution | fire | flooding | functioning of a trap | imprisonment | lovers tryst
 
-# nature of rumor
-tbr
-
-# rumor content
-tbr
-
 # nature of writing
-*knave book* :: 0.10 | *ownership paper* | accounts and financial records | dossier of information about someone | family tree and/or genealogical records | graffiti | inscription on *item* | journal | legal documents, concerning a dispute | letter: *letter content* | maps | military plans or orders | notes to self | receipts | recipes or instructions | stitched into cloth | treaty documents | troop movements | wall carving
+*book* :: 0.10 | *ownership paper* | accounts and financial records | dossier of information about someone | family tree and/or genealogical records | graffiti | inscription on *item* | journal | legal documents, concerning a dispute | letter: *letter content* | maps | military plans or orders | notes to self | receipts | recipes or instructions | stitched into cloth | treaty documents | troop movements | wall carving
 
 # letter content
 birth or death announcement | demand for performance of a bargain | demand for repayment of money or a past favor | demand for surrender | financial information | gift of ownership documents | invitations | love | military situation | pleas for help | request for information about an "item" | request for information about an *event type* | response to plea for help | response to status report or demand | response to threat | scholarly question | secret information about enemy weakness | secret orders | status report from an inferior or superior | threatening litigation | updates on recent events in family

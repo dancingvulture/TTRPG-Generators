@@ -119,15 +119,15 @@ class ToadClueGenerator(ToadGenerator):
     """
     def _generator(self) -> Creation:
         clue_types = {
-            "*coded and deliberate message*": 0.12,
-            "for anyone: *coded and deliberate message*": 0.13,
-            "*deliberate misdirection*": 0.13,
-            "a direct vision or memory imparted to someone": 0.13,
-            "*evidence of mechanism use*": 0.13,
-            "*writing*": 0.13,
+            "a coded and deliberate message from *author*, to *recipient*,"
+            " containing *useful information*": 1,
+            "a coded and deliberate message from *author*, to anyone,"
+            " containing *useful information*": 1,
+            "*evidence of mechanism use*": 1,
+            "*writing*": 1,
             "something that is an inherent part of the general decoration,"
-            " architecture, environment, or atmosphere": 0.13,
-            "remnants of a(n): *event type*": 0.10,
+            " architecture, environment, or atmosphere": 1,
+            "remnants of a(n): *event type*": 1,
         }
         clue = self._choose_from_dist(1, clue_types)
         clue = self._substitute_headers(clue)
@@ -138,6 +138,12 @@ class ToadClueGenerator(ToadGenerator):
 
     def _get_monster(self) -> Creation:
         return self._get_other_generator_output("monster", "knave-monsters")
+
+    def _get_author(self) -> Creation:
+        return self._substitute_headers("*from whom*")
+
+    def _get_recipient(self) -> Creation:
+        return self._substitute_headers("*to whom*")
 
 
 class Writing(Creation):
@@ -172,7 +178,7 @@ class ToadWritingGenerator(ToadGenerator):
         writing = ("nature", self._substitute_headers("*nature of writing*"))
         return Writing("writing", writing)
 
-    def _get_knave_book(self) -> Creation:
+    def _get_book(self) -> Creation:
         return self._get_other_generator_output("item", "books")
 
     def _get_item(self) -> Creation:

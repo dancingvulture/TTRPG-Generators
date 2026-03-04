@@ -136,9 +136,7 @@ class GeneratorLibrary:
             "pit-traps" :(
                 dungeon_generators.ToadPitTrapGenerator,
                 [],
-                {
-                    "*ooze*": "_get_ooze",
-                }
+                {}
             ),
             "trap-gasses": (
                 dungeon_generators.ToadTrapGasGenerator,
@@ -162,13 +160,15 @@ class GeneratorLibrary:
                 {
                     "*writing*": "_get_writing",
                     "*monster*": "_get_monster",
+                    "*author*": "_get_author",
+                    "*recipient*": "_get_recipient",
                 }
             ),
             "writing": (
                 misc_generators.ToadWritingGenerator,
                 [],
                 {
-                    "*knave book*": "_get_knave_book",
+                    "*book*": "_get_book",
                     "*item*": "_get_item",
                 }
             )
