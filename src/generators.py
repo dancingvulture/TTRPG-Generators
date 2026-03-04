@@ -125,12 +125,20 @@ class GeneratorLibrary:
                 {
                     "*trap gas*": "_get_trap_gas",
                     "*missile trap*": "_get_missile_trap",
+                    "*pit trap*": "_get_pit_trap"
                 }
             ),
             "missile-traps": (
                 dungeon_generators.ToadMissileTrapGenerator,
                 [],
                 {}
+            ),
+            "pit-traps" :(
+                dungeon_generators.ToadPitTrapGenerator,
+                [],
+                {
+                    "*ooze*": "_get_ooze",
+                }
             ),
             "trap-gasses": (
                 dungeon_generators.ToadTrapGasGenerator,
@@ -148,11 +156,14 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
-            # "clues": (
-            #     misc_generators.ToadClueGenerator,
-            #     [],
-            #     {"*writing*": "_get_writing"}
-            # ),
+            "clues": (
+                misc_generators.ToadClueGenerator,
+                [],
+                {
+                    "*writing*": "_get_writing",
+                    "*monster*": "_get_monster",
+                }
+            ),
             "writing": (
                 misc_generators.ToadWritingGenerator,
                 [],

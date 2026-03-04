@@ -1,0 +1,36 @@
+# coded message author
+*monster* | a fugitive | a person who was cheated | adventurer | an architect or engineer involved in construction | controller or powerful figure in the location | insane person | one who cannot write; a scribe was involved | one who has been cursed or influence by spell | one who is afraid for their life | one who is believed dead | one who is hidden or guarded | one who is sick or on the verge of death | performer or artist | prisoner | protector in adventure area | religious leader | second in command | slave | someone held for ransom
+
+# coded message recipient
+a devoutly religious person or zealot | a friend | a healer | a historian or sage | a person seeking vengeance | a potential rescuer | a skilled negotiator or possible intermediary | a spy | a thief or thieves' guild | a wanton hussy | a war leader | a wizard | an ally | an employer | an enemy | another member of the same racial group | one who is believed dead | one who provides supplies of some kind | patron elsewhere | relative, clan member, or family
+
+# coded message content of interest
+how to avoid or disarm a trap | how to find another important piece of information | how to open a trick door or secret door | how to operate a piece of machinery | how to work a particular trick most beneficially | information about a major *monster*: how to avoid it |
+
+# deliberate misdirection content
+tbr
+
+# deliberate misdirection nature
+tbr
+
+# evidence of mechanism use
+tbr
+
+# event type
+agreement or treaty | battle | betrayal | cave-in | execution | fire | flooding | functioning of a trap | imprisonment | lovers tryst
+
+# nature of rumor
+tbr
+
+# rumor content
+tbr
+
+# nature of writing
+*knave book* :: 0.10 | *ownership paper* | accounts and financial records | dossier of information about someone | family tree and/or genealogical records | graffiti | inscription on *item* | journal | legal documents, concerning a dispute | letter: *letter content* | maps | military plans or orders | notes to self | receipts | recipes or instructions | stitched into cloth | treaty documents | troop movements | wall carving
+
+# letter content
+birth or death announcement | demand for performance of a bargain | demand for repayment of money or a past favor | demand for surrender | financial information | gift of ownership documents | invitations | love | military situation | pleas for help | request for information about an "item" | request for information about an *event type* | response to plea for help | response to status report or demand | response to threat | scholarly question | secret information about enemy weakness | secret orders | status report from an inferior or superior | threatening litigation | updates on recent events in family
+
+# ownership paper
+a license to commit a particular crime once, without prosecution | deed to a building currently being used as a temple | deed to a castle | deed to a cottage in a village | deed to a desert area | deed to a dungeon | deed to a farm | deed to a forested area | deed to a hilly area | deed to a house in a city | deed to a house in a town | deed to a junkyard | deed to a manor house | deed to a mine | deed to a ranch | deed to a swamp area | deed to a tavern | deed to a toll bridge | deed to a warehouse and its contents | deed to an isolated college | dungeon exploration rights | exclusive rights to bounty hunt | exclusive rights to create a canal | exclusive rights to grow a particular type of crop | exclusive rights to minerals taken from a particular area | exclusive rights to rent collected from a particular building for a particular length of time | exclusive rights to trade in a particular commodity | exclusive rights to undertake religious activity, operate a temple, and/or proselytize in a particular area | fishing rights | hunting rights | iou: any bearer can collect the debt after a certain date | membership in a guild or organization | partnership in a dungeon exploration | partnership in a seafaring ship | partnership in a smithy | partnership in a tavern | partnership in proceeds from an unusual cargo | partnership in proceeds of a cargo about to set sail | patents of nobility, issuance of a noble title, or papers of citizenship in a particular town or city | title to a *gem* | title to a fishing boat | title to a ship | title to a slave | title to a(n) *jewelry* | title to contents of a warehouse | transfer of ownership of certain rooms in a dungeon | wilderness exploration rights
+

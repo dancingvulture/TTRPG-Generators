@@ -206,7 +206,7 @@ class Creation:
         if name: settings["title"] = f"[b]{name}[/b]"
 
         table = Table(**settings)
-        table.add_column(header="Attribute", justify="right")
+        table.add_column(header="Attribute", justify="left")
         table.add_column(header="Description")
         return table
 
@@ -746,7 +746,7 @@ class ToadGenerator(LinkedGenerator):
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
                            "mystic orders.txt", "sarcophagus.txt", "traps.txt",
-                           "clues.txt", "items.txt"]
+                           "information.txt", "items.txt"]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,

@@ -136,6 +136,9 @@ class ToadClueGenerator(ToadGenerator):
     def _get_writing(self) -> Creation:
         return self._get_other_generator_output("misc", "writing")
 
+    def _get_monster(self) -> Creation:
+        return self._get_other_generator_output("monster", "knave-monsters")
+
 
 class Writing(Creation):
     """\
