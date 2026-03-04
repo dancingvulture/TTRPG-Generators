@@ -4,7 +4,8 @@ about all generators.
 """
 
 
-import src.generators._generator as generator
+from types import MappingProxyType
+
 import src.generators.name as name_generators
 import src.generators.item as item_generators
 import src.generators.npc as npc_generators
@@ -25,7 +26,7 @@ class GeneratorLibrary:
         # enough to use elsewhere). The Value is a tuple, the first entry is
         # always the generator class itself, while all other tuple entries
         # (if they exist) are arguments used to initiate the generator class.
-        self.name = {
+        self.name = MappingProxyType({
             "test": (
                 name_generators.TestGenerator,
                 ["test.txt"]
@@ -72,8 +73,8 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
-        }
-        self.item = {
+        })
+        self.item = MappingProxyType({
             "magic": (
                 item_generators.MagicItemGenerator,
                 [],
@@ -98,15 +99,15 @@ class GeneratorLibrary:
                 [],
                 {}
             )
-        }
-        self.npc = {
+        })
+        self.npc = MappingProxyType({
             "fantasy": (
                 npc_generators.KnaveFantasyNPCGenerator,
                 [],
                 {"*mundane item*": "_get_fantasy_mundane"}
             )
-        }
-        self.monster = {
+        })
+        self.monster = MappingProxyType({
             "oozes": (
                 monster_generators.OozeGenerator,
                 ["oozes.txt"],
@@ -117,8 +118,8 @@ class GeneratorLibrary:
                 [],
                 {}
             )
-        }
-        self.dungeon = {
+        })
+        self.dungeon = MappingProxyType({
             "basic-mechanical-traps": (
                 dungeon_generators.ToadBasicMechanicalTrapGenerator,
                 [],
@@ -143,8 +144,8 @@ class GeneratorLibrary:
                 [],
                 {}
             )
-        }
-        self.misc = {
+        })
+        self.misc = MappingProxyType({
             "plants": (
                 misc_generators.PlantGenerator,
                 ["herbs.txt"]
@@ -172,7 +173,7 @@ class GeneratorLibrary:
                     "*item*": "_get_item",
                 }
             )
-        }
+        })
 
         self.generators_by_type = {
             "name": self.name,
