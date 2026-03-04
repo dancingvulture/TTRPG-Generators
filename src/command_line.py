@@ -4,7 +4,7 @@ Contains all needed command line objects.
 
 
 import argparse
-from src.generators import GeneratorLibrary
+import src.generators as generators
 
 
 _KEYWORD_ARGS = {
@@ -47,19 +47,18 @@ def parse_arguments() -> argparse.Namespace:
         help="Choose your generator type.",
         dest="type"
     )
-    library = GeneratorLibrary()
 
-    _add_name_subparser(subparsers, library)
-    _add_item_subparser(subparsers, library)
-    _add_npc_subparser(subparsers, library)
-    _add_monster_subparser(subparsers, library)
-    _add_misc_subparser(subparsers, library)
-    _add_dungeon_subparser(subparsers, library)
+    _add_name_subparser(subparsers)
+    _add_item_subparser(subparsers)
+    _add_npc_subparser(subparsers)
+    _add_monster_subparser(subparsers)
+    _add_misc_subparser(subparsers)
+    _add_dungeon_subparser(subparsers)
 
     return parser.parse_args()
 
 
-def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_item_subparser(subparsers) -> None:
     """
     Subparser for using the name generators.
     """
@@ -67,7 +66,7 @@ def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
         "item",
         help="Generate items.",
     )
-    generator_names = library.item.keys()
+    generator_names = generators.get_names("item")
 
     parser.add_argument(
         "generator",
@@ -81,7 +80,7 @@ def _add_item_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_name_subparser(subparsers) -> None:
     """
     Subparser for using the name generators.
     """
@@ -89,7 +88,7 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
         "name",
         help="Generate names.",
     )
-    generator_names = library.name.keys()
+    generator_names = generators.get_names("name")
 
     parser.add_argument(
         "generator",
@@ -103,7 +102,7 @@ def _add_name_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_npc_subparser(subparsers) -> None:
     """
     Subparser for using the npc generators.
     """
@@ -111,7 +110,7 @@ def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
         "npc",
         help="Generate NPCs.",
     )
-    generator_names = library.npc.keys()
+    generator_names = generators.get_names("npc")
 
     parser.add_argument(
         "generator",
@@ -125,7 +124,7 @@ def _add_npc_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_monster_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_monster_subparser(subparsers) -> None:
     """
     Subparser for using the monster generators.
     """
@@ -133,7 +132,7 @@ def _add_monster_subparser(subparsers, library: GeneratorLibrary) -> None:
         "monster",
         help="Generate monsters."
     )
-    generator_names = library.monster.keys()
+    generator_names = generators.get_names("monster")
 
     parser.add_argument(
         "generator",
@@ -147,7 +146,7 @@ def _add_monster_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_misc_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_misc_subparser(subparsers) -> None:
     """
     Subparser for using the miscellaneous generator.
     """
@@ -155,7 +154,7 @@ def _add_misc_subparser(subparsers, library: GeneratorLibrary) -> None:
         "misc",
         help="Miscellaneous generators"
     )
-    generator_names = library.misc.keys()
+    generator_names = generators.get_names("misc")
 
     parser.add_argument(
         "generator",
@@ -169,7 +168,7 @@ def _add_misc_subparser(subparsers, library: GeneratorLibrary) -> None:
     parser.add_argument("count", **_COUNT_ARGS)
 
 
-def _add_dungeon_subparser(subparsers, library: GeneratorLibrary) -> None:
+def _add_dungeon_subparser(subparsers) -> None:
     """\
     Subparser for using dungeon generators.\
     """
@@ -177,7 +176,7 @@ def _add_dungeon_subparser(subparsers, library: GeneratorLibrary) -> None:
         "dungeon",
         help="Dungeon generators"
     )
-    generator_names = library.dungeon.keys()
+    generator_names = generators.get_names("dungeon")
 
     parser.add_argument(
         "generator",

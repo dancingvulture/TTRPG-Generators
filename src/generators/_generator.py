@@ -4,7 +4,6 @@ easily applicable to more than one type of generator.
 """
 
 
-
 import time
 import os
 import re
@@ -553,11 +552,9 @@ class Generator:
         Use the GeneratorLibrary interface to call any other generator by
         specifying the type of generator, and its name.
         """
-        library = generators.GeneratorLibrary().generators_by_type
-        generator_class, *init_args = library[generator_type][generator_name]
-        generator = generator_class(False, *init_args)
-        items = generator.generate(1, None, 0.1, suppress_print=True)
-        return items[0]
+        generator = generators.get_instance(generator_type, generator_name)
+        creations = generator.generate(1, None, 0.1, suppress_print=True)
+        return creations[0]
 
     @staticmethod
     def _choose_from_dist(count: int,

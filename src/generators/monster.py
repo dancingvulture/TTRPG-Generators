@@ -3,7 +3,7 @@ Contains monster generator classes.
 """
 
 
-from src._generator import Creation, LinkedGenerator, KnaveGenerator
+from src.generators._generator import Creation, LinkedGenerator, KnaveGenerator
 from src.dice import Roller
 import re
 

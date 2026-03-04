@@ -6,7 +6,8 @@ Run unit tests on the generator program.
 import argparse
 import subprocess
 import os
-from src.generators import GeneratorLibrary, get_generator
+
+import src.generators as generators
 
 
 
@@ -47,12 +48,11 @@ def run_all_via_cmd(count: int, suppress_print: bool) -> None:
     Runs every single generator through the command line interface. That way
     the full flow of the program is tested.
     """
-    library = GeneratorLibrary()
     py_cmd = "py" if os.name == 'nt' else 'python3'
 
     # First we gather all command line inputs and displays in a list.
     all_inputs_and_displays = []
-    for gen_type, gen_dict in library.generators_by_type.items():
+    for gen_type, gen_dict in generators._LIBRARY.generators_by_type.items():
         for gen_name in gen_dict:
             cmd_input = [f"{py_cmd}", "main.py", f"{gen_type}", f"{gen_name}",
                          f"{count}"]
@@ -85,7 +85,7 @@ def get_generate_method(generator_type: str, generator_name: str):
     Get a call to a generator class's generate method, with the only input as
     the count, and everything else filled in. Used for quick testing.\
     """
-    return lambda x: get_generator(generator_type, generator_name).generate(x, None, 1)
+    return lambda x: generators.get_instance(generator_type, generator_name).generate(x, None, 1)
 
 
 def main():

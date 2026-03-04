@@ -4,13 +4,13 @@ about all generators.
 """
 
 
-import src._generator as generator
-import src.name_generators as name_generators
-import src.item_generators as item_generators
-import src.npc_generators as npc_generators
-import src.monster_generators as monster_generators
-import src.dungeon_generators as dungeon_generators
-import src.misc_generators as misc_generators
+import src.generators._generator as generator
+import src.generators.name as name_generators
+import src.generators.item as item_generators
+import src.generators.npc as npc_generators
+import src.generators.monster as monster_generators
+import src.generators.dungeon as dungeon_generators
+import src.generators.misc as misc_generators
 
 
 class GeneratorLibrary:
@@ -182,16 +182,3 @@ class GeneratorLibrary:
             "dungeon": self.dungeon,
             "misc": self.misc,
         }
-
-
-def get_generator(generator_type: str,
-                  generator_name: str,
-                  *,
-                  force_update: bool=False,
-                  ) -> generator.Generator:
-    """\
-    Get a generator instance by specifying the type and name.\
-    """
-    library = GeneratorLibrary().generators_by_type
-    gen_class, *init_args = library[generator_type][generator_name]
-    return gen_class(force_update, *init_args)

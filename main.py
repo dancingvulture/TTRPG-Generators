@@ -2,7 +2,7 @@
 Program for generating random things for TTRPG games.
 """
 
-from src.generators import GeneratorLibrary
+from src.generators._library import GeneratorLibrary
 from src.command_line import parse_arguments
 
 

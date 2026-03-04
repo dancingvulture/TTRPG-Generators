@@ -3,8 +3,8 @@ For storing name generator classes.
 """
 
 from random import choice, choices, randint
-from src._generator import (Generator, Creation, LinkedGenerator,
-                            KnaveGenerator, ToadGenerator)
+from src.generators._generator import (Generator, Creation, LinkedGenerator,
+                                       KnaveGenerator, ToadGenerator)
 
 
 class Name(Creation):

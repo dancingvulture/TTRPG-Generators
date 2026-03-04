@@ -3,7 +3,7 @@ Generators for things that are in dungeons, or parts of dungeons.\
 """
 
 
-from src._generator import Creation, ToadGenerator
+from src.generators._generator import Creation, ToadGenerator
 
 
 class ToadBasicMechanicalTrapGenerator(ToadGenerator):

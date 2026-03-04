@@ -6,7 +6,7 @@ I'll probably end up moving things out of this frequently.\
 
 from rich.table import Table
 
-from src._generator import Creation, Generator, ToadGenerator
+from src.generators._generator import Creation, Generator, ToadGenerator
 from src._display import get_minimal_table_settings
 
 

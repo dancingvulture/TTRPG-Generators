@@ -3,7 +3,7 @@ Generate various kinds of items.
 """
 
 
-from src._generator import Creation, Generator, KnaveGenerator
+from src.generators._generator import Creation, Generator, KnaveGenerator
 from src.dice import Roller
 from random import choice, choices, shuffle
 

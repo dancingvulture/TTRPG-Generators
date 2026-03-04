@@ -3,7 +3,7 @@ Generate various types of NPCs.
 """
 
 
-from src._generator import Creation, KnaveGenerator
+from src.generators._generator import Creation, KnaveGenerator
 from random import choices, shuffle
 
 
