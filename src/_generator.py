@@ -40,7 +40,7 @@ class Creation:
 
     def replace(self,
                 __old: str,
-                __new: str | 'Creation',
+                __new: 'str | Creation',
                 __count=-1
                 ) -> 'Creation':
         """\
@@ -119,7 +119,7 @@ class Creation:
 
         return attributes, unlabelled_attributes
 
-    def _unpack_attributes(self) -> list[tuple[str, str | 'Creation']]:
+    def _unpack_attributes(self) -> 'list[tuple[str, str | Creation]]':
         """\
         Takes all attributes and unpacks them into the original form they
         were in when they were passed into init.\
