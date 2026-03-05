@@ -17,6 +17,7 @@ from rich.protocol import is_renderable
 
 import src.generators as generators  # Absolute import to avoid circular conflict.
 from src._display import get_minimal_table_settings
+from src.dice import Roller
 
 
 _EXHAUSTED_HDR_TEMPLATE = "[u]{}[/u]"
@@ -583,6 +584,20 @@ class Generator:
                 distribution_copy.pop(current_value)
 
         return chosen_values if count > 1 else chosen_values[0]
+
+    @staticmethod
+    def _roll_dice(text: str) -> str:
+        """
+        Searches for any rollable dice in the text, which should be bookened by
+        '$' (e.g. $1d20$). The dice are rolled, and the result (a sum), is
+        substituted in place of the dice string.
+        """
+        dice_strings = re.compile(r"\$[^$]*\$").findall(text)
+        roller = Roller()
+        for dice_str in dice_strings:
+            roll = roller.sum(dice_str[1:-1])  # Cut out $.
+            text = text.replace(dice_str, str(roll), 1)
+        return text
 
 
 class LinkedGenerator(Generator):

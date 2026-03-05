@@ -41,7 +41,7 @@ class _ToadDungeonGenerator(ToadGenerator):
                          )
 
     def _get_trap(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "traps")
 
     def _get_trap_basic_mechanical(self) -> Creation:
         return self._get_other_generator_output("dungeon", "basic-mechanical-traps")
