@@ -120,14 +120,15 @@ class GeneratorLibrary:
             )
         })
         self.dungeon = MappingProxyType({
+            "traps": (
+                dungeon_generators.ToadTrapGenerator,
+                [],
+                {}
+            ),
             "basic-mechanical-traps": (
                 dungeon_generators.ToadBasicMechanicalTrapGenerator,
                 [],
-                {
-                    "*trap gas*": "_get_trap_gas",
-                    "*missile trap*": "_get_missile_trap",
-                    "*pit trap*": "_get_pit_trap"
-                }
+                {}
             ),
             "missile-traps": (
                 dungeon_generators.ToadMissileTrapGenerator,
@@ -141,6 +142,11 @@ class GeneratorLibrary:
             ),
             "trap-gasses": (
                 dungeon_generators.ToadTrapGasGenerator,
+                [],
+                {}
+            ),
+            "corridors": (
+                dungeon_generators.ToadCorridorGenerator,
                 [],
                 {}
             ),

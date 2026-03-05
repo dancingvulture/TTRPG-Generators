@@ -17,12 +17,17 @@ class _ToadDungeonGenerator(ToadGenerator):
                  additional_special_case_funcs: dict[str, str]
                  ):
         special_case_funcs = {
+            "*trap*": "_get_trap",
             "*trap, basic mechanical*": "_get_trap_basic_mechanical",
+            "*trap gas*": "_get_trap_gas",
+            "*missile trap*": "_get_missile_trap",
+            "*pit trap*": "_get_pit_trap",
             "*trap, magical*": "_get_magical_trap",
             "*trap, complex*": "_get_complex_trap",
             "*unusual mechanism*": "_get_unusual_mechanism",
-            "*statue*": "_get_statue",
+            "*corridor*": "_get_corridor",
             "*architectural trick*": "_get_architectural_trick",
+            "*statue*": "_get_statue",
             "*level change*": "_get_level_change",
             "*stairs*": "_get_stairs",
             "*teleportation*": "_get_teleportation",
@@ -35,44 +40,11 @@ class _ToadDungeonGenerator(ToadGenerator):
                          special_case_funcs,
                          )
 
+    def _get_trap(self) -> Creation:
+        raise NotImplementedError()
+
     def _get_trap_basic_mechanical(self) -> Creation:
         return self._get_other_generator_output("dungeon", "basic-mechanical-traps")
-
-    def _get_magical_trap(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_complex_trap(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_unusual_mechanism(self) -> Creation:
-        template = ("*unusual mechanism action* *unusual mechanism object*"
-                    " *unusual mechanism modifier*")
-        return self._substitute_headers(template)
-
-    def _get_statue(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_architectural_trick(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_level_change(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_stairs(self) -> Creation:
-        raise NotImplementedError()
-
-    def _get_teleportation(self) -> Creation:
-        raise NotImplementedError()
-
-
-class ToadBasicMechanicalTrapGenerator(_ToadDungeonGenerator):
-    """\
-    Generates basic mechanical traps using the Tome of Adventure Design (2nd edition)
-    table 3-126, pg. 217.\
-    """
-    def _generator(self) -> Creation:
-        trap = self._substitute_headers("*basic mechanical trap*")
-        return Creation("Trap, basic mechanical", ("Mechanism", trap))
 
     def _get_trap_gas(self) -> Creation:
         """\
@@ -88,6 +60,58 @@ class ToadBasicMechanicalTrapGenerator(_ToadDungeonGenerator):
 
     def _get_pit_trap(self) -> Creation:
         return self._get_other_generator_output("dungeon", "pit-traps")
+
+    def _get_magical_trap(self) -> Creation:
+        raise NotImplementedError()
+
+    def _get_complex_trap(self) -> Creation:
+        raise NotImplementedError()
+
+    def _get_unusual_mechanism(self) -> Creation:
+        template = ("*unusual mechanism action* *unusual mechanism object*"
+                    " *unusual mechanism modifier*")
+        return self._substitute_headers(template)
+
+    def _get_corridor(self) -> Creation:
+        return self._get_other_generator_output("dungeon" ,"corridors")
+
+    def _get_architectural_trick(self) -> Creation:
+        raise NotImplementedError()
+
+    def _get_statue(self) -> Creation:
+        raise NotImplementedError()
+
+    def _get_level_change(self) -> Creation:
+        raise NotImplementedError()
+
+    def _get_stairs(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "stairs")
+
+    def _get_teleportation(self) -> Creation:
+        raise NotImplementedError()
+
+
+class ToadTrapGenerator(_ToadDungeonGenerator):
+    """\
+    This generator just picks, from a probability distribution, another trap
+    generator to call.\
+    """
+    def _generator(self) -> Creation:
+        trap_distribution = {
+            ("dungeon", "basic-mechanical-traps"): 1,
+        }
+        gen_type, gen_name = self._choose_from_dist(1, trap_distribution)
+        return self._get_other_generator_output(gen_type, gen_name)
+
+
+class ToadBasicMechanicalTrapGenerator(_ToadDungeonGenerator):
+    """\
+    Generates basic mechanical traps using the Tome of Adventure Design (2nd edition)
+    table 3-126, pg. 217.\
+    """
+    def _generator(self) -> Creation:
+        trap = self._substitute_headers("*basic mechanical trap*")
+        return Creation("Trap, basic mechanical", ("Mechanism", trap))
 
 
 class ToadTrapGasGenerator(_ToadDungeonGenerator):
@@ -124,7 +148,7 @@ class ToadPitTrapGenerator(_ToadDungeonGenerator):
     Design (2nd edition).\
     """
     def _generator(self) -> Creation:
-        type_ = ("type", self._substitute_headers("*pit trap*"))
+        type_ = ("type", self._substitute_headers("*trap, pit*"))
         return Creation("pit trap", type_)
 
 
@@ -152,7 +176,42 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
     Design (2nd edition).\
     """
     def _generator(self) -> Creation:
-        raise NotImplementedError()
+        attributes = [
+            ("shape", self._substitute_headers("*corridor, shape*")),
+            ("construction", self._substitute_headers("*corridor, construction*")),
+            ("width", self._substitute_headers("*corridor, width*")),
+            ("height", self._substitute_headers("*corridor, height*")),
+        ]
+        self._add_unusual_features(attributes)
+
+        return Creation("corridor", *attributes)
+
+    def _add_unusual_features(self,
+                              attributes: list[tuple[str, str | Creation]]
+                              ) -> None:
+        """\
+        Add zero to two unusual features to a corridor's attributes.
+        append changes directly to the list.\
+        """
+        unusual_features_distribution = {
+            0: 0.4,
+            1: 0.4,
+            2: 0.2,
+        }
+        unusual_features_count = self._choose_from_dist(1, unusual_features_distribution)
+        if unusual_features_count == 1:
+            feature = (
+                "unusual feature",
+                self._substitute_headers("*corridor, unusual features*")
+            )
+            attributes.append(feature)
+        elif unusual_features_count == 2:
+            for num in range(1, 3):
+                feature = (
+                    f"unusual feature {num}",
+                    self._substitute_headers("*corridor, unusual features*")
+                )
+                attributes.append(feature)
 
 
 class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):
@@ -207,7 +266,6 @@ class ToadStairGenerator(_ToadDungeonGenerator):
             )
         )
         return Creation("stairs", *attributes)
-
 
 
 class ToadSarcophagusGenerator(_ToadDungeonGenerator):

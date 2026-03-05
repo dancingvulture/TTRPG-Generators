@@ -1,3 +1,18 @@
+# corridor, shape
+long and straight | long with turns or curves | short
+
+# corridor, construction
+excavated, rough hewn | excavated, well-finished | naturally occurring | same as connected area :: 0.40
+
+# corridor, width
+10ft :: 0.60 | 20ft | 5ft
+
+# corridor, height
+10ft :: 0.40 | 20ft or more | crawlway | same as connected area
+
+# corridor, unusual features
+*monster* lair | *trap* | alcoves | blocking line of thin pillars or bars 2ft apart blocks carts, mules, large objects | carvings on walls | crumbling or unstable | dips through short underwater area | half-pillars inside walls | high ceiling | holes in walls (potential *missile trap*) | large grates in floor | mosaic or patterned floor | murals or mosaics on walls | pillars down center | pillars in random locations | several short twists, turns, or zigzags | slopes down | slopes up | strong air drafts or even wind | tube or pipe rather than corridor | unusual temperature
+
 # unusual mechanism action
 apply heat to | apply pressure to | close | cover up | crank | disconnect | don't touch | hit | lift and turn | lift up | lower | move | open | press and then turn | press on | pry out | pull | pull down on | pull up on | push down | push in | push left | push right | push up | put weight on | reconnect | remove | replace | rotate | rotate (clockwise) | rotate (counterclockwise) | shake | shine bright light on | slide | slide down | slide up | spin | squeeze | strike | take pressure off | take weight off | touch | turn | turn around | twist | uncover | unfasten | use a wrench on | use electric shock on | use water on
 

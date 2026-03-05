@@ -16,6 +16,6 @@ arrows :: 0.10 | ballista bolt | bladed disk or shuriken | bolts | cannonball | 
 # missile trap special
 attached to cable or chain for pulling back | coated in acid | disease carrier | explosive | none :: 0.70 | poisoned (lethal) | poisoned (non-lethal)
 
-# pit trap
+# trap, pit
 closes and locks | closes, contains *trap liquid* | closes, locks, floods | closes, locks, poison spikes at bottom | closes, locks, sinks down like elevator | closes, locks, snakes or centipedes inside | closes, locks, spikes at bottom | closes, locks, then shifts or rotates to be replaced with new (empty) pit | closes, locks, walls close to crush | contains piranha, mutant sea bass, electric eels, etc | covered :: 0.15 | covered pit, spikes at bottom | uncovered pit | uncovered pit, *ooze* at bottom | uncovered pit, snakes | uncovered pit, spikes at bottom
 
