@@ -12,7 +12,7 @@ Much of the above might be possible by the names alone, for example to find gene
 - Allow regular expressions to work with keyword searches.
 
 # Refactoring
-- See if you can't 
+- See if you can't create some synax so exhausted headers can have a different display name than their column header. Probably something like `*header $$ display*`
 
 # Pie in the Sky
 - Maybe design a GUI? Replaced headers could be hover text instead of being displayed below.

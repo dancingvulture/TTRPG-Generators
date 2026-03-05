@@ -1,0 +1,30 @@
+# unusual mechanism action
+apply heat to | apply pressure to | close | cover up | crank | disconnect | don't touch | hit | lift and turn | lift up | lower | move | open | press and then turn | press on | pry out | pull | pull down on | pull up on | push down | push in | push left | push right | push up | put weight on | reconnect | remove | replace | rotate | rotate (clockwise) | rotate (counterclockwise) | shake | shine bright light on | slide | slide down | slide up | spin | squeeze | strike | take pressure off | take weight off | touch | turn | turn around | twist | uncover | unfasten | use a wrench on | use electric shock on | use water on
+
+# unusual mechanism object
+each knob | teh curtain rod | the bell-pull | the bladed apparatus | the blue stone | the bolt | the carved hand | the carving on the bottom | the chain | the coupling | the decorative wing-nut | the disk under the latch | the doorknob | the entire keyhole | the eye of the idol | the eye of the tiger | the falcon head | the faucet | the fig leaf | the floorboard | the gargoyle's buttocks | the gem | the glass pane | the handle | the hidden lever | the hook | the king's crown | the knob | the large flagstone | the large gear | the loop | the middle face | the numbered dial | the other door | the red pin | the rope | the second button | the serpent's tongue | the shortest lever | the skull | the spiral thingy | the statue | the talking part | the torch sconce | the triangular piece | the tripwire-looking thing | the twisted wire | the water valve | the wheel
+
+# unusual mechanism modifier
+and wait for three hours | as hard as you can | at the indicated time | but pull your hand back quickly | carefully | forcefully | from a distance | hard | in complete darkness | in complete silence | just after the chime sounds | out in the hallway | quickly | slowly | then back away | then cover your eyes | then jump back | then run like hell | three times | to get into the other socket | to keep that obviously very bad contingency from occurring | to make it match the other side | to make the stone rise | to remove the magnetic force | to start the process | until blood flows | until it aligns with the other side | until it clicks | until it lines up with the yellow marker - not the red marker | until the button pops up | until the electrical arcs have started | until the floor opens | until the illusion disappears | until the keyhole appears | until the latch appears | until the latch opens | until the other one makes a clicking noise | until the real door opens | until the ticking noise stops | until the tubes fill with liquid | until the water-tubes connect | until you have heard two clicks | using a mental command | very gently | when it glows | which is in the other room | while saying the word 'ni.' | while standing on the pressure plate | while the eye of the statue is closed | while the other door is closed
+
+# level change, type
+*stairs* :: 0.25 | *teleportation* | chasm | chute | concealed *stairs* :: 0.05 | concealed trapdoor | cranked platform | elevator room | fireman's pole | floor, flipping | floor, sinking | illusionary floor | ladder | levitation shaft | narrow crack | pit | pneumatic tube | shaft | slide | sloping corridor | trapdoor | well
+
+# stairs, type
+curving :: 0.20 | spiral :: 0.20 | straight :: 0.20 | straight with landings :: 0.20 | zigzag :: 0.20
+
+# stairs, material
+stone | wood
+
+# stairs, structural feature
+banisters :: 0.10 | broad steps :: 0.10 | cracked or crumbled steps :: 0.10 | low ceiling :: 0.10 | narrow steps :: 0.10 | short steps :: 0.10 | steps start broad and end narrow :: 0.025 | steps start narrow and end broad :: 0.025 | steps start short and end tall :: 0.025 | steps start tall and end short :: 0.025 | tall steps :: 0.10 | uneven steps :: 0.10 | very narrow stairwell :: 0.10
+
+# stairs, distinctive feature
+*stairs, unusual* | *trap, basic mechanical* | carvings on stair fronts | carvings on stair tops | carvings on walls | carvings or paintings on stairwell ceiling | drains or vents | lighting | mist in stairwell | mosaics | runes or writing on stair tops | wall paintings
+
+# stairs, condition
+extremely poor due to age | normal :: 0.70 | poor due to damage | slightly crumbling/rotten
+
+# stairs, unusual
+stairs sometimes lead up, and sometimes lead down | | stairwell changes position to lead to different locations
+

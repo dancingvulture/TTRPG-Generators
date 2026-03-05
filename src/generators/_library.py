@@ -143,6 +143,11 @@ class GeneratorLibrary:
                 dungeon_generators.ToadTrapGasGenerator,
                 [],
                 {}
+            ),
+            "stairs": (
+                dungeon_generators.ToadStairGenerator,
+                [],
+                {}
             )
         })
         self.misc = MappingProxyType({

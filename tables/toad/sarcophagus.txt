@@ -1,11 +1,11 @@
 # structure
-larger than human sized | much larger than human sized | made of unusual colored stone | human sized and made of stone | made of inliad wood rather than stone | made of *material* | made of beaten bronze or some other metal | a single casting of metal
+larger than human sized | much larger than human sized | made of unusual colored stone | human sized and made of stone | made of inlaid wood rather than stone | made of *material* | made of beaten bronze or some other metal | a single casting of metal
 
 # exterior decoration
-carvings or pictures with the themes: *theme*, *theme* :: 0.20 | carvings or pictures with the theme: *theme* :: 0.20 | *warning or sigil* :: 0.20 | *external feature* :: 0.20 | mirrored or reflective inside | mirrored or reflective outside | mirrored or reflective inside and outside | shrouded in cloth, smoke, illusion, mist, etc
+carvings or pictures with the themes: *theme*, *theme* :: 0.20 | carvings or pictures with the theme: *theme* :: 0.20 | *warning or sigil* :: 0.20 | *external feature* :: 0.20 | mirrored or reflective inside | mirrored or reflective outside | mirrored or reflective inside and outside | shrouded in cloth, smoke, illusion, mist, etc.
 
 # other features
-
+*trap, basic mechanical* | false bottom | opens with an *unusual mechanism* | functions as an *architectural trick* | *level change* | contains vermin | *trap, magical* | *trap, complex* | *statue*, effigy, or other representation of a body | dimensional space, suspended animation, frozen time, trapped magical being, or other magical effect contained or constrained within | contains undead or other *monster*
 
 # theme
 antlers | deer head | archer | arrow | axe | boar | bull | castle | centipede | spider | chains | circles | cloaked figure | cloud | comet | crown | dagger | demon face | diamond | spiral | dragon | egg | eyes | eye | fish | whale | leviathan | flame | goblet | grapes | griffon | hippogriff | hands | heads | faces | heart | helix | helm | hourglass | lion | manticore | unicorn | minotaur | pegasus | moon | mouse | rat | pyramid | roses | serpent | shield | ships | skulls | squares | stars | sun | sword | throne | chair | tree | vines | wreath
@@ -14,8 +14,7 @@ antlers | deer head | archer | arrow | axe | boar | bull | castle | centipede | 
 big locks or seals | candles | high platform beneath sarcophagus | located in a marked area: *method of marking off area* | motto, scripture, or eulogy is inscribed or is in bas-relief on sarcophagus | plants grow around, on, or through sarcophagus | raised on pillars | statues surround | water or liquid font | window, peephole, air-holes, or other gap or transparent feature
 
 # method of marking off area
-bars, gates, portcullis, or fence | line of candles | beaded curtain | cloth curtain | designs on floor inside area | feel, a strong sense of evil, danger, or perhaps elation or a more positive emotion | construction material of the floor | stains or coloration on the floor | mist within the area | painted line | plants at the border | raised or sunken floor in area | ribbons | shrunken head or skulls | signs | spoken warning near border of area (magic mouth, etc) | statues at border | unusual light within area | waterfall or water channel | writing on floor at the border of area
+bars, gates, portcullis, or fence | line of candles | beaded curtain | cloth curtain | designs on floor inside area | feel, a strong sense of evil, danger, or perhaps elation or a more positive emotion | construction material of the floor | stains or coloration on the floor | mist within the area | painted line | plants at the border | raised or sunken floor in area | ribbons | shrunken head or skulls | signs | spoken warning near border of area (magic mouth, etc.) | statues at border | unusual light within area | waterfall or water channel | writing on floor at the border of area
 
-# warning or sigill
+# warning or sigil
 spoken or sound alarm warning | cryptic warning written on exterior | rune: *magic symbol* | force field or other magical device is used to deter people from touching the sarcophagus
-

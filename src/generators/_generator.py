@@ -205,7 +205,7 @@ class Creation:
         if name: settings["title"] = f"[b]{name}[/b]"
 
         table = Table(**settings)
-        table.add_column(header="Attribute", justify="left")
+        table.add_column(header="Attribute", justify="right")
         table.add_column(header="Description")
         return table
 
@@ -446,10 +446,11 @@ class Generator:
             raise ValueError(f"The sum of the weights in a column are greater"
                              f" than 1! Column: {column_dict}")
 
-        zero_count = len(zeros)
-        prb = (1 - weight_sum) / zero_count
-        for entry in zeros:
-            column_dict[entry] = prb
+        # Assign any entries with no manually set probability the same probability.
+        if zero_count := len(zeros):  # to avoid dividing by zero.
+            prb = (1 - weight_sum) / zero_count
+            for entry in zeros:
+                column_dict[entry] = prb
 
     @staticmethod
     def _has_attributes(creation: Creation) -> bool:
@@ -740,11 +741,10 @@ class ToadGenerator(LinkedGenerator):
         special_case_funcs = {
             "*magic symbol*": "_get_magic_symbol",
             "*gem*": "_get_gem",
-            "*ooze*": "_get_ooze",
+            "*ooze*": "_get_ooze"
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
-                           "mystic orders.txt", "sarcophagus.txt", "traps.txt",
-                           "information.txt", "items.txt"]
+                           "mystic orders.txt", "information.txt", "items.txt"]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
