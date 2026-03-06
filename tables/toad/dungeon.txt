@@ -1,5 +1,8 @@
 # corridor, shape
-long and straight | long with turns or curves | short
+long and straight | long with $1d4$ side passage(s) and after $1d3$ turn(s) it ends in a *corridor, ending* | long with turns or curves | short
+
+# corridor, ending
+dead end | room
 
 # corridor, construction
 excavated, rough hewn | excavated, well-finished | naturally occurring | same as connected area :: 0.40
@@ -35,7 +38,7 @@ stone | wood
 banisters :: 0.10 | broad steps :: 0.10 | cracked or crumbled steps :: 0.10 | low ceiling :: 0.10 | narrow steps :: 0.10 | short steps :: 0.10 | steps start broad and end narrow :: 0.025 | steps start narrow and end broad :: 0.025 | steps start short and end tall :: 0.025 | steps start tall and end short :: 0.025 | tall steps :: 0.10 | uneven steps :: 0.10 | very narrow stairwell :: 0.10
 
 # stairs, distinctive feature
-*stairs, unusual* | *trap, basic mechanical* | carvings on stair fronts | carvings on stair tops | carvings on walls | carvings or paintings on stairwell ceiling | drains or vents | lighting | mist in stairwell | mosaics | runes or writing on stair tops | wall paintings
+*basic mechanical trap* | *stairs, unusual* | carvings on stair fronts | carvings on stair tops | carvings on walls | carvings or paintings on stairwell ceiling | drains or vents | lighting | mist in stairwell | mosaics | runes or writing on stair tops | wall paintings
 
 # stairs, condition
 extremely poor due to age | normal :: 0.70 | poor due to damage | slightly crumbling/rotten

@@ -171,7 +171,6 @@ class GeneratorLibrary:
                 [],
                 {
                     "*writing*": "_get_writing",
-                    "*monster*": "_get_monster",
                     "*author*": "_get_author",
                     "*recipient*": "_get_recipient",
                 }

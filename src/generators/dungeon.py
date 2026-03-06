@@ -18,12 +18,12 @@ class _ToadDungeonGenerator(ToadGenerator):
                  ):
         special_case_funcs = {
             "*trap*": "_get_trap",
-            "*trap, basic mechanical*": "_get_trap_basic_mechanical",
+            "*basic mechanical trap*": "_get_trap_basic_mechanical",
             "*trap gas*": "_get_trap_gas",
             "*missile trap*": "_get_missile_trap",
             "*pit trap*": "_get_pit_trap",
-            "*trap, magical*": "_get_magical_trap",
-            "*trap, complex*": "_get_complex_trap",
+            "*magical trap*": "_get_magical_trap",
+            "*complex trap*": "_get_complex_trap",
             "*unusual mechanism*": "_get_unusual_mechanism",
             "*corridor*": "_get_corridor",
             "*architectural trick*": "_get_architectural_trick",
@@ -62,10 +62,10 @@ class _ToadDungeonGenerator(ToadGenerator):
         return self._get_other_generator_output("dungeon", "pit-traps")
 
     def _get_magical_trap(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "magical-traps")
 
     def _get_complex_trap(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "complex-traps")
 
     def _get_unusual_mechanism(self) -> Creation:
         template = ("*unusual mechanism action* *unusual mechanism object*"
@@ -76,19 +76,19 @@ class _ToadDungeonGenerator(ToadGenerator):
         return self._get_other_generator_output("dungeon" ,"corridors")
 
     def _get_architectural_trick(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "architectural-tricks")
 
     def _get_statue(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "statues")
 
     def _get_level_change(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "level-changes")
 
     def _get_stairs(self) -> Creation:
         return self._get_other_generator_output("dungeon", "stairs")
 
     def _get_teleportation(self) -> Creation:
-        raise NotImplementedError()
+        return self._get_other_generator_output("dungeon", "teleportation")
 
 
 class ToadTrapGenerator(_ToadDungeonGenerator):
@@ -110,7 +110,7 @@ class ToadBasicMechanicalTrapGenerator(_ToadDungeonGenerator):
     table 3-126, pg. 217.\
     """
     def _generator(self) -> Creation:
-        trap = self._substitute_headers("*basic mechanical trap*")
+        trap = self._substitute_headers("*trap, basic mechanical*")
         return Creation("Trap, basic mechanical", ("Mechanism", trap))
 
 
@@ -176,8 +176,11 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
     Design (2nd edition).\
     """
     def _generator(self) -> Creation:
+        # The outcome of shape may produce roll-able dice.
+        shape = self._substitute_headers("*corridor, shape*")
+        shape = self._roll_dice(shape)
         attributes = [
-            ("shape", self._substitute_headers("*corridor, shape*")),
+            ("shape", shape),
             ("construction", self._substitute_headers("*corridor, construction*")),
             ("width", self._substitute_headers("*corridor, width*")),
             ("height", self._substitute_headers("*corridor, height*")),
@@ -212,6 +215,15 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
                     self._substitute_headers("*corridor, unusual features*")
                 )
                 attributes.append(feature)
+
+
+class ToadTeleportationGenerator(_ToadDungeonGenerator):
+    """\
+    Generate teleporters using tables (pp. 156-157) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        raise NotImplementedError()
 
 
 class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):
