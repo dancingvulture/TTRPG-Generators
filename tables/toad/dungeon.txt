@@ -5,7 +5,7 @@ long and straight | long with $1d4$ side passage(s) and after $1d3$ turn(s) it e
 dead end | room
 
 # corridor, construction
-excavated, rough hewn | excavated, well-finished | naturally occurring | same as connected area :: 0.40
+excavated, rough-hewn | excavated, well-finished | naturally occurring | same as connected area :: 0.40
 
 # corridor, width
 10ft :: 0.60 | 20ft | 5ft
@@ -44,5 +44,14 @@ banisters :: 0.10 | broad steps :: 0.10 | cracked or crumbled steps :: 0.10 | lo
 extremely poor due to age | normal :: 0.70 | poor due to damage | slightly crumbling/rotten
 
 # stairs, unusual
-stairs sometimes lead up, and sometimes lead down | | stairwell changes position to lead to different locations
+stairs sometimes lead up, and sometimes lead down | stairwell changes position to lead to different locations | stairs lead nowhere without particular command word or *item* | stairs lead over lava, water, or other hazard | stairs are squishy, spongy, or sticky | stairs are suspended from cables or ropes | stairwell contains some stairs leading up, and some down | stair steps are invisible, making the stairwell resemble a chute | stairs are corrosive, hot, or freezing, causing slow progressive damage unless proper precautions are taken | stairs tilt, tremble, and shift, making it difficult to maintain footing
+
+# architectural trick, central feature
+alcove :: 0.04 | altar | arch | balcony | bridge | canal | ceiling | cistern | container | crawlway/ventillation duct | dais | disk | dome | door :: 0.06 | door, secret | fire pit | fireplace | closed fissure | floor : 0.06 | force field | fountain | furniture | hole | idol or statue | illusion | machine | niche | passageway | pedestal | pillar | pit | platform | pool | portcullis | room | stairway | walkway (in trench) | walkway (raised) | wall :: 0.06 | window to other area
+
+# architectural trick, what it does
+snaps to the side
+
+# architectural trick, how it functions
+activate electricity
 

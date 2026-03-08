@@ -1,0 +1,3 @@
+- Filled out the rest of the unusual stairs column.
+- Added _get_item() to ToadGenerator.
+- Added the first entry to two architectural trick columns.
