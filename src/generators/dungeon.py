@@ -24,7 +24,10 @@ class _ToadDungeonGenerator(ToadGenerator):
             "*pit trap*": "_get_pit_trap",
             "*magical trap*": "_get_magical_trap",
             "*complex trap*": "_get_complex_trap",
+            "*archway*": "_get_archway",
+            "*door*": "_get_door",
             "*unusual mechanism*": "_get_unusual_mechanism",
+            "*bridge*": "_get_bridge",
             "*corridor*": "_get_corridor",
             "*architectural trick*": "_get_architectural_trick",
             "*statue*": "_get_statue",
@@ -67,10 +70,19 @@ class _ToadDungeonGenerator(ToadGenerator):
     def _get_complex_trap(self) -> Creation:
         return self._get_other_generator_output("dungeon", "complex-traps")
 
+    def _get_archway(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "archways")
+
+    def _get_door(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "doors")
+
     def _get_unusual_mechanism(self) -> Creation:
         template = ("*unusual mechanism action* *unusual mechanism object*"
                     " *unusual mechanism modifier*")
         return self._substitute_headers(template)
+
+    def _get_bridge(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "bridges")
 
     def _get_corridor(self) -> Creation:
         return self._get_other_generator_output("dungeon" ,"corridors")
@@ -170,6 +182,33 @@ class ToadComplexTrapGenerator(_ToadDungeonGenerator):
         raise NotImplementedError()
 
 
+class ToadTransitionGenerator(_ToadDungeonGenerator):
+    """\
+    Generate transitions using table (pg. 150) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        raise NotImplementedError()
+
+
+class ToadArchwayGenerator(_ToadDungeonGenerator):
+    """\
+    Generate archways using table (pg. 151) from the Tomb of Adventure Design
+    (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        raise NotImplementedError()
+
+
+class ToadBridgeGenerator(_ToadDungeonGenerator):
+    """\
+    Generate bridges using table (pg. 151) from the Tomb of Adventure Design
+    (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        raise NotImplementedError()
+
+
 class ToadCorridorGenerator(_ToadDungeonGenerator):
     """\
     Generate corridors using tables (pg. 150) from the Tomb of Adventure
@@ -217,6 +256,15 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
                 attributes.append(feature)
 
 
+class ToadDoorGenerator(_ToadDungeonGenerator):
+    """\
+    Generate doors using tables (pp. 152-153) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        raise NotImplementedError()
+
+
 class ToadTeleportationGenerator(_ToadDungeonGenerator):
     """\
     Generate teleporters using tables (pp. 156-157) from the Tomb of Adventure
@@ -232,7 +280,25 @@ class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):
     of Adventure Design (2nd edition).\
     """
     def _generator(self) -> Creation:
-        raise NotImplementedError()
+        attributes = (
+            (
+                "central feature",
+                self._substitute_headers("*architectural trick, central feature*")
+            ),
+            (
+                "how it functions",
+                self._substitute_headers("*architectural trick, how it functions*")
+            ),
+            (
+                "what happens",
+                self._substitute_headers("*architectural trick, what happens when functioning*")
+            ),
+            (
+                "what is accessed",
+                self._substitute_headers("*architectural trick, what is accessed*")
+            )
+        )
+        return Creation("architectural trick", *attributes)
 
 
 class ToadStatueGenerator(_ToadDungeonGenerator):

@@ -758,7 +758,8 @@ class ToadGenerator(LinkedGenerator):
             "*item*": "_get_item",
             "*gem*": "_get_gem",
             "*monster*": "_get_monster",
-            "*ooze*": "_get_ooze"
+            "*ooze*": "_get_ooze",
+            "*writing*": "_get_writing",
         }
         table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
                            "mystic orders.txt", "information.txt", "items.txt"]
@@ -774,7 +775,7 @@ class ToadGenerator(LinkedGenerator):
         """\
         Get a magical symbol using the magic symbol generator.\
         """
-        return self._get_other_generator_output("misc", "magic-symbol")
+        return self._get_other_generator_output("misc", "magic-symbols")
 
     def _get_item(self) -> Creation:
         return self._get_other_generator_output("item", "fantasy-mundane")
@@ -787,3 +788,6 @@ class ToadGenerator(LinkedGenerator):
 
     def _get_ooze(self) -> Creation:
         return self._get_other_generator_output("monster", "oozes")
+
+    def _get_writing(self) -> Creation:
+        return self._get_other_generator_output("misc", "writing")

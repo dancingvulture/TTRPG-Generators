@@ -71,4 +71,3 @@ class KnaveMonsterGenerator(KnaveGenerator):
             attributes.append((f"trait {trait_num}", trait))
 
         return KnaveMonster(monster_type, *attributes)
-    

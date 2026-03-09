@@ -154,6 +154,11 @@ class GeneratorLibrary:
                 dungeon_generators.ToadStairGenerator,
                 [],
                 {}
+            ),
+            "architectural-tricks": (
+                dungeon_generators.ToadArchitecturalTrickGenerator,
+                [],
+                {}
             )
         })
         self.misc = MappingProxyType({
@@ -170,7 +175,6 @@ class GeneratorLibrary:
                 misc_generators.ToadClueGenerator,
                 [],
                 {
-                    "*writing*": "_get_writing",
                     "*author*": "_get_author",
                     "*recipient*": "_get_recipient",
                 }

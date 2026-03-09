@@ -1,3 +1,3 @@
-- Filled out the rest of the unusual stairs column.
-- Added _get_item() to ToadGenerator.
-- Added the first entry to two architectural trick columns.
+- Moved _get_writing() from ToadClueGenerator to ToadGenerator.
+- Finished ToadArchitecturalTrickGenerator.
+- Added class skeletons and special exception funcs to _ToadDungeonGenerator for archway, door, and bridge generators.
