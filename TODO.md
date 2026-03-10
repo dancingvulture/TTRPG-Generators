@@ -8,10 +8,10 @@
   - [ ] ToadTransitionGenerator
   - [ ] ToadArchwayGenerator
   - [ ] ToadDoorGenerator
-  - [ ] ToadBridgeGenerator
+  - [x] ToadBridgeGenerator
   - [ ] ToadTeleportationGenerator
   - [x] ToadArchitecturalTrickGenerator
-  - [ ] ToadStatueGenerator
+  - [x] ToadStatueGenerator
   - [ ] ToadLevelChangeGenerator
   - [ ] ToadSarcophagusGenerator
 - Perilous wilds

@@ -1,5 +1,1 @@
-- Reorganized the generator classes in the dungeon module, using comments to separate out
-- Moved _get_book() to ToadGenerator.
-- Finished ToadBridgeGenerator.
-- Removed 'dungeon.txt' and split its contents into 'tricks.txt' and 'map.txt'
-- Finished ToadStatueGenerator.
+Forgot to check off those items in the to-do list.
