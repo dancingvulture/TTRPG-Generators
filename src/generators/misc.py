@@ -83,9 +83,9 @@ class MagicalSymbol(Creation):
     Description of a magical symbol.\
     """
     def __rich__(self) -> str:
-        basic_form = self.attributes["basic form"]
-        first_change = self.attributes["first change"]
-        second_change = self.attributes["second change"]
+        basic_form = self.attributes["basic form"][0]
+        first_change = self.attributes["first change"][0]
+        second_change = self.attributes["second change"][0]
 
         symbol = f"[b]{basic_form}[/b]" + ", " + first_change
         if second_change != "no further modification":
@@ -150,7 +150,7 @@ class Writing(Creation):
         table.add_column()
         table.add_column()
 
-        writing = self.attributes["nature"]
+        writing = self.attributes["nature"][0]
         table.add_row("[b][i]Writing:[/b][/i]", writing)
         return table
 

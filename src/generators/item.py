@@ -124,10 +124,10 @@ class WHScroll(Item):
     A whitehack scroll.
     """
     def __rich__(self) -> str:
-        spell = self.attributes["spell"]
-        magnitude = self._capitalize(self.attributes["magnitude"])
-        cost = self.attributes["cost"]
-        fabric = self.attributes["fabric"]
+        spell = self.attributes["spell"][0]
+        magnitude = self._capitalize(self.attributes["magnitude"][0])
+        cost = self.attributes["cost"][0]
+        fabric = self.attributes["fabric"][0]
         return f"{magnitude} ({cost} HP) {fabric} scroll of {spell}"
 
     @property

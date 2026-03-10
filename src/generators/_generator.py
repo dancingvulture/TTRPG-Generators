@@ -61,7 +61,7 @@ class Creation:
             # the substitute, and whose content is the substitute.
             exhausted_hdr =_EXHAUSTED_HDR_TEMPLATE.format(__old[1:-1])
             name = self.name.replace(__old, exhausted_hdr, __count)
-            attributes.append(("", __new))
+            attributes.append((exhausted_hdr, __new))
 
         else:
             raise Exception(f"__new must be str or Creation: type={type(__new)}")
@@ -104,7 +104,7 @@ class Creation:
 
     @staticmethod
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
-                            ) -> 'tuple[dict[str, str | Creation], list[str | Creation]]':
+                            ) -> 'tuple[dict[str, list[str | Creation]], list[str | Creation]]':
         """
         Take in a number of attribute 2-tuples and collect the labelled
         attributes into a dictionary, and the unlabelled ones into a list.
@@ -115,7 +115,9 @@ class Creation:
             if not attribute_label:
                 unlabelled_attributes.append(value)
             else:
-                attributes[attribute_label] = value
+                if attribute_label not in attributes:
+                    attributes[attribute_label] = []
+                attributes[attribute_label].append(value)
 
         return attributes, unlabelled_attributes
 
@@ -125,8 +127,9 @@ class Creation:
         were in when they were passed into init.\
         """
         attributes = []
-        for label, value in self.attributes.items():
-            attributes.append((label, value))
+        for label, values in self.attributes.items():
+            for val in values:
+                attributes.append((label, val))
 
         for value in self.unlabelled_attributes:
             attributes.append(("", value))
@@ -186,10 +189,11 @@ class Creation:
             return name
 
         table = self._initialize_table(name)
-        for label, attribute in attributes.items():
+        for label, attributes in attributes.items():
             label = self._capitalize(label)
             label = f"[u]{label}[/u]"
-            self._add_row(table, label, attribute)
+            for attr in attributes:
+                self._add_row(table, label, attr)
 
         for attribute in unlabelled_attributes:
             self._add_row(table, "-", attribute)

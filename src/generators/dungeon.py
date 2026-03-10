@@ -233,16 +233,9 @@ class ToadBridgeGenerator(_ToadDungeonGenerator):
             2: 0.05,
         }
         count = self._choose_from_dist(1, unusual_feature_count_dist)
-        if count == 1:
-            attribute_names = ["unusual feature"]
-        elif count > 1:
-            attribute_names = [f"unusual feature {num}" for num in range(count)]
-        else:
-            attribute_names = []
-
-        for attr_name in attribute_names:
-            attr = (attr_name, self._substitute_headers("*bridge, unusual feature*"))
-            attributes.append(attr)
+        for _ in range(count):
+            attr = self._substitute_headers("*bridge, unusual feature*")
+            attributes.append(("unusual feature", attr))
 
 
 class ToadCorridorGenerator(_ToadDungeonGenerator):

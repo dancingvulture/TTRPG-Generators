@@ -1,1 +1,10 @@
-Forgot to check off those items in the to-do list.
+To make it possible for a Creation to have multiple attributes with identical labels, we make the Creation.attributes values lists, appending each new instance of an attribute. Slight changes were made to the code of the following methods.
+- Creation._collect_attributes()
+- Creation._unpack_attributes()
+- Creation._create_display()
+- WHscroll.__rich__()
+- MagicSymbol.__rich__()
+- ToadBridgeGenerator._add_unusual_features()
+- KnaveMonsterGenerator._generator()
+
+Additionally, fixed a bug where if a creation is substituted in the header of another creation, it was included as an unlabelled attribute instead of a labelled one.

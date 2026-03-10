@@ -66,8 +66,8 @@ class KnaveMonsterGenerator(KnaveGenerator):
         }
         trait_count = self._choose_from_dist(1, trait_dist)
         attributes = []
-        for trait_num in range(1, trait_count + 1):
+        for _ in range(trait_count):
             trait = self._substitute_headers("*monster trait*")
-            attributes.append((f"trait {trait_num}", trait))
+            attributes.append(("trait", trait))
 
         return KnaveMonster(monster_type, *attributes)
