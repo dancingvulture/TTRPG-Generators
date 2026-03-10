@@ -1,3 +1,9 @@
+# bridge, material
+bronze | floating disks | glass | iron | rope and wood | stepping stones | stone | tree or log | vines | wood
+
+# bridge, unusual feature
+*statue*s or carvings | broken | crumbling or dilapidated | illusion involved | invisible | rotates | slippery and/or sloped | sways or flexes | tilting | upward sloping
+
 # corridor, shape
 long and straight | long with $1d4$ side passage(s) and after $1d3$ turn(s) it ends in a *corridor, ending* | long with turns or curves | short
 
@@ -46,18 +52,30 @@ extremely poor due to age | normal :: 0.70 | poor due to damage | slightly crumb
 # stairs, unusual
 stair steps are invisible, making the stairwell resemble a chute | stairs are corrosive, hot, or freezing, causing slow progressive damage unless proper precautions are taken | stairs are squishy, spongy, or sticky | stairs are suspended from cables or ropes | stairs lead nowhere without particular command word or *item* | stairs lead over lava, water, or other hazard | stairs sometimes lead up, and sometimes lead down | stairs tilt, tremble, and shift, making it difficult to maintain footing | stairwell changes position to lead to different locations | stairwell contains some stairs leading up, and some down
 
-# architectural trick, central feature
-alcove :: 0.04 | altar | arch | balcony | bridge | canal | ceiling | cistern | closed fissure | container | crawlway/ventillation duct | dais | disk | dome | door :: 0.06 | door, secret | fire pit | fireplace | floor : 0.06 | force field | fountain | furniture | hole | idol or statue | illusion | machine | niche | passageway | pedestal | pillar | pit | platform | pool | portcullis | room | stairway | walkway (in trench) | walkway (raised) | wall :: 0.06 | window to other area
+# statue, material
+brass | bronze | clay :: 0.08 | copper | flesh | granite | ice | iron | jade | marble | obsidian | quartz | stone :: 0.20 | straw | thorns | wax | wicker | wires or mesh | wood :: 0.16
 
-# architectural trick, what it does
-causes vertical movement to seem horizontal, or vice versa | changes your direction | closes | contains built-up tension of some kind | distorts space or distance | fall to reveal entrance | flips over | has a false bottom | has a slant | has multiple moving parts | has two entrances or apertures with different results | is concealed | moves to block party from going back or retracing steps | moves up or down | pulls things in a particular direction | rotates | snaps to the side | transports to a different area (teleport or dimensional) | uses illusion to cause mapping problem and get you lost
+# statue, condition
+bisected or decapitated | broken | chipped | covered in frost or condensation | covered in graffiti | covered in guano | covered in moss or goo | covered in webs | cracked | defaced or defiled | draped with cloth | eroded by water or wind | hacked at | half buried | hot to the touch | painted over | partially disintegrated | partially melted | parts removed/broken off | perfect condition | phosphorescent | pockmarks or holes | scorched | smashed apart | toppled over | warped
 
-# architectural trick, how it functions
-activate electricity | chill something | chop something off | command word | connect pipes | counterweights | crank-operated | dial or dials to proper settings | disconnect/reconnect something | fill it with water | friction on/off | heat something | intelligent | manipulate specific component :: 0.04 | move through a particular area | perform or bring sacrifice | place specific object into space provided for it | press button | pressure plate (adding weight) :: 0.04 | pressure plate (remove weight) :: 0.04 | provide darkness | provide light | pry something out :: 0.04 | pull lever | pull tripwire | put proper chemicals, minerals or elements in the place where they are processed | redirect water channel | riddle | rotate something | shake something | slide something sideways :: 0.04 | speak command word, phrase, or name | squeeze something | stand in precise locations | strike something | tilt something | touch component | turn dials to correct settings | turn something | turn spigot | un-jam something | unfasten something | untie something | use key in lock
+# statue, subject
+*statue, animal* | *statue, combination* | *statue, event* | *statue, inanimate* | *statue, monster* | *statue, person*
 
-# architectural trick, what happens when functioning
-antigravity :: 0.04 | breaks apart :: 0.04 | component rotates :: 0.08 | component slides down :: 0.08 | component slides up :: 0.08 | component vanishes :: 0.04 | disintegrates | entire thing rotates :: 0.08 | floats :: 0.04 | operates normally :: 0.04 | rises :: 0.04 | slides down :: 0.08 | slides up :: 0.08 | teleports party past obstacle :: 0.04 | tilts down :: 0.08 | tilts sideways :: 0.06 | tilts up :: 0.06 | vanishes from existence
+# statue, person
+a barbaric warrior | a beggar | a builder | a child or baby | a commoner | a craftsman | a deity | a heroic warrior | a knight | a performer | a poet | a religious leader | a saint | a scholar | a vanquished one | a victim | a wizard | an artist | nondescript/faceless | royalty | the owner
 
-# architectural trick, what is accessed
-another level :: 0.10 | chamber with *monster* :: 0.12 | chamber with treasure :: 0.14 | delivers a key :: 0.10 | dimensional pocket :: 0.10 | entry to otherwise inaccessible area :: 0.12 | information (e.g. *writing*, *magic symbol*, etc.) :: 0.10 | permits access to a game stacked in the player's favor :: 0.10 | shortcut :: 0.12
+# statue, animal
+ape | bear | bird | boar :: 0.025 | bull :: 0.025 | cat | crane :: 0.016 | dog :: 0.10 | dolphin :: 0.025 | duck | elephant | fish :: 0.025 | hawk | heron :: 0.016 | horse :: 0.10 | lion :: 0.025 | octopus | ox :: 0.025 | pig :: 0.025 | rooster | snake | stork :: 0.016 | tiger :: 0.025 | wolf
+
+# statue, monster
+*monster*
+
+# statue, inanimate
+*item* :: 0.10 | abstract blob form | abstract jumbled form | abstract spheres | balancing scales, wings, or other symbolic representation of a concept or ideal | cube or cubes | diorama of an outdoor location | hanging hoops or other mobile | helix or spiral | model of a house or castle | model of a room | mushroom or fungus | musical instrument | representation of a machine or mechanism | sculpted pillar | skull or skeletal | sphere or cone | symbol on a pedestal | tree
+
+# statue, event
+a blessing | a duel | a funeral | a marriage | a meal | a religious judgement | a significant discovery | a significant purchase | adulthood rites | an assassination | an execution | an important argument or dispute | battle scene :: 0.10 | conferring knighthood or status | conferring ownership | scene from the dungeon's history | signing of a treaty or accord | the exiling of a rebel or criminal | the greeting of an important guest
+
+# statue, combination
+*statue, animal* and *statue, animal* | *statue, animal* and *statue, inanimate* | *statue, animal* and *statue, monster* | *statue, animal* family group | *statue, inanimate* and *statue, inanimate* | *statue, monster* and *statue, inanimate* | *statue, monster* and *statue, monster* | *statue, person* and *statue, animal* | *statue, person* and *statue, inanimate* | *statue, person* and *statue, monster* | *statue, person* and *statue, person* | *statue, person*, *statue, person*, and *statue, person* | family group of *statue, person* | terracotta army arrangement of $2d6$ near identical *statue, animal* | terracotta army arrangement of $2d6$ near identical *statue, person* | totem pole arrangement of *statue, animal*, *statue, animal*, *statue, animal*, *statue, animal*, and *statue, animal* :: 0.016 | totem pole arrangement of *statue, animal*, *statue, animal*, *statue, animal*, and *statue, animal* :: 0.016 | totem pole arrangement of *statue, animal*, *statue, animal*, and *statue, animal* :: 0.016 | totem pole arrangement of *statue, monster*, *statue, monster*, *statue, monster*, *statue, monster*, and *statue, monster* :: 0.016 | totem pole arrangement of *statue, monster*, *statue, monster*, *statue, monster*, and *statue, monster* :: 0.016 | totem pole arrangement of *statue, monster*, *statue, monster*, and *statue, monster* :: 0.016 | two *statue, monster*s
 

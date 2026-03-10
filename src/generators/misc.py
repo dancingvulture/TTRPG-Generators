@@ -172,8 +172,3 @@ class ToadWritingGenerator(ToadGenerator):
         writing = ("nature", self._substitute_headers("*nature of writing*"))
         return Writing("writing", writing)
 
-    def _get_book(self) -> Creation:
-        return self._get_other_generator_output("item", "books")
-
-    def _get_item(self) -> Creation:
-        return self._get_other_generator_output("item", "fantasy-mundane")

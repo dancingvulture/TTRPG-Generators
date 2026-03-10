@@ -35,7 +35,7 @@ class _ToadDungeonGenerator(ToadGenerator):
             "*stairs*": "_get_stairs",
             "*teleportation*": "_get_teleportation",
         }
-        table_filenames = ["dungeon.txt", "traps.txt"]
+        table_filenames = ["map.txt", "traps.txt", "tricks.txt"]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
@@ -102,6 +102,10 @@ class _ToadDungeonGenerator(ToadGenerator):
     def _get_teleportation(self) -> Creation:
         return self._get_other_generator_output("dungeon", "teleportation")
 
+
+###########################################
+################## TRAPS ##################
+###########################################
 
 class ToadTrapGenerator(_ToadDungeonGenerator):
     """\
@@ -182,6 +186,10 @@ class ToadComplexTrapGenerator(_ToadDungeonGenerator):
         raise NotImplementedError()
 
 
+###########################################
+################### MAP ###################
+###########################################
+
 class ToadTransitionGenerator(_ToadDungeonGenerator):
     """\
     Generate transitions using table (pg. 150) from the Tomb of Adventure
@@ -206,7 +214,35 @@ class ToadBridgeGenerator(_ToadDungeonGenerator):
     (2nd edition).\
     """
     def _generator(self) -> Creation:
-        raise NotImplementedError()
+        attributes = [
+            ("material", self._substitute_headers("*bridge, material*")),
+        ]
+        self._add_unusual_features(attributes)
+        return Creation("bridge", *attributes)
+
+
+    def _add_unusual_features(self,
+                              attributes: list[tuple[str, str | Creation]]
+                              ) -> None:
+        """\
+        Append unusual features to a list of bridge attributes. \
+        """
+        unusual_feature_count_dist = {
+            0: 0.75,
+            1: 0.20,
+            2: 0.05,
+        }
+        count = self._choose_from_dist(1, unusual_feature_count_dist)
+        if count == 1:
+            attribute_names = ["unusual feature"]
+        elif count > 1:
+            attribute_names = [f"unusual feature {num}" for num in range(count)]
+        else:
+            attribute_names = []
+
+        for attr_name in attribute_names:
+            attr = (attr_name, self._substitute_headers("*bridge, unusual feature*"))
+            attributes.append(attr)
 
 
 class ToadCorridorGenerator(_ToadDungeonGenerator):
@@ -274,40 +310,18 @@ class ToadTeleportationGenerator(_ToadDungeonGenerator):
         raise NotImplementedError()
 
 
-class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):
-    """\
-    Generate architectural tricks using tables (pp. 190-191) from the Tomb
-    of Adventure Design (2nd edition).\
-    """
-    def _generator(self) -> Creation:
-        attributes = (
-            (
-                "central feature",
-                self._substitute_headers("*architectural trick, central feature*")
-            ),
-            (
-                "how it functions",
-                self._substitute_headers("*architectural trick, how it functions*")
-            ),
-            (
-                "what happens",
-                self._substitute_headers("*architectural trick, what happens when functioning*")
-            ),
-            (
-                "what is accessed",
-                self._substitute_headers("*architectural trick, what is accessed*")
-            )
-        )
-        return Creation("architectural trick", *attributes)
-
-
 class ToadStatueGenerator(_ToadDungeonGenerator):
     """\
     Generate statues using tables (pp. 176-177) from the Tomb of
     Adventure Design (2nd edition).\
     """
     def _generator(self) -> Creation:
-        raise NotImplementedError()
+        attributes = (
+            ("material", self._substitute_headers("*statue, material*")),
+            ("condition", self._substitute_headers("*statue, condition*")),
+            ("subject", self._substitute_headers("*statue, subject*"))
+        )
+        return Creation("statue", *attributes)
 
 
 class ToadLevelChangeGenerator(_ToadDungeonGenerator):
@@ -345,6 +359,41 @@ class ToadStairGenerator(_ToadDungeonGenerator):
         )
         return Creation("stairs", *attributes)
 
+
+###########################################
+################## TRICKS #################
+###########################################
+
+class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):
+    """\
+    Generate architectural tricks using tables (pp. 190-191) from the Tomb
+    of Adventure Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        attributes = (
+            (
+                "central feature",
+                self._substitute_headers("*architectural trick, central feature*")
+            ),
+            (
+                "how it functions",
+                self._substitute_headers("*architectural trick, how it functions*")
+            ),
+            (
+                "what happens",
+                self._substitute_headers("*architectural trick, what happens when functioning*")
+            ),
+            (
+                "what is accessed",
+                self._substitute_headers("*architectural trick, what is accessed*")
+            )
+        )
+        return Creation("architectural trick", *attributes)
+
+
+###########################################
+################### MISC ##################
+###########################################
 
 class ToadSarcophagusGenerator(_ToadDungeonGenerator):
     """\

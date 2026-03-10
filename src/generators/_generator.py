@@ -756,6 +756,7 @@ class ToadGenerator(LinkedGenerator):
         special_case_funcs = {
             "*magic symbol*": "_get_magic_symbol",
             "*item*": "_get_item",
+            "*book*": "_get_book",
             "*gem*": "_get_gem",
             "*monster*": "_get_monster",
             "*ooze*": "_get_ooze",
@@ -779,6 +780,9 @@ class ToadGenerator(LinkedGenerator):
 
     def _get_item(self) -> Creation:
         return self._get_other_generator_output("item", "fantasy-mundane")
+
+    def _get_book(self) -> Creation:
+        return self._get_other_generator_output("item", "books")
 
     def _get_gem(self) -> Creation:
         return self._get_other_generator_output("item", "gems")

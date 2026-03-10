@@ -145,6 +145,11 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
+            "bridges": (
+                dungeon_generators.ToadBridgeGenerator,
+                [],
+                {}
+            ),
             "corridors": (
                 dungeon_generators.ToadCorridorGenerator,
                 [],
@@ -152,6 +157,11 @@ class GeneratorLibrary:
             ),
             "stairs": (
                 dungeon_generators.ToadStairGenerator,
+                [],
+                {}
+            ),
+            "statues": (
+                dungeon_generators.ToadStatueGenerator,
                 [],
                 {}
             ),
@@ -182,10 +192,7 @@ class GeneratorLibrary:
             "writing": (
                 misc_generators.ToadWritingGenerator,
                 [],
-                {
-                    "*book*": "_get_book",
-                    "*item*": "_get_item",
-                }
+                {}
             )
         })
 

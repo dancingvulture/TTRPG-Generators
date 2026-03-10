@@ -1,3 +1,5 @@
-- Moved _get_writing() from ToadClueGenerator to ToadGenerator.
-- Finished ToadArchitecturalTrickGenerator.
-- Added class skeletons and special exception funcs to _ToadDungeonGenerator for archway, door, and bridge generators.
+- Reorganized the generator classes in the dungeon module, using comments to separate out
+- Moved _get_book() to ToadGenerator.
+- Finished ToadBridgeGenerator.
+- Removed 'dungeon.txt' and split its contents into 'tricks.txt' and 'map.txt'
+- Finished ToadStatueGenerator.
