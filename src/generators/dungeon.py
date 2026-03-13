@@ -246,7 +246,6 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
     def _generator(self) -> Creation:
         # The outcome of shape may produce roll-able dice.
         shape = self._substitute_headers("*corridor, shape*")
-        shape = self._roll_dice(shape)
         attributes = [
             ("shape", shape),
             ("construction", self._substitute_headers("*corridor, construction*")),
