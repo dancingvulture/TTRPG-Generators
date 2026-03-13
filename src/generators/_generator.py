@@ -377,7 +377,8 @@ class Generator:
         Get a random entry from the given column.
         """
         distribution = self._tables[column_name]
-        return self._choose_from_dist(1, distribution)
+        entry = self._choose_from_dist(1, distribution)
+        return self._roll_dice(entry)
 
     def _text_file_to_dict(self, filename: str) -> dict[str, dict[str, float]]:
         """\

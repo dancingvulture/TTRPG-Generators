@@ -354,7 +354,7 @@ class ToadStairGenerator(_ToadDungeonGenerator):
 
 
 ###########################################
-################## TRICKS #################
+################# TRICKS ##################
 ###########################################
 
 class ToadArchitecturalTrickGenerator(_ToadDungeonGenerator):

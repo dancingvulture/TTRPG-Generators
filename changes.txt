@@ -1,6 +1,0 @@
-- Made the header bookend character ('*') an attribute instead of a hardcoded value. Defined at the module level.
-
-Added functionality to create an optional display name for an exhausted header.
-- Added function _generator._get_col_and_display_name() to extract the column and display names.
-- Changed code in Creation.replace() and LinkedGenerator._substitute_headers() to make use of the new function.
-- Altered the entries in map.txt's statue, combination column to test the new feature.

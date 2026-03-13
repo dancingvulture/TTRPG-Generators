@@ -37,7 +37,6 @@ class OozeGenerator(LinkedGenerator):
         attributes = []
         for name, value in attributes_template:
             value = self._substitute_headers(value)
-            value = self._roll_dice(value)
             attributes.append((name, value))
 
         ooze_type = self._extract_ooze_type(attributes[0][1])
