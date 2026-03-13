@@ -269,19 +269,12 @@ class ToadCorridorGenerator(_ToadDungeonGenerator):
             2: 0.2,
         }
         unusual_features_count = self._choose_from_dist(1, unusual_features_distribution)
-        if unusual_features_count == 1:
+        for num in range(unusual_features_count):
             feature = (
-                "unusual feature",
+                f"unusual feature",
                 self._substitute_headers("*corridor, unusual features*")
             )
             attributes.append(feature)
-        elif unusual_features_count == 2:
-            for num in range(1, 3):
-                feature = (
-                    f"unusual feature {num}",
-                    self._substitute_headers("*corridor, unusual features*")
-                )
-                attributes.append(feature)
 
 
 class ToadDoorGenerator(_ToadDungeonGenerator):
