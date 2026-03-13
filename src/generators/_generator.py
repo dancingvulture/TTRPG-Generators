@@ -20,7 +20,28 @@ from src._display import get_minimal_table_settings
 from src.dice import Roller
 
 
-_EXHAUSTED_HDR_TEMPLATE = "[u]{}[/u]"
+_HEADER_BOOKEND_CHAR = "*"
+
+
+def _get_col_and_display_names(header: str) -> tuple[str, str]:
+    """\
+    From the text of a header, extract the column name and the intended
+    display name. If there is no intended display name make it equal to the
+    column name.\
+    """
+    demar_char = ">>"
+    format_start, format_end = "[u]", "[/u]"
+    bookend_char = _HEADER_BOOKEND_CHAR
+    bookend_len = len(_HEADER_BOOKEND_CHAR)
+    try:
+        col_name, display_name = header.split(demar_char)
+        col_name = bookend_char + col_name[bookend_len:].strip() + bookend_char
+        display_name = format_start + display_name[:-bookend_len].strip() + format_end
+    except ValueError:
+        col_name = header
+        display_name = format_start + header[bookend_len:-bookend_len].strip() + format_end
+
+    return col_name, display_name
 
 
 class Creation:
@@ -59,9 +80,11 @@ class Creation:
             # We take out the asterisks in the header in the name, and underline
             # it instead. Then we add a new attribute, which has the name of
             # the substitute, and whose content is the substitute.
-            exhausted_hdr =_EXHAUSTED_HDR_TEMPLATE.format(__old[1:-1])
-            name = self.name.replace(__old, exhausted_hdr, __count)
-            attributes.append((exhausted_hdr, __new))
+
+            # NEED DISPLAY NAME HERE
+            _, display_hdr = _get_col_and_display_names(__old)
+            name = self.name.replace(__old, display_hdr, __count)
+            attributes.append((display_hdr, __new))
 
         else:
             raise Exception(f"__new must be str or Creation: type={type(__new)}")
@@ -626,7 +649,8 @@ class LinkedGenerator(Generator):
                  ):
         super().__init__(force_table_update, table_filenames, table_directory)
         self._special_case_funcs = self._get_special_case_funcs(special_case_names)
-        self._get_all_headers = re.compile(r"\*[^*]*\*").findall
+        self._header_bookend_char = char = _HEADER_BOOKEND_CHAR
+        self._get_all_headers = re.compile(f"\\{char}[^{char}]*\\{char}").findall
 
     def _substitute_headers(self, entry: str | Creation) -> str | Creation:
         """\
@@ -642,6 +666,7 @@ class LinkedGenerator(Generator):
         # str function so if the entry is a Creation, it will search the name
         # of the Creation for headers.
         headers = self._get_all_headers(str(entry))
+        bookend_len = len(_HEADER_BOOKEND_CHAR)
 
         # This loop will substitute each header present in our entry with a
         # random new entry from that header's column. If there are no headers
@@ -654,10 +679,12 @@ class LinkedGenerator(Generator):
             # something, usually more complicated than can be defined in a
             # single column's entry. These functions take no arguments, and
             # output a string (or more commonly) a Creation.
-            if hdr in self._special_case_funcs:
-                substitute: str | Creation = self._special_case_funcs[hdr]()
+            col_name, display_name = _get_col_and_display_names(hdr)
+
+            if col_name in self._special_case_funcs:
+                substitute: str | Creation = self._special_case_funcs[col_name]()
             else:
-                substitute: str = self._get_entry(hdr[1:-1])
+                substitute: str = self._get_entry(col_name[bookend_len:-bookend_len])
 
             # Regardless of whether the substitute is a Creation or string, it
             # may itself contain headers which require substitution, so we apply
@@ -684,9 +711,8 @@ class LinkedGenerator(Generator):
                 # knave tables) worked. If the substitute was a Creation, we'd
                 # just return the substitute.
                 if entry == hdr: return substitute
-                exhausted_hdr = _EXHAUSTED_HDR_TEMPLATE.format(hdr[1:-1])
-                entry_name = entry.replace(hdr, exhausted_hdr, 1)
-                entry = Creation(entry_name, (hdr[1:-1], substitute))
+                entry_name = entry.replace(hdr, display_name, 1)
+                entry = Creation(entry_name, (display_name, substitute))
 
             else:
                 entry = entry.replace(hdr, substitute, 1)

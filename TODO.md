@@ -1,5 +1,5 @@
 # Bugs
-- When substituting multiple copies of identical headers in a single entry, all headers beyond the first are added as unlabelled attributes. 
+
 
 # Generators
 - Tomb of Adventure Design

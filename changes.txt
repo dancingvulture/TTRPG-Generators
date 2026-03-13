@@ -1,10 +1,6 @@
-To make it possible for a Creation to have multiple attributes with identical labels, we make the Creation.attributes values lists, appending each new instance of an attribute. Slight changes were made to the code of the following methods.
-- Creation._collect_attributes()
-- Creation._unpack_attributes()
-- Creation._create_display()
-- WHscroll.__rich__()
-- MagicSymbol.__rich__()
-- ToadBridgeGenerator._add_unusual_features()
-- KnaveMonsterGenerator._generator()
+- Made the header bookend character ('*') an attribute instead of a hardcoded value. Defined at the module level.
 
-Additionally, fixed a bug where if a creation is substituted in the header of another creation, it was included as an unlabelled attribute instead of a labelled one.
+Added functionality to create an optional display name for an exhausted header.
+- Added function _generator._get_col_and_display_name() to extract the column and display names.
+- Changed code in Creation.replace() and LinkedGenerator._substitute_headers() to make use of the new function.
+- Altered the entries in map.txt's statue, combination column to test the new feature.
