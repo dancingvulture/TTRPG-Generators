@@ -54,10 +54,10 @@ class Creation:
     """
     def __init__(self, name: str | None, *attributes: 'tuple[str, str | Creation]'):
         self.name = name
-        self.attributes, self.unlabelled_attributes = self._collect_attributes(*attributes)
+        self.attributes, self.unlabeled_attributes = self._collect_attributes(*attributes)
         self._display = self._create_display(self.name,
                                              self.attributes,
-                                             self.unlabelled_attributes)
+                                             self.unlabeled_attributes)
 
     def replace(self,
                 __old: str,
@@ -104,7 +104,7 @@ class Creation:
             return self.name
         else:
             attr_count = len(self.attributes)
-            un_attr_count = len(self.unlabelled_attributes)
+            un_attr_count = len(self.unlabeled_attributes)
             return (f"Unnamed Creation with {attr_count} attributes and"
                     f" {un_attr_count} unlabelled attributes")
 
@@ -129,7 +129,7 @@ class Creation:
     def _collect_attributes(*attribute: 'tuple[str, str | Creation]'
                             ) -> 'tuple[dict[str, list[str | Creation]], list[str | Creation]]':
         """
-        Take in a number of attribute 2-tuples and collect the labelled
+        Take in a number of attribute 2-tuples and collect the labeled
         attributes into a dictionary, and the unlabelled ones into a list.
         """
         attributes = {}
@@ -154,7 +154,7 @@ class Creation:
             for val in values:
                 attributes.append((label, val))
 
-        for value in self.unlabelled_attributes:
+        for value in self.unlabeled_attributes:
             attributes.append(("", value))
 
         return attributes
@@ -179,7 +179,7 @@ class Creation:
         return new_words.strip()
 
     def __bool__(self) -> bool:
-        if self.name is None and not self.attributes and not self.unlabelled_attributes:
+        if self.name is None and not self.attributes and not self.unlabeled_attributes:
             return False
         else:
             return True
@@ -198,7 +198,7 @@ class Creation:
 
     def _create_display(self,
                         name: str | None,
-                        attributes: 'dict[str, str | Creation]',
+                        attributes: 'dict[str, list[str | Creation]]',
                         unlabelled_attributes: 'list[str | Creation]'
                         ) -> Table | str:
         """
@@ -457,7 +457,7 @@ class Generator:
             self._manual_weights[column_name] = {entry: weight}
 
     @staticmethod
-    def _adjust_weights(column_dict: [str, float]) -> None:
+    def _adjust_weights(column_dict: dict[str, float]) -> None:
         """\
         Given a column dict, search through and find all entries with weights
         equal to zero, and give them all an even probability distribution.
@@ -487,7 +487,7 @@ class Generator:
         Returns true if creation.attributes or creation.unlabelled_attributes
         are not empty, false otherwise.\
         """
-        if creation.attributes or creation.unlabelled_attributes:
+        if creation.attributes or creation.unlabeled_attributes:
             return True
         else:
             return False
@@ -688,7 +688,7 @@ class LinkedGenerator(Generator):
                 substitute: str = self._get_entry(col_name[bookend_len:-bookend_len])
 
             # Regardless of whether the substitute is a Creation or string, it
-            # may itself contain headers which require substitution, so we apply
+            # may itself contain headers which require substitution; so we apply
             # the function recursively, as the rest of the loop hereafter assumes
             # the substitute has no headers that need to be substituted.
             substitute: str | Creation = self._substitute_headers(substitute)
@@ -720,7 +720,7 @@ class LinkedGenerator(Generator):
 
         return entry
 
-    def _get_special_case_funcs(self, func_map: dict[str, str]) -> dict[str, any]:
+    def _get_special_case_funcs(self, func_map: dict[str, str]) -> dict[str, Any]:
         """
         All we can do is pass the name of the special case functions as a
         string, and map them to each special case. All this method does
