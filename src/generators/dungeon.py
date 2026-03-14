@@ -39,7 +39,11 @@ class _ToadDungeonGenerator(ToadGenerator):
             "*teleportation*": "_get_teleportation",
             "*npc*": "_get_npc",
         }
-        table_filenames = ["map.txt", "traps.txt", "tricks.txt"]
+        table_filenames = [
+            "toad/map.txt",
+            "toad/traps.txt",
+            "toad/tricks.txt"
+        ]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,

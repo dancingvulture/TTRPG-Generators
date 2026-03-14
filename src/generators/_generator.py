@@ -748,15 +748,21 @@ class KnaveGenerator(LinkedGenerator):
             "*inn*": "_get_inn_name",
             "*spell*": "_get_spell",
         }
-        table_filenames = ["alchemy.txt", "civilization.txt", "delving.txt",
-                           "equipment.txt", "monster.txt", "people.txt",
-                           "spells.txt", "travel.txt"]
+        table_filenames = [
+            "knave/alchemy.txt",
+            "knave/civilization.txt",
+            "knave/delving.txt",
+            "knave/equipment.txt",
+            "knave/monster.txt",
+            "knave/people.txt",
+            "knave/spells.txt",
+            "knave/travel.txt"
+        ]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
                          table_filenames,
                          special_case_funcs,
-                         "tables/knave/"
                          )
 
     def _get_spell(self) -> str:
@@ -794,14 +800,19 @@ class ToadGenerator(LinkedGenerator):
             "*ooze*": "_get_ooze",
             "*writing*": "_get_writing",
         }
-        table_filenames = ["locations.txt", "magic symbols.txt", "minor gods.txt",
-                           "mystic orders.txt", "information.txt", "items.txt"]
+        table_filenames = [
+            "toad/locations.txt",
+            "toad/magic symbols.txt",
+            "toad/minor gods.txt",
+            "toad/mystic orders.txt",
+            "toad/information.txt",
+            "toad/items.txt"
+        ]
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
                           table_filenames,
                          special_case_funcs,
-                         "tables/toad/"
                          )
 
     def _get_magic_symbol(self) -> Creation:
