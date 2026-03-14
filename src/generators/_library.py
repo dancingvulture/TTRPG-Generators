@@ -208,7 +208,12 @@ class GeneratorLibrary:
                 misc_generators.ToadWritingGenerator,
                 [],
                 {}
-            )
+            ),
+            "details": (
+                misc_generators.PerilousWildsDetailGenerator,
+                ["perilous wilds/details.txt"],
+                {}
+            ),
         })
 
         self.generators_by_type = {

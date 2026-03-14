@@ -1,0 +1,3 @@
+- Added perilous wilds directory in tables
+- Added a perilous wilds detail table
+- Added PerilousWildsDetailGenerator

@@ -1,0 +1,39 @@
+# detail, ability
+*detail, ability*, *detail, ability* | *detail, magic type* | bless/curse | dissolve/disinigrate | drain life/magic | entange/entrap/ensare | immunity: *detail, element* | mimic/camouflage | paralyze/petrify | poison/disease | read/control minds | seduce/hypnotize
+
+# detail, activity
+buiding/excavating | crafting/praying | dying | eating/resting | exploring/lost | fighting/at war | hunting/foraging | laying trap/ambush | prowling/on patrol | returning home | sleeping | travelling/relocating
+
+# detail, adjective
+broken/brittle | colorful | corroded/rusty | dark/rich/deep | pale/poor/shallow | rotten/decaying | rough/hard/sharp | slick/slimy | smooth/soft/dull | stinking/smelly | strong/fat/full | weak/thin/drained
+
+# detail, age
+ancient :: 0.167 | being born/built | middle-aged :: 0.25 | old :: 0.167 | pre-historic | young/recent :: 0.25
+
+# detail, alignment
+chaotic | evil | good | lawful | neutral :: 0.25
+
+# detail, aspect
+*detail, aspect*, *detail, aspect* | *detail, element* | culture/charisma | hate/envy | knowledge/intelligence | love/admiration | nature/wisdom | peace/truth/balance | power/strength | time/constition | trickery/dexterity | war/lies/discord
+
+# detail, condition
+being built/born | dissapeared/dead | inact/healthy/stable :: 0.25 | occupied/active/alert :: 0.25 | ruined/defiled/dying | vacant/lost | worn/tired/weak :: 0.167
+
+# detail, disposition
+attacking | cautious/doubtful :: 0.167 | curious/hopeful | fearful/fleeing | friendly | hostile/aggressive :: 0.25 | neutral :: 0.25
+
+# detail, element
+air | death | earth | fire | life | water
+
+# detail, feature
+*detail, aspect* | *detail, element* | *detail, feature*, *detail, feature* | *detail, magic type* | *detail, oddity* | heavily armored | many eyes/one eye | many limbs/tails | multiple heads/headless | tentacles/tendrils | winged/flying :: 0.167
+
+# detail, magic type
+divination | enchantment | evocation | illusion | necromancy | summoning
+
+# detail, no. appearing
+group ($3d3$) :: 0.416 | horde ($4d6$ per wave) | solitary :: 0.333
+
+# detail, oddity
+*detail, oddity*, *detail, oddity* | crystalline/glass-like | devoid of life | fungal | gaseous/smokey | geometric | magnetic/repellant | mirage/illusion | unexpectedly alive | volcanic/explosive | web/network/system | weird color/smell/sound
+

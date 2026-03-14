@@ -17,11 +17,10 @@
   - [x] ToadThroneGenerator
   - [ ] ToadLevelChangeGenerator
   - [ ] ToadSarcophagusGenerator
-- Perilous wilds
-  - The details table, in particular, could be used widely across many generators
-- Treasure
-- The ironforged oracle tables
-- Art generator, for wall carvings, tapestries, paintings, etc
+- [ ] Perilous wilds
+- [ ] Treasure
+- [ ] The ironforged oracle tables
+- [ ] Art generators, for wall carvings, tapestries, paintings, etc
 
 Much of the above might be possible by the names alone, for example to find generators, `GeneratorLibrary` could look into `x_generator` modules and pull every name ending in `Generator`.
 # New Feature Ideas

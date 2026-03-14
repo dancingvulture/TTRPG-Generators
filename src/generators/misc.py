@@ -6,7 +6,12 @@ I'll probably end up moving things out of this frequently.\
 
 from rich.table import Table
 
-from src.generators._generator import Creation, Generator, ToadGenerator
+from src.generators._generator import (
+    Creation,
+    Generator,
+    ToadGenerator,
+    LinkedGenerator
+)
 from src._display import get_minimal_table_settings
 
 
@@ -171,4 +176,31 @@ class ToadWritingGenerator(ToadGenerator):
     def _generator(self) -> Creation:
         writing = ("nature", self._substitute_headers("*nature of writing*"))
         return Writing("writing", writing)
+
+
+class PerilousWildsDetailGenerator(LinkedGenerator):
+    """\
+    Get a random result from a random detail table from the Perilous Wilds
+    (pp. 50-51). Currently, this mostly exists to just test the detail tables.\
+    """
+    def _generator(self) -> Creation:
+        all_tables = {
+            "*detail, ability*": 1,
+            "*detail, activity*": 1,
+            "*detail, adjective*": 1,
+            "*detail, age*": 1,
+            "*detail, alignment*": 1,
+            "*detail, aspect*": 1,
+            "*detail, condition*": 1,
+            "*detail, disposition*": 1,
+            "*detail, element*": 1,
+            "*detail, feature*": 1,
+            "*detail, magic type*": 1,
+            "*detail, no. appearing*": 1,
+            "*detail, oddity*": 1,
+        }
+        table = self._choose_from_dist(1, all_tables)
+        _, detail_type = table.replace("*", "").split(", ")
+        detail = self._substitute_headers(table)
+        return Creation(f"{detail_type}: {detail}")
 
