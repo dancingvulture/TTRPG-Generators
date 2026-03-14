@@ -160,6 +160,21 @@ class GeneratorLibrary:
                 [],
                 {}
             ),
+            "pillars": (
+                dungeon_generators.ToadPillarGenerator,
+                [],
+                {}
+            ),
+            "furniture" :(
+                dungeon_generators.ToadFurnitureGenerator,
+                [],
+                {}
+            ),
+            "thrones" :(
+                dungeon_generators.ToadThroneGenerator,
+                [],
+                {}
+            ),
             "statues": (
                 dungeon_generators.ToadStatueGenerator,
                 [],

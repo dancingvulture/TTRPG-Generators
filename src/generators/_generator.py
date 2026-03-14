@@ -191,6 +191,7 @@ class Creation:
             return False
 
     def __eq__(self, other: 'Creation') -> bool:
+        if not isinstance(other, Creation): return False
         if other.name == self.name and other.attributes == self.attributes:
             return True
         else:

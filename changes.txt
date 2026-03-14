@@ -1,0 +1,7 @@
+- Finished writing the concealment and complex trigger columns.
+- Added npc special case func to _ToadDungeonGenerator.
+- Added ToadPillarGenerator, and its special case func call to _ToadDungeonGenerator.
+- Replaced all sensible pillar table results with *pillar*
+- Added a step in Creation.__eq__() to check the type of the other, if it's not a creation, return false. This is to avoid an exception being thrown when a non-creation is compared to a creation.
+- Add ToadThroneGenerator, and its special case func call
+- Added ToadFurnitureGenerator, and it's special case func call.

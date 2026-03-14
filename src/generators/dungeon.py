@@ -30,10 +30,14 @@ class _ToadDungeonGenerator(ToadGenerator):
             "*bridge*": "_get_bridge",
             "*corridor*": "_get_corridor",
             "*architectural trick*": "_get_architectural_trick",
+            "*pillar*": "_get_pillar",
+            "*furniture*": "_get_furniture",
+            "*throne*" : "_get_throne",
             "*statue*": "_get_statue",
             "*level change*": "_get_level_change",
             "*stairs*": "_get_stairs",
             "*teleportation*": "_get_teleportation",
+            "*npc*": "_get_npc",
         }
         table_filenames = ["map.txt", "traps.txt", "tricks.txt"]
         special_case_funcs.update(additional_special_case_funcs)
@@ -90,6 +94,15 @@ class _ToadDungeonGenerator(ToadGenerator):
     def _get_architectural_trick(self) -> Creation:
         return self._get_other_generator_output("dungeon", "architectural-tricks")
 
+    def _get_pillar(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "pillars")
+
+    def _get_furniture(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "furniture")
+
+    def _get_throne(self) -> Creation:
+        return self._get_other_generator_output("dungeon", "thrones")
+
     def _get_statue(self) -> Creation:
         return self._get_other_generator_output("dungeon", "statues")
 
@@ -102,6 +115,8 @@ class _ToadDungeonGenerator(ToadGenerator):
     def _get_teleportation(self) -> Creation:
         return self._get_other_generator_output("dungeon", "teleportation")
 
+    def _get_npc(self) -> Creation:
+        return self._get_other_generator_output("npc", "fantasy")
 
 ###########################################
 ################## TRAPS ##################
@@ -295,6 +310,37 @@ class ToadTeleportationGenerator(_ToadDungeonGenerator):
         raise NotImplementedError()
 
 
+class ToadPillarGenerator(_ToadDungeonGenerator):
+    """\
+    Generate pillars using table 3-69 (pg. 173) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        attributes = [
+            ("description", self._substitute_headers("*pillar, description*")),
+        ]
+        decoration = self._substitute_headers("*pillar, decoration*")
+        if decoration != "none":
+            attributes.append(("decoration", decoration))
+        return Creation("pillar", *attributes)
+
+
+class ToadFurnitureGenerator(_ToadDungeonGenerator):
+    """\
+    Generate furniture using table 3-63 (pg. 170) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        kind = self._substitute_headers("*furniture, type*")
+        if isinstance(kind, Creation): return kind
+
+        feature = ("feature", self._substitute_headers("*furniture, unusual feature*"))
+        if feature[1] != "none":
+            return Creation(kind, feature)
+        else:
+            return Creation(kind)
+
+
 class ToadStatueGenerator(_ToadDungeonGenerator):
     """\
     Generate statues using tables (pp. 176-177) from the Tomb of
@@ -307,6 +353,18 @@ class ToadStatueGenerator(_ToadDungeonGenerator):
             ("subject", self._substitute_headers("*statue, subject*"))
         )
         return Creation("statue", *attributes)
+
+
+class ToadThroneGenerator(_ToadDungeonGenerator):
+    """\
+    Generate thrones using tables (pp. 178-181) from the Tomb of Adventure
+    Design (2nd edition).\
+    """
+    def _generator(self) -> Creation:
+        name = (self._substitute_headers("*throne, name 1*") + " "
+                + self._substitute_headers("*throne, name 2*"))
+        detail = ("detail", self._substitute_headers("*throne, detail*"))
+        return Creation(name, detail)
 
 
 class ToadLevelChangeGenerator(_ToadDungeonGenerator):
