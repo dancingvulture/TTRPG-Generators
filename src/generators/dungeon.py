@@ -141,8 +141,31 @@ class ToadBasicMechanicalTrapGenerator(_ToadDungeonGenerator):
     table 3-126, pg. 217.\
     """
     def _generator(self) -> Creation:
-        trap = self._substitute_headers("*trap, basic mechanical*")
-        return Creation("Trap, basic mechanical", ("Mechanism", trap))
+        attributes = [
+            ("mechanism", self._substitute_headers("*trap, basic mechanical*"))
+        ]
+        self._add_extra_attributes(attributes)
+        return Creation("Trap, basic mechanical", *attributes)
+
+    def _add_extra_attributes(self, attributes):
+        """\
+        Random chance to add extra attributes, it's possible nothing will be
+        added, attributes are appended directly.\
+        """
+        concealment_dist = {
+            True: 0.4,
+            False: 0.6,
+        }
+        complex_trigger_dist = {
+            True: 0.2,
+            False: 0.8,
+        }
+
+        if self._choose_from_dist(1, concealment_dist):
+            attributes.append(("concealment", self._substitute_headers("*trap, concealment*")))
+
+        if self._choose_from_dist(1, complex_trigger_dist):
+            attributes.append(("trigger", self._substitute_headers("*trap, complex trigger*")))
 
 
 class ToadTrapGasGenerator(_ToadDungeonGenerator):
