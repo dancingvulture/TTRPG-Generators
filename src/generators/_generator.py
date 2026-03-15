@@ -811,7 +811,7 @@ class ToadGenerator(LinkedGenerator):
         special_case_funcs.update(additional_special_case_funcs)
         table_filenames += additional_tables
         super().__init__(force_table_update,
-                          table_filenames,
+                         table_filenames,
                          special_case_funcs,
                          )
 
@@ -838,3 +838,26 @@ class ToadGenerator(LinkedGenerator):
 
     def _get_writing(self) -> Creation:
         return self._get_other_generator_output("misc", "writing")
+
+
+class PerilousWildsGenerator(LinkedGenerator):
+    """\
+    Base generator for any generator using the Perilous Wilds tables.\
+    """
+    def __init__(self,
+                 force_table_update: bool,
+                 additional_tables: list[str],
+                 additional_special_case_funcs: dict[str, str]
+                 ):
+        special_case_funcs = {}
+        table_filenames = [
+            "perilous wilds/details.txt",
+        ]
+        special_case_funcs.update(additional_special_case_funcs)
+        table_filenames += additional_tables
+        super().__init__(force_table_update,
+                         table_filenames,
+                         special_case_funcs,
+                         )
+
+

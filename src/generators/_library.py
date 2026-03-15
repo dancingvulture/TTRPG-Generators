@@ -102,9 +102,14 @@ class GeneratorLibrary:
         })
         self.npc = MappingProxyType({
             "fantasy": (
-                npc_generators.KnaveFantasyNPCGenerator,
+                npc_generators.KnaveNPCGenerator,
                 [],
                 {"*mundane item*": "_get_fantasy_mundane"}
+            ),
+            "wilds-fantasy": (
+                npc_generators.PerilousWildsNPCGenerator,
+                ["perilous wilds/npc.txt"],
+                {}
             )
         })
         self.monster = MappingProxyType({

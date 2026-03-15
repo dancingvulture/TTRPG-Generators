@@ -1,0 +1,42 @@
+# npc context
+rural :: 0.416 | urban | wilderness :: 0.25
+
+# npc context, wilderness
+*npc context, official* | *npc occupation, commoner* :: 0.166 | *npc occupation, criminal* :: 0.166 | adventurer/explorer :: 0.166 | hunter/gatherer :: 0.166 | ranger/scout :: 0.166 | solider/mercenary
+
+# npc context, rural
+*npc occupation, commoner* :: 0.333 | *npc occupation, criminal* | *npc occupation, merchant* | *npc occupation, official* | *npc occupation, tradesperson* | adventurer/explorer | beggar/urchin | hunter/gatherer | militia/solider/guard
+
+# npc context, urban
+*npc occupation, commoner* :: 0.333 | *npc occupation, criminal* | *npc occupation, merchant* | *npc occupation, official* | *npc occupation, specialist* | *npc occupation, tradesperson* | beggar/urchin :: 0.166 | militia/solider/guard
+
+# npc occupation, criminal
+bandit/brigand/thug :: 0.166 | bodyguard/tough :: 0.166 | boss | burglar :: 0.166 | criminal lieutenant | dealer/fence | racketeer | thief :: 0.166
+
+# npc occupation, commoner
+apprentice/adventurer | clergy/monk | driver/porter/guide | farmer/herder :: 0.25 | housewife/husband | hunter/gatherer :: 0.166 | laborer/servant :: 0.166 | sailor/soldier/guard
+
+# npc occupation, tradesperson
+armorer/weaponsmith | artist/actor/minstrel | cobbler/furrier/tailor | cooper/wheelwright | innkeeper/tavernkeeper | mason/baker/chandler | potter/carpenter | smith/tinker | stablekeeper/herbalist | tanner/ropemaker | vintner/jeweler | weaver/basketmaker
+
+# npc occupation, merchant
+ale/wine/spirits | books/scrolls | clothing/jewelry | general goods/outfitter :: 0.25 | grain/livestock | labor/slaves | magic supplies/items | raw materials | spices/tobacco | weapons/armor
+
+# npc occupation, specialist
+alchemist/astrologer | architect/engineer | cartographer | inventor | locksmith/clockmaker | navigator/guide | perfumer | physician/apothecary | sage/scholar/wizard | spy/diplomat | undertaker | writer/illuminator
+
+# npc occupation, official
+armier/gentry | elder/high priest | guildmaster | knight/templar | lord/lady/king/queen | mayor/magistrate | noble | priest/bishop/abbot | reeve/sheriff/constable | tax collector | town crier
+
+# npc trait
+*npc trait, personality* :: 0.25 | *npc trait, physical* :: 0.50 | *npc trait, quirk*
+
+# npc trait, physical
+attractive/handsome/stunning | big/thick/brawny | clean/well-dressed/well-groomed | disfigured | lasting injury | notable eyes | notable hair | notable nose | small/scrawny/emaciated | tattooed/pockmarked/scarred | they are *npc trait, physical* despite *npc trait, physical* | unkempt/shabby/grubby
+
+# npc trait, personality
+aloof/haughty/arroant | anxious/fearful/cowardly | awkward/shy/self-loathing | cheerful/happy/optimistic | confident/impulsive/reckless | cruel/belligerent/bully | easygoing/relaxed/peaceful | kind/generous/compassionate | loner/alienated/antisocial | orderly/compulsive/controlling | they are *npc trait, personality* despite *npc trait, personality*
+
+# npc trait, quirk
+addict | allergic/asthmatic/chronically ill | artisitic/dreamer/delusional | insecure/racist/xenophobic | miser/pack-rat | naive/idealistic | phobia | skeptic/paranoid | smart alceck/know-it-all | spendthrift/wastrel | superstitious/devout/fanatical | they are *npc trait, quirk* despite *npc trait, quirk*
+

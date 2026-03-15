@@ -1,0 +1,4 @@
+- Added base generator class PerilousWildsGenerator
+- Changed KnaveFantasyNPCGenerator to KnaveNPCGenerator
+- Added temp to .gitignore
+- Added PerilousWildsNPCGenerator
