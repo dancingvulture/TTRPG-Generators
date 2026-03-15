@@ -1,4 +1,3 @@
-- Added base generator class PerilousWildsGenerator
-- Changed KnaveFantasyNPCGenerator to KnaveNPCGenerator
-- Added temp to .gitignore
-- Added PerilousWildsNPCGenerator
+- Added PerilousWildsCreatureGenerator
+- Added missing details tables
+- Added special case func _get_npc() to PerilousWildsGenerator, still need to finish adding extra attributes and tags.

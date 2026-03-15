@@ -849,7 +849,9 @@ class PerilousWildsGenerator(LinkedGenerator):
                  additional_tables: list[str],
                  additional_special_case_funcs: dict[str, str]
                  ):
-        special_case_funcs = {}
+        special_case_funcs = {
+            "*npc*": "_get_npc",
+        }
         table_filenames = [
             "perilous wilds/details.txt",
         ]
@@ -860,4 +862,6 @@ class PerilousWildsGenerator(LinkedGenerator):
                          special_case_funcs,
                          )
 
+    def _get_npc(self) -> Creation:
+        return self._get_other_generator_output("npc", "wilds-fantasy")
 

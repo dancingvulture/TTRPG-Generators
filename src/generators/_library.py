@@ -118,9 +118,14 @@ class GeneratorLibrary:
                 ["oozes.txt"],
                 {}
             ),
-            "knave-monsters" : (
+            "knave-monsters": (
                 monster_generators.KnaveMonsterGenerator,
                 [],
+                {}
+            ),
+            "wilds-creatures": (
+                monster_generators.PerilousWildsCreatureGenerator,
+                ["perilous wilds/creatures.txt"],
                 {}
             )
         })

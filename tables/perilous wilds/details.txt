@@ -37,3 +37,21 @@ group ($3d3$) :: 0.416 | horde ($4d6$ per wave) | solitary :: 0.333
 # detail, oddity
 *detail, oddity*, *detail, oddity* | crystalline/glass-like | devoid of life | fungal | gaseous/smokey | geometric | magnetic/repellant | mirage/illusion | unexpectedly alive | volcanic/explosive | web/network/system | weird color/smell/sound
 
+# detail, orientation
+down/earthward :: 0.166 | east | north | northeast | northwest | south | southeast | southwest | up/skyward :: 0.166 | west
+
+# detail, ruination
+arcane disaster | better prospects elsewhere | damnation/curse | depleted resources | earthquake/fire/flood :: 0.166 | overrun by monsters :: 0.166 | plague/famine/drought :: 0.166 | war/invasion :: 0.166
+
+# detail, size
+huge | large :: 0.166 | medium :: 0.50 | small :: 0.166 | tiny
+
+# detail, tag
+amorphous | cautious | construct | devious | intelligent | magical | organized | planar | stealthy | terrifying
+
+# detail, terrain
+*detail, oddity* | flatland/plain :: 0.166 | highland/hills :: 0.166 | mountains :: 0.166 | wasteland/desert | wetland/marsh/swamp | woodland/forest/jungle :: 0.25
+
+# detail, visibility
+buried/camouflaged/nigh invisible :: 0.166 | obvious/in plain sight :: 0.25 | partly covered/over-grown/hidden :: 0.333 | visible at a great distance/focal point | visible at near distance :: 0.166
+

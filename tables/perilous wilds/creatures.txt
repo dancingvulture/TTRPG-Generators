@@ -1,0 +1,39 @@
+# creature, type
+beast :: 0.333 | human :: 0.166 | humanoid :: 0.166 | monster
+
+# creature, beast
+*beast, airborne* :: 0.25 | *beast, earthbound* :: 0.583 | *beast, water-going*
+
+# beast, earthbound
+ant/centipede/scorpion | bear/ape/gorila | boar/pig | cat/lion/panther | deer/horse/camel | dog/fox/wolf | mammonth/dinosaur | ox/rhino | snail/slug/worm | snake/lizard | termite/tick/louse | vole/rat/weasel
+
+# beast, airborne
+bee/wasp | chicken/duck/goose | condor | crow/raven | eagle/owl | gull/waterbird | hawk/falcon | heron/crane/stork | locust/dragonfly/moth | mosquito/firefly | pteranodon | songbird/parrot
+
+# beast, water-going
+alligator/crocodile | clam/oyster/snail | crab/lobster | dolphin/shark | eel/snake | fish | frog/toad | insect | jelly/anemone | squid/octopus | turtle | whale
+
+# creature, humanoid
+*humanoid, common* :: 0.583 | *humanoid, hybrid* | *humanoid, uncommon* :: 0.25
+
+# humanoid, common
+dwarf/gnome (small) :: 0.166 | elf | goblin/kobold (small) :: 0.166 | half-elf/half-orc. et. :: 0.166 | halfling (small) :: 0.25 | orc/hobgolbin/gnoll :: 0.1666
+
+# humanoid, uncommon
+birdfolk | catfolk/dogfolk :: 0.166 | cyclops/giant (large) :: 0.166 | fey (tiny) | lizardfolk/merfolk :: 0.25 | ogre/troll (large) :: 0.25
+
+# humanoid, hybrid
+centaur :: 0.166 | human + *creature, beast* + *creature, beast* :: 0.166 | human + *creature, beast* :: 0.333 | were-*creature, beast* | werewolf/werebear :: 0.25
+
+# creature, monster
+*monster, legendary* | *monster, unusual* :: 0.25
+
+# monster, unusual
+*creature, beast* + *creature, beast* :: 0.166 | *creature, beast* + *detail, ability* :: 0.166 | *creature, beast* + *detail, feature* :: 0.166 | plant/fungus :: 0.25 | undead *creature, humanoid* | undead human :: 0.166
+
+# monster, rare
+*creature, beast* + *detail, oddity* :: 0.25 | creation (construct) :: 0.25 | slime/ooze (amorphous) :: 0.25 | unnatural entity
+
+# monster, legendary
+*creature, beast* + dragon | *monster, rare* (huge) | *monster, rare* + dragon | *monster, unusual* (huge) :: 0.25 | *monster, unusual* + dragon | dragon/colossus (huge) :: 0.25
+
