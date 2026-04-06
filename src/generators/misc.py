@@ -204,3 +204,24 @@ class PerilousWildsDetailGenerator(LinkedGenerator):
         detail = self._substitute_headers(table)
         return Creation(f"{detail_type}: {detail}")
 
+
+class ToadMissionGenerator(ToadGenerator):
+    """\
+    Generate missions using the tables from the Tomb of Adventure Design,
+    2nd printing, pp. 15-26\
+    """
+    def _generator(self) -> Creation:
+        attributes = (
+            ("mission", self._substitute_headers("*mission, type*")),
+            ("patron", self._substitute_headers("*patrons and targets*")),
+            ("patron motivation", self._substitute_headers("*patron, motivation*")),
+            ("player motivation", self._substitute_headers("*player, motivation*")),
+            ("Learned of opportunity from", self._substitute_headers("*player, learn of opportunity*"))
+        )
+        return Creation("mission", *attributes)
+
+    def _get_clue(self) -> Creation:
+        return self._get_other_generator_output("misc", "clues")
+
+    def _get_location(self) -> str:
+        return str(self._get_other_generator_output("name", "locations"))

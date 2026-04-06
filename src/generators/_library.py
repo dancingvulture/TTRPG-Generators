@@ -224,6 +224,14 @@ class GeneratorLibrary:
                 ["perilous wilds/details.txt"],
                 {}
             ),
+            "missions": (
+                misc_generators.ToadMissionGenerator,
+                ["toad/missions.txt"],
+                {
+                    "*clue*": "_get_clue",
+                    "*location*": "_get_location",
+                }
+            )
         })
 
         self.generators_by_type = {
