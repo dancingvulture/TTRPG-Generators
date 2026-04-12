@@ -744,6 +744,7 @@ class KnaveGenerator(LinkedGenerator):
                  additional_special_case_funcs: dict[str, str]
                  ):
         special_case_funcs = {
+            "*mundane item*": "_get_fantasy_mundane",
             "*surname*": "_get_surname",
             "*inn*": "_get_inn_name",
             "*spell*": "_get_spell",
@@ -764,6 +765,9 @@ class KnaveGenerator(LinkedGenerator):
                          table_filenames,
                          special_case_funcs,
                          )
+
+    def _get_fantasy_mundane(self) -> Creation:
+        return self._get_other_generator_output("item", "fantasy-mundane")
 
     def _get_spell(self) -> str:
         """

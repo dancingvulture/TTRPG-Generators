@@ -50,6 +50,7 @@ def parse_arguments() -> argparse.Namespace:
 
     _add_name_subparser(subparsers)
     _add_item_subparser(subparsers)
+    _add_pc_subparser(subparsers)
     _add_npc_subparser(subparsers)
     _add_monster_subparser(subparsers)
     _add_misc_subparser(subparsers)
@@ -101,6 +102,27 @@ def _add_name_subparser(subparsers) -> None:
     parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
     parser.add_argument("count", **_COUNT_ARGS)
 
+
+def _add_pc_subparser(subparsers) -> None:
+    """\
+    Subparser for using the pc generators.\
+    """
+    parser = subparsers.add_parser(
+        "pc",
+        help="Generate player characters.",
+    )
+    generator_names = generators.get_names("pc")
+
+    parser.add_argument(
+        "generator",
+        choices=generator_names,
+        help="choose a generator."
+    )
+    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
+    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
+    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
+    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
+    parser.add_argument("count", **_COUNT_ARGS)
 
 def _add_npc_subparser(subparsers) -> None:
     """

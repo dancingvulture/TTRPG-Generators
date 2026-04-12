@@ -8,6 +8,7 @@ from types import MappingProxyType
 
 import src.generators.name as name_generators
 import src.generators.item as item_generators
+import src.generators.pc as pc_generators
 import src.generators.npc as npc_generators
 import src.generators.monster as monster_generators
 import src.generators.dungeon as dungeon_generators
@@ -100,11 +101,18 @@ class GeneratorLibrary:
                 {}
             )
         })
+        self.pc = MappingProxyType({
+            "knave": (
+                pc_generators.KnavePCGenerator,
+                [],
+                {}
+            )
+        })
         self.npc = MappingProxyType({
             "fantasy": (
                 npc_generators.KnaveNPCGenerator,
                 [],
-                {"*mundane item*": "_get_fantasy_mundane"}
+                {}
             ),
             "wilds-fantasy": (
                 npc_generators.PerilousWildsNPCGenerator,
@@ -237,6 +245,7 @@ class GeneratorLibrary:
         self.generators_by_type = {
             "name": self.name,
             "item": self.item,
+            "pc": self.pc,
             "npc": self.npc,
             "monster": self.monster,
             "dungeon": self.dungeon,

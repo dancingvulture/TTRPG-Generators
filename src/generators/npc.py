@@ -49,9 +49,6 @@ class KnaveNPCGenerator(KnaveGenerator):
         race_chosen = choices(races, weights=weights)[0]
         return race_chosen
 
-    def _get_fantasy_mundane(self) -> Creation:
-        return self._get_other_generator_output("item", "fantasy-mundane")
-
     def _get_name(self, race: str) -> str:
         templates = {
             "human": "humans",

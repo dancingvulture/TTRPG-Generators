@@ -1,3 +1,5 @@
-- Added PerilousWildsCreatureGenerator
-- Added missing details tables
-- Added special case func _get_npc() to PerilousWildsGenerator, still need to finish adding extra attributes and tags.
+- Added columns to knave/people.txt: career and equipment, and ability score.
+- Added a new generator class: pc.
+- Added a pc generator: KnavePCGenerator.
+- Added KnaveAbilityScores and wrote a nice display method for it.
+- Moved npc.KnaveNPCGenerator._get_fantasy_mundane() to the base KnaveGenerator.
