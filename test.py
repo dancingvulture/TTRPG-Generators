@@ -88,6 +88,32 @@ def get_generate_method(generator_type: str, generator_name: str):
     return lambda x: generators.get_instance(generator_type, generator_name).generate(x, None, 1)
 
 
+def md_table_to_dict(md_table: str) -> dict[str, dict[str, str]]:
+    """\
+    Take a standard markdown table and convert it to a row by column dictionary.\
+    Specifically, in a format like this:
+        |            | col_name 0 | col_name 1 | ... |
+        | ---------- | ---------- | ---------- | ... |
+        | row_name 0 |    ...     |    ...     | ... |
+        | row_name 1 |    ...     |    ...     | ... |
+        | row_name 2 |    ...     |    ...     | ... |
+        |    ...     |    ...     |    ...     | ... |
+    """
+    raw_rows = md_table.strip().split("\n")  # Strip removes any leading or trailing \n.
+    raw_rows.pop(1)  # Tossing the body/header separator.
+    col_names = [name.strip() for name in raw_rows.pop(0).split("|")[2:-1]]
+    # Note above the [2:-1]. we need [1:-1] to toss the extra empty entries caused
+    # by the "|" characters on either side of the table. The two in the [2:-1] us
+    # throwing out the empty entry above the row names.
+    table = {}
+    for row_index, row in enumerate(raw_rows):
+        row_name, *values = [val.strip() for val in row.split("|")[1: -1]]
+        table[row_name] = {}
+        for col_index, col_nm in enumerate(col_names):
+            table[row_name][col_nm] = values[col_index]
+    return table
+
+
 def main():
     args = parse_arguments()
     if args.test == "run-all-cmd":

@@ -1,5 +1,0 @@
-- Added columns to knave/people.txt: career and equipment, and ability score.
-- Added a new generator class: pc.
-- Added a pc generator: KnavePCGenerator.
-- Added KnaveAbilityScores and wrote a nice display method for it.
-- Moved npc.KnaveNPCGenerator._get_fantasy_mundane() to the base KnaveGenerator.
