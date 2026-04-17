@@ -31,5 +31,3 @@
    1. Create its subparser function, with a name like `_add_new_module_subparser`. It should take the same arguments as the other subparser functions.
    2. Makes sure the function is called in `parse_arguments`.
 4. Add an entry in the `main` logic tree for the new subparser, look to the other entries for guidance on what it should look like.
-
-test
