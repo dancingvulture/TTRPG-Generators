@@ -2,7 +2,7 @@
 rural :: 0.416 | urban | wilderness :: 0.25
 
 # npc context, wilderness
-*npc context, official* | *npc occupation, commoner* :: 0.166 | *npc occupation, criminal* :: 0.166 | adventurer/explorer :: 0.166 | hunter/gatherer :: 0.166 | ranger/scout :: 0.166 | solider/mercenary
+*npc occupation, official* | *npc occupation, commoner* :: 0.166 | *npc occupation, criminal* :: 0.166 | adventurer/explorer :: 0.166 | hunter/gatherer :: 0.166 | ranger/scout :: 0.166 | solider/mercenary
 
 # npc context, rural
 *npc occupation, commoner* :: 0.333 | *npc occupation, criminal* | *npc occupation, merchant* | *npc occupation, official* | *npc occupation, tradesperson* | adventurer/explorer | beggar/urchin | hunter/gatherer | militia/solider/guard
