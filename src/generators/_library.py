@@ -23,7 +23,8 @@ class GeneratorLibrary:
     def __init__(self):
         # Each entry for a given generator type is saved in a dictionary, the
         # key is the name of the generator rendered as a string, this is used
-        # in main by typing the name into the command line (although it's easy
+        # in main b
+        # ?  y typing the name into the command line (although it's easy
         # enough to use elsewhere). The Value is a tuple, the first entry is
         # always the generator class itself, while all other tuple entries
         # (if they exist) are arguments used to initiate the generator class.
@@ -165,6 +166,11 @@ class GeneratorLibrary:
             ),
             "bridges": (
                 dungeon_generators.ToadBridgeGenerator,
+                [],
+                {}
+            ),
+            "doors": (
+                dungeon_generators.ToadDoorGenerator,
                 [],
                 {}
             ),

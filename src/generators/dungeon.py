@@ -325,7 +325,29 @@ class ToadDoorGenerator(_ToadDungeonGenerator):
     Design (2nd edition).\
     """
     def _generator(self) -> Creation:
-        raise NotImplementedError()
+        attr_count_dist = {
+            0: 0.50,
+            1: 0.30,
+            2: 0.15,
+            3: 0.05,
+        }
+        count = self._choose_from_dist(1, attr_count_dist)
+
+        attr_type_dist = {
+            "material": 1,
+            "color": 1,
+            "opens": 1,
+            "oddity": 1,
+            "unusual shape": 1,
+        }
+        attr_types = self._choose_from_dist(count, attr_type_dist, repeats=False)
+        if isinstance(attr_types, str): attr_types = [attr_types]
+        attributes = []
+        for at in attr_types:
+            attr = (at, self._substitute_headers(f"*door, {at}*"))
+            attributes.append(attr)
+
+        return Creation("door", *attributes)
 
 
 class ToadTeleportationGenerator(_ToadDungeonGenerator):

@@ -1,4 +1,5 @@
 # To-Do
+- Need to make `Generator._choose_from_dist()` always output a list.
 - See if there is some way you can't save the random seed used for a given run, so bugs can be easier to recreate.
 - See if you can't get `Generator._capitalize` to have a smarter implementation.
 - Add a generic version of "get attributes" to `CreationWithAttributes`.
@@ -7,7 +8,8 @@
 - Might be worth using rich (or doing your own thing) to make large multi-line outputs read cleaner, and not break the display bars.
 - `Creation._get_attr_display` and `Creation._get_unlabelled_attr_display` re-use too much code from each other, find a way to factor that out.
 - Add coloring using ANSI escape codes, or some third party module.
-# Procedures
+- The generator adding generated items to an internal list isn't really intuitive, it shouldn't store them, just return them. But there might be a lot of code that depends on that fact. The most obvious one is the fact I'll need to move `generator.show()` into a new function `generators.__init__.show()`
+# Procedures 
 ## Add a new generator 
 1. Find or create a generator category.
 2. Add the generator and its logic to the generator category's module. 

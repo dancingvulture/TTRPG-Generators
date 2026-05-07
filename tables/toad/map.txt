@@ -22,6 +22,21 @@ excavated, rough-hewn | excavated, well-finished | naturally occurring | same as
 # corridor, unusual features
 *monster* lair | *trap* | alcoves | blocking line of thin *pillar >> pillars* or bars 2ft apart blocks carts, mules, large objects | carvings on walls | crumbling or unstable | dips through short underwater area | half-pillars inside walls | high ceiling | holes in walls (potential *missile trap*) | large grates in floor | mosaic or patterned floor | murals or mosaics on walls | pillars down center | pillars in random locations | several short twists, turns, or zigzags | slopes down | slopes up | strong air drafts or even wind | tube or pipe rather than corridor | unusual temperature
 
+# door, material
+bronze :: 0.12 | clay | copper | curtain (beads) | curtain (cloth) | flesh | gauze :: 0.01 | iron :: 0.08 | lace :: 0.01 | paper :: 0.01 | quartz | stone :: 0.12 | thorns | tiles | wicker | wires or mesh | wood :: 0.20
+
+# door, color
+black | blue | checkerboard | diamond pattern | gray | green | orange | pink | purple | red | splotches | stripes | swirls | transparent | white | yellow
+
+# door, opens
+dissolves | divides at middle, hinged top and bottom | divides at middle, top slides up, bottom slides down | divides down middle, hinges on both sides | drops into slot | hinged at bottom | hinged at top | iris valve | pushes | raises | revolves | slides | turnstile
+
+# door, oddity
+*trap* | *unusual mechanism* | bells | bloodied | brand new | broken | creaks | dented | dog door | door knocker | doormat or sign | eyes, nose, or mouth | face imprinted upon | glows | glyphs | graffiti | hacked at | illusion | multiple locks | peephole | recently painted or wet paint | scorched
+
+# door, unusual shape
+circular | half circle | octagonal | oval | reached by steps down | reached by steps upward | square | triangular | very tall and narrow | wider than it is tall
+
 # unusual mechanism action
 apply heat to | apply pressure to | close | cover up | crank | disconnect | don't touch | hit | lift and turn | lift up | lower | move | open | press and then turn | press on | pry out | pull | pull down on | pull up on | push down | push in | push left | push right | push up | put weight on | reconnect | remove | replace | rotate | rotate (clockwise) | rotate (counterclockwise) | shake | shine bright light on | slide | slide down | slide up | spin | squeeze | strike | take pressure off | take weight off | touch | turn | turn around | twist | uncover | unfasten | use a wrench on | use electric shock on | use water on
 

@@ -280,7 +280,8 @@ class Generator:
                  count: int,
                  keywords: list[str] | None,
                  max_time: float,
-                 suppress_print=False
+                 suppress_print=False,
+                 **kwargs,
                  ) -> list[Creation]:
         """
         This method belongs to the base Generator class. Although not useful in
@@ -303,13 +304,14 @@ class Generator:
         if keywords is None:  # If the optional argument is not used.
 
             for _ in range(count):
-                self.creations.append(self._generator())
+                creation = self._try_generator(**kwargs)
+                self.creations.append(creation)
 
         else:  # Generate names until we have count names containing the keywords.
             tries = 0
             while len(self.creations) < count:
                 tries += 1
-                creation = self._generator()
+                creation = self._try_generator(**kwargs)
                 for keyword in keywords:
                     if keyword not in creation:
                         break
@@ -349,7 +351,7 @@ class Generator:
                 for _ in range(space_count): console.print()
 
 
-    def _generator(self) -> Creation:
+    def _generator(self, **kwargs) -> Creation:
         """
         Placeholder meant to be overwritten by child classes.
         """
@@ -600,6 +602,8 @@ class Generator:
         whether multiple identical items can be chosen from the distribution
         (True by default).
         """
+        if count <= 0: return []
+
         distribution_copy = deepcopy(distribution)
         if repeats:
             values, weights = zip(*distribution_copy.items())
@@ -627,6 +631,22 @@ class Generator:
             roll = roller.sum(dice_str[1:-1])  # Cut out $.
             text = text.replace(dice_str, str(roll), 1)
         return text
+
+    def _try_generator(self, **kwargs) -> Creation:
+        """\
+        Some generators take keyword arguments, others do not. This method
+        exists to check for keywords and raises an exception if keyword
+        arguments were passed into a generator that doesn't take them.
+        """
+        try:
+            if kwargs:
+                creation = self._generator(**kwargs)
+            else:
+                creation = self._generator()
+        except TypeError:
+            raise TypeError(f"Generator {self.__class__.__name__} does not"
+                            f" support keyword arguments.")
+        return creation
 
 
 class LinkedGenerator(Generator):

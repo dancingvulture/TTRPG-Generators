@@ -4,33 +4,48 @@ Contains all needed command line objects.
 
 
 import argparse
+from types import MappingProxyType
+
 import src.generators as generators
 
 
-_KEYWORD_ARGS = {
-    "help": ("Results must contain these words; syntax for this command: "
-              "separate each keyword with a commas, but with no spaces"),
-    "type": lambda keywords: [x for x in keywords.lower().split(',')]
-}
-_MAXTIME_ARGS = {
-    "type": float,
-    "help": ("Maximum time the program tries to generate "
-              "names for in seconds, default is 5."),
-    "default": 5.0
-}
-_FORCE_UPDATE_ARGS = {
-    "help": "Force update of generator's table file.",
-    "action": "store_true",
-}
-_COUNT_ARGS = {
-    "type": int,
-    "help": "Number to generate."
-}
-_SUPPRESS_PRINT_ARGS = {
-    "help": "Suppress the print output of the main generator, mainly for"
-            " debugging purposes",
-    "action": "store_true",
-}
+_SUBPARSERS = (
+    (
+        "name",
+        "Generate names.",
+        "None",
+    ),
+    (
+        "item",
+        "Generate items.",
+        "None",
+    ),
+    (
+        "pc",
+        "Generate player characters.",
+        "None",
+    ),
+    (
+        "npc",
+        "Generate NPCs.",
+        "None",
+    ),
+    (
+        "monster",
+        "Generate monsters.",
+        "None",
+    ),
+    (
+        "misc",
+        "Miscellaneous generators.",
+        "None",
+    ),
+    (
+        "dungeon",
+        "Dungeons generators.",
+        "None",
+    ),
+)
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -48,165 +63,74 @@ def parse_arguments() -> argparse.Namespace:
         dest="type"
     )
 
-    _add_name_subparser(subparsers)
-    _add_item_subparser(subparsers)
-    _add_pc_subparser(subparsers)
-    _add_npc_subparser(subparsers)
-    _add_monster_subparser(subparsers)
-    _add_misc_subparser(subparsers)
-    _add_dungeon_subparser(subparsers)
+    for name, parser_help, kwarg_help in _SUBPARSERS:
+        _add_subparser(subparsers, name, parser_help, kwarg_help)
 
     return parser.parse_args()
 
 
-def _add_item_subparser(subparsers) -> None:
-    """
-    Subparser for using the name generators.
-    """
-    parser = subparsers.add_parser(
-        "item",
-        help="Generate items.",
-    )
-    generator_names = generators.get_names("item")
-
-    parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="choose a generator."
-    )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_name_subparser(subparsers) -> None:
-    """
-    Subparser for using the name generators.
-    """
-    parser = subparsers.add_parser(
-        "name",
-        help="Generate names.",
-    )
-    generator_names = generators.get_names("name")
-
-    parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="choose a generator."
-    )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_pc_subparser(subparsers) -> None:
+def _add_subparser(subparsers: argparse._SubParsersAction,
+                   name: str,
+                   parser_help: str,
+                   kwargs_help: str,
+                   ) -> None:
     """\
-    Subparser for using the pc generators.\
+    Create a subparser for a generator type.\
     """
     parser = subparsers.add_parser(
-        "pc",
-        help="Generate player characters.",
+        name,
+        help=parser_help,
     )
-    generator_names = generators.get_names("pc")
-
-    parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="choose a generator."
-    )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-def _add_npc_subparser(subparsers) -> None:
-    """
-    Subparser for using the npc generators.
-    """
-    parser = subparsers.add_parser(
-        "npc",
-        help="Generate NPCs.",
-    )
-    generator_names = generators.get_names("npc")
-
-    parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="choose a generator."
-    )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_monster_subparser(subparsers) -> None:
-    """
-    Subparser for using the monster generators.
-    """
-    parser = subparsers.add_parser(
-        "monster",
-        help="Generate monsters."
-    )
-    generator_names = generators.get_names("monster")
-
-    parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="choose a generator."
-    )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_misc_subparser(subparsers) -> None:
-    """
-    Subparser for using the miscellaneous generator.
-    """
-    parser = subparsers.add_parser(
-        "misc",
-        help="Miscellaneous generators"
-    )
-    generator_names = generators.get_names("misc")
-
+    generator_names = generators.get_names(name)
     parser.add_argument(
         "generator",
         choices=generator_names,
         help="Choose a generator."
     )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
-
-
-def _add_dungeon_subparser(subparsers) -> None:
-    """\
-    Subparser for using dungeon generators.\
-    """
-    parser = subparsers.add_parser(
-        "dungeon",
-        help="Dungeon generators"
-    )
-    generator_names = generators.get_names("dungeon")
-
     parser.add_argument(
-        "generator",
-        choices=generator_names,
-        help="Choose a generator."
+        "count",
+        type=int,
+        help="Number to generate.",
     )
-    parser.add_argument("-kw", "--keywords", **_KEYWORD_ARGS)
-    parser.add_argument("-mt", "--maxtime", **_MAXTIME_ARGS)
-    parser.add_argument("-up", "--update", **_FORCE_UPDATE_ARGS)
-    parser.add_argument("-sp", "--suppress-print", **_SUPPRESS_PRINT_ARGS)
-    parser.add_argument("count", **_COUNT_ARGS)
+    parser.add_argument(
+        "-kw", "--kwargs",
+        help="Some generators will take special inputs, those that do are"
+             f" listed here: \n{kwargs_help}\n\n snytax is kwarg=value, separate"
+             f" multiple kwargs with commas, no spaces.",
+        type=lambda x: _get_kwargs(x),
+        default=MappingProxyType({}),
+    )
+    parser.add_argument(
+        "-sr", "--search",
+        help="Results must contain these words; syntax for this command:"
+              " separate each search with a commas, but with no spaces",
+        type=lambda search: [x for x in search.lower().split(',')],
+    )
+    parser.add_argument(
+        "-mt", "--maxtime",
+        help="Maximum time the program tries to generate names for in seconds,"
+             " default is 5.",
+        type=float,
+        default=5.0,
+    )
+    parser.add_argument(
+        "-up", "--update",
+        help="Force update of generator's table file.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-sp", "--suppress-print",
+        help="Suppress the print output of the main generator, mainly for"
+             " debugging purposes.",
+        action="store_true",
+    )
+
+
+def _get_kwargs(raw: str) -> dict[str, str]:
+    """\
+    Process kwargs.\
+    """
+    kwargs = {}
+    for key, value in raw.strip().split(","):
+        kwargs[key] = value
+    return kwargs
